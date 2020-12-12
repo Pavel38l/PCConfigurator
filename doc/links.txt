@@ -1,0 +1,3 @@
+QIWI APi:
+https://github.com/QIWI-API/bill-payments-java-sdk
+https://developer.qiwi.com/ru/qiwi-wallet-personal/#payment_receipt
