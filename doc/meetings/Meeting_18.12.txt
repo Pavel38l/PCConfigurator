@@ -1,0 +1,15 @@
+использовать maven
+
+сделать changelog liquibase для различных таблиц:
+-user, user_role, journey - Паша
+-travel_point, order_status - Влад
+-order, order_size - Данил
+
+можно использовать готовые компоненты для React (посмотреть)
+ https://ant.design/components/overview/
+-погрузится в React, прочитать основные понятия на оф. сайте React
+ https://ru.reactjs.org/docs/getting-started.html
+Влад  - расскажет основные понятия React и покажет, что у него получилось сделать
+Павел - полностью создать базу, вставить данные, создать репозитории, сделать рестконтроллеры
+Данил - разобраться с Spring Security
+Совместно записать задачи в Trello в список новых
