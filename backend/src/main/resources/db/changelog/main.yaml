@@ -1,4 +1,7 @@
 databaseChangeLog:
   - include:
+      file: user-role.yaml
+      relativeToChangelogFile: true
+  - include:
       file: user.yaml
       relativeToChangelogFile: true

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: 2
       author: Burdyug Pavel
       changes:
         - createTable:
@@ -14,7 +14,50 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+              - column:
                   name: email
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: password
+                  type: varchar(300)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rating
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: date
+                  constraints:
+                    nullable: true
+              - column:
+                  name: sex
+                  type: char(1)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            constraintName: fk_user_role
+            baseColumnNames: role_id
+            baseTableName: user
+            referencedColumnNames: id
+            referencedTableName: user_role
+            validate: true
