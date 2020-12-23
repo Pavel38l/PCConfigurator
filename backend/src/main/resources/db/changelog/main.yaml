@@ -5,3 +5,6 @@ databaseChangeLog:
   - include:
       file: user.yaml
       relativeToChangelogFile: true
+  - include:
+      file: journey.yaml
+      relativeToChangelogFile: true

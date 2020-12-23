@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Burdyug Pavel
+      changes:
+        - createTable:
+            tableName: journey
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: dispatch_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_date
+                  type: date
+                  constraints:
+                    nullable: true
+              - column:
+                  name: cost
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            constraintName: fk_journey_user
+            baseColumnNames: owner_id
+            baseTableName: journey
+            referencedColumnNames: id
+            referencedTableName: user
+            validate: true

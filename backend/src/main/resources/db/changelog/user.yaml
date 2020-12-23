@@ -35,7 +35,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: rating
-                  type: bigint
+                  type: int
                   constraints:
                     nullable: false
               - column:
@@ -45,7 +45,7 @@ databaseChangeLog:
                     nullable: true
               - column:
                   name: sex
-                  type: char(1)
+                  type: varchar(10)
                   constraints:
                     nullable: true
               - column:
