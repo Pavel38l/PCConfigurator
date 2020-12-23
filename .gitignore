@@ -1,5 +1,8 @@
 target/
 backend/HELP.md
+backend/mvnw
+backend/mvnw.cmd
+backend/.mvn
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
