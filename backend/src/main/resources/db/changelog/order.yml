@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: Demchenko Daniil
+      changes:
+        - createTable:
+            tableName: order
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: size_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false      
+              - column:
+                  name: code
+                  type: varchar(300)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_value
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dispatch_poin_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_point_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reciever_phone_number
+                  type: bigint
+                  constraints:
+                    nullable: false  
+      - addForeignKeyConstraint:
+            constraintName: fk_order_order_size
+            baseColumnNames: size_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: order_size
+            validate: true
+      - addForeignKeyConstraint:
+            constraintName: fk_order_order_status
+            baseColumnNames: status_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: order_status
+            validate: true
+      - addForeignKeyConstraint:
+            constraintName: fk_order_user
+            baseColumnNames: owner_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: user
+            validate: true 
+      - addForeignKeyConstraint:
+            constraintName: fk_order_travel_point
+            baseColumnNames: dispatch_poin_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            validate: true
+      - addForeignKeyConstraint:
+            constraintName: fk_order_travel_point
+            baseColumnNames: arrival_point_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            validate: true
