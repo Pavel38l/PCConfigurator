@@ -52,7 +52,7 @@ databaseChangeLog:
                   name: role_id
                   type: bigint
                   constraints:
-                    nullable: true
+                    nullable: false
 
         - addForeignKeyConstraint:
             constraintName: fk_user_role
