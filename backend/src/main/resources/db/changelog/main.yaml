@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: user-role.yaml
+      file: user_role.yaml
       relativeToChangelogFile: true
   - include:
       file: user.yaml
@@ -8,3 +8,24 @@ databaseChangeLog:
   - include:
       file: journey.yaml
       relativeToChangelogFile: true
+  - include:
+      file: travel_point.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order_status.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order_size.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order.yaml
+      relativeToChangelogFile: true
+
+
+#  - include:
+#      file: order_size.yaml
+#      relativeToChangelogFile: true
+#  - include:
+#      file: order.yaml
+#      relativeToChangelogFile: true
+
