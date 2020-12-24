@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: Dunaev Vladislav
+      changes:
+        - createTable:
+            tableName: travel_point
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: comment
+                  type: varchar(1000)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: journey_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: x
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: y
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: previous_id
+                  type: bigint
+                  constraints:
+                    nullable: true  
+
+        - addForeignKeyConstraint:
+            constraintName: fk_journey_id
+            baseColumnNames: journey_id
+            baseTableName: travel_point
+            referencedColumnNames: id
+            referencedTableName: journey
+            validate: true
+
+        - addForeignKeyConstraint:
+            constraintName: fk_previous_id
+            baseColumnNames: previous_id
+            baseTableName: travel_point
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            validate: true
