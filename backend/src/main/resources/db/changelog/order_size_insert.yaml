@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: small
+              - column:
+                  name: description
+                  value: Carry-on bag
+            tableName: order_size
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: average
+              - column:
+                  name: description
+                  value: Fits in the trunk of a regular car
+            tableName: order_size
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: big
+              - column:
+                  name: description
+                  value: Need a truck or station wagon
+            tableName: order_size

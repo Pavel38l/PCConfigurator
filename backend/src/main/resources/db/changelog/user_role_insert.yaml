@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: user
+            tableName: user_role
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: admin
+            tableName: user_role

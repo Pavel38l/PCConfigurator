@@ -20,12 +20,16 @@ databaseChangeLog:
   - include:
       file: order.yaml
       relativeToChangelogFile: true
-
-
-#  - include:
-#      file: order_size.yaml
-#      relativeToChangelogFile: true
-#  - include:
-#      file: order.yaml
-#      relativeToChangelogFile: true
+  - include:
+      file: user_role_insert.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: user_insert.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order_status_insert.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order_size_insert.yaml
+      relativeToChangelogFile: true
 

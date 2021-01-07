@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: posted
+            tableName: order_status
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: defined
+            tableName: order_status
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: on_the_way
+            tableName: order_status
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: completed
+            tableName: order_status
