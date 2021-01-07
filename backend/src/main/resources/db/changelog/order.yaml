@@ -52,7 +52,12 @@ databaseChangeLog:
                   name: reciever_phone_number
                   type: bigint
                   constraints:
-                    nullable: false  
+                    nullable: false
+              - column:
+                  name: journey_id
+                  type: bigint
+                  constraints:
+                    nullable: true
         - addForeignKeyConstraint:
               constraintName: fk_order_order_size
               baseColumnNames: size_id
@@ -88,3 +93,10 @@ databaseChangeLog:
               referencedColumnNames: id
               referencedTableName: travel_point
               validate: true
+        - addForeignKeyConstraint:
+            constraintName: fk_order_journey
+            baseColumnNames: journey_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: journey
+            validate: true
