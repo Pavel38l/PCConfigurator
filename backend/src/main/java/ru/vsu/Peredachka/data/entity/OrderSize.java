@@ -6,11 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "orderSize", schema = "public")
 public class OrderSize {
@@ -19,4 +19,7 @@ public class OrderSize {
     private Long id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "orderSize")
+    private List<Order> orders;
 }

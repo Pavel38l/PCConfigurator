@@ -7,12 +7,12 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter @Setter
 @EqualsAndHashCode
-@ToString
 @Table(name = "journey", schema = "public")
 public class Journey {
     @Id
@@ -25,4 +25,12 @@ public class Journey {
     @ManyToOne
     @JoinColumn(name = "ownerId")
     private User owner;
+
+    @OneToMany(mappedBy = "journey")
+    List<TravelPoint> travelPoints;
+
+    @OneToMany(mappedBy = "journey")
+    List<Order> orders;
+
+
 }

@@ -12,7 +12,6 @@ import java.util.Objects;
 
 @Getter @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "user", schema = "public")
 public class User {
@@ -33,4 +32,7 @@ public class User {
 
     @OneToMany(mappedBy = "owner")
     private List<Journey> journeys;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Order> orders;
 }

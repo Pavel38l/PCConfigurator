@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "travelPoint", schema = "public")
 public class TravelPoint {
@@ -19,4 +18,13 @@ public class TravelPoint {
     private Long id;
     private String comment;
     private Double x, y;
+
+    @OneToOne
+    @JoinColumn(name = "previous_id", referencedColumnName = "id")
+    private TravelPoint previousTravelPoint;
+
+    @ManyToOne
+    @JoinColumn(name = "journeyId")
+    private Journey journey;
+
 }

@@ -11,7 +11,6 @@ import java.util.Objects;
 
 @Getter @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "userRole", schema = "public")
 public class UserRole {
