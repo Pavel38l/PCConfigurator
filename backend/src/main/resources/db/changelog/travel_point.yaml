@@ -25,12 +25,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: x
-                  type: numeric
+                  type: double
                   constraints:
                     nullable: false
               - column:
                   name: y
-                  type: numeric
+                  type: double
                   constraints:
                     nullable: false
               - column:

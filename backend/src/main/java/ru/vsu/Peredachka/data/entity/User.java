@@ -14,6 +14,7 @@ import java.util.Objects;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name = "user", schema = "public")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

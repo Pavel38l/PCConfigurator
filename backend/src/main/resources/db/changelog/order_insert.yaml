@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: size_id
+                  value: 1
+              - column:
+                  name: status_id
+                  value: 2
+              - column:
+                  name: owner_id
+                  value: 4
+              - column:
+                  name: code
+                  value: 1234
+              - column:
+                  name: order_value
+                  value: 100
+              - column:
+                  name: dispatch_point_id
+                  value: 1
+              - column:
+                  name: arrival_point_id
+                  value: 2
+              - column:
+                  name: reciever_phone_number
+                  value: 89023498790
+              - column:
+                  name: journey_id
+                  value: 1
+            tableName: order
+        - insert:
+            columns:
+              - column:
+                  name: size_id
+                  value: 2
+              - column:
+                  name: status_id
+                  value: 1
+              - column:
+                  name: owner_id
+                  value: 2
+              - column:
+                  name: code
+                  value: 1234
+              - column:
+                  name: order_value
+                  value: 500
+              - column:
+                  name: dispatch_point_id
+                  value: 3
+              - column:
+                  name: arrival_point_id
+                  value: 4
+              - column:
+                  name: reciever_phone_number
+                  value: 89023499978
+              - column:
+                  name: journey_id
+                  value: null
+            tableName: order

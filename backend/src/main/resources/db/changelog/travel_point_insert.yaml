@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: here
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: x
+                  value: 51.660481
+              - column:
+                  name: y
+                  value: 39.173461
+              - column:
+                  name: previous_id
+                  value: null
+            tableName: travel_point
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: null
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: x
+                  value: 51.681187
+              - column:
+                  name: y
+                  value: 39.218316
+              - column:
+                  name: previous_id
+                  value: 1
+            tableName: travel_point
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: hello
+              - column:
+                  name: journey_id
+                  value: 2
+              - column:
+                  name: x
+                  value: 51.683156
+              - column:
+                  name: y
+                  value: 39.216642
+              - column:
+                  name: previous_id
+                  value: null
+            tableName: travel_point
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: hello
+              - column:
+                  name: journey_id
+                  value: 2
+              - column:
+                  name: x
+                  value: 55.773237
+              - column:
+                  name: y
+                  value: 37.631478
+              - column:
+                  name: previous_id
+                  value: 3
+            tableName: travel_point

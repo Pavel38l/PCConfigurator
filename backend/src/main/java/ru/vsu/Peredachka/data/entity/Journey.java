@@ -13,6 +13,7 @@ import java.util.Objects;
 @Getter @Setter
 @EqualsAndHashCode
 @ToString
+@Table(name = "journey", schema = "public")
 public class Journey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -32,4 +32,13 @@ databaseChangeLog:
   - include:
       file: order_size_insert.yaml
       relativeToChangelogFile: true
+  - include:
+      file: journey_insert.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: travel_point_insert.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: order_insert.yaml
+      relativeToChangelogFile: true
 

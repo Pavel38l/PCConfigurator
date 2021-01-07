@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: dispatch_date
+                  value: 2020-12-12
+              - column:
+                  name: arrival_date
+                  value: 2021-01-01
+              - column:
+                  name: cost
+                  value: 1000
+              - column:
+                  name: owner_id
+                  value: 1
+            tableName: journey
+        - insert:
+            columns:
+              - column:
+                  name: dispatch_date
+                  value: 2019-11-04
+              - column:
+                  name: arrival_date
+                  value: 2020-02-01
+              - column:
+                  name: cost
+                  value: 100
+              - column:
+                  name: owner_id
+                  value: 3
+            tableName: journey
+        - insert:
+            columns:
+              - column:
+                  name: dispatch_date
+                  value: 2018-10-10
+              - column:
+                  name: arrival_date
+                  value: 2018-10-12
+              - column:
+                  name: cost
+                  value: 150
+              - column:
+                  name: owner_id
+                  value: 1
+            tableName: journey
+        - insert:
+            columns:
+              - column:
+                  name: dispatch_date
+                  value: 2020-11-08
+              - column:
+                  name: arrival_date
+                  value: 2020-11-15
+              - column:
+                  name: cost
+                  value: 250
+              - column:
+                  name: owner_id
+                  value: 4
+            tableName: journey
