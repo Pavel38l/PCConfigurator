@@ -10,9 +10,5 @@ import java.util.List;
 
 @Component
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    List<Order> findAllByOwner(User user);
-
-    List<Order> findAllByJourney(Journey journey);
-
     List<Order> findAllByJourneyIsNull();
 }

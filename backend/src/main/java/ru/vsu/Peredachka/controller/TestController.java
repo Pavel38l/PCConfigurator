@@ -1,35 +1,39 @@
 package ru.vsu.Peredachka.controller;
 
+import javassist.NotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vsu.Peredachka.data.dto.UserDto;
 import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.entity.UserRole;
 import ru.vsu.Peredachka.data.repository.*;
 import ru.vsu.Peredachka.service.OrderService;
-
-import java.util.List;
+import ru.vsu.Peredachka.service.UserService;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 public class TestController {
     private final UserRoleRepository userRoleRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final JourneyRepository journeyRepository;
     private final TravelPointRepository travelPointRepository;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
+    private final ModelMapper modelMapper;
 
 
-    public TestController(UserRoleRepository userRoleRepository, UserRepository userRepository, JourneyRepository journeyRepository, TravelPointRepository travelPointRepository, OrderRepository orderRepository, OrderService orderService) {
+    public TestController(UserRoleRepository userRoleRepository, UserService userService, JourneyRepository journeyRepository, TravelPointRepository travelPointRepository, OrderRepository orderRepository, OrderService orderService, ModelMapper modelMapper) {
         this.userRoleRepository = userRoleRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.journeyRepository = journeyRepository;
         this.travelPointRepository = travelPointRepository;
         this.orderRepository = orderRepository;
         this.orderService = orderService;
+        this.modelMapper = modelMapper;
     }
 
     @RequestMapping(method = GET, path = "/roles")
@@ -39,10 +43,10 @@ public class TestController {
     }
 
     @RequestMapping(method = GET, path = "/user")
-    public List<Order> user() {
-       User user = userRepository.findById(2L).orElseThrow();
-       var result = orderService.getAllUserOrders(user);
-       return result;
+    public UserDto user() throws NotFoundException {
+       User user = userService.findById(10L);
+       UserDto userDto = modelMapper.map(user, UserDto.class);
+       return userDto;
     }
 
     @RequestMapping(method = GET, path = "/point")

@@ -24,10 +24,6 @@ public class JourneyService {
         return result;
     }
 
-    public List<Journey> getAllUserOrders(Journey journey) {
-        return journeyRepository.findAllByOwner(journey);
-    }
-
     public Journey findById(Long id) throws NotFoundException {
         return journeyRepository.findById(id).orElseThrow(() -> new NotFoundException("Journey not found!"));
     }

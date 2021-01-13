@@ -31,14 +31,6 @@ public class OrderService {
         return result;
     }
 
-    public List<Order> getAllUserOrders(User user) {
-        return orderRepository.findAllByOwner(user);
-    }
-
-    public List<Order> getAllJourneyOrders(Journey journey) {
-        return orderRepository.findAllByJourney(journey);
-    }
-
     public List<Order> getAllOrdersWithoutJourney() {
         return orderRepository.findAllByJourneyIsNull();
     }

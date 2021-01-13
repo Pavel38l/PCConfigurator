@@ -16,7 +16,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
-    private Integer order_value;
+    private Integer orderValue;
     private String description;
 
     @ManyToOne

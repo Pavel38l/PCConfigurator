@@ -10,5 +10,4 @@ import java.util.List;
 
 @Component
 public interface JourneyRepository extends CrudRepository<Journey, Long> {
-    List<Journey> findAllByOwner(Journey journey);
 }

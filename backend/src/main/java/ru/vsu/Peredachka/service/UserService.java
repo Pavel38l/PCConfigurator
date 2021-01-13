@@ -2,6 +2,7 @@ package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
+import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.repository.UserRepository;
 
@@ -15,7 +16,6 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     public User findById(Long id) throws NotFoundException {
        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
