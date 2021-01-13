@@ -1,7 +1,11 @@
-package ru.vsu.Peredachka.data.dto;
+package ru.vsu.Peredachka.data.dto.order;
 
 import lombok.*;
-import ru.vsu.Peredachka.data.entity.*;
+import ru.vsu.Peredachka.data.dto.OrderSizeDto;
+import ru.vsu.Peredachka.data.dto.OrderStatusDto;
+import ru.vsu.Peredachka.data.dto.TravelPointDto;
+import ru.vsu.Peredachka.data.dto.user.UserDto;
+import ru.vsu.Peredachka.data.dto.journey.JourneyDto;
 
 @Getter
 @Setter

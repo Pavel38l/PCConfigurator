@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
-import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.Journey;
-import ru.vsu.Peredachka.data.entity.Order;
-import ru.vsu.Peredachka.service.OrderService;
+import ru.vsu.Peredachka.service.JourneyService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,38 +17,38 @@ import java.util.stream.Collectors;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping("/api/v1/orders")
-public class OrderController {
-    private final OrderService orderService;
+@RequestMapping("/api/v1/journey")
+public class JourneyController {
+    private final JourneyService journeyService;
     private final ModelMapper mapper;
 
-    public OrderController(OrderService orderService, ModelMapper mapper) {
-        this.orderService = orderService;
+    public JourneyController(JourneyService journeyService, ModelMapper mapper) {
+        this.journeyService = journeyService;
         this.mapper = mapper;
     }
 
     @RequestMapping(method = GET, path = "")
-    public List<OrderWithDependenciesDto> getDevices() {
-        return orderService.getAllOrders().stream().map(
-                o -> mapper.map(o, OrderWithDependenciesDto.class)
+    public List<JourneyWithDependenciesDto> getDevices() {
+        return journeyService.getAllJourneys().stream().map(
+                o -> mapper.map(o, JourneyWithDependenciesDto.class)
         ).collect(Collectors.toList());
     }
 
     @RequestMapping(method = POST, path = "")
-    public JourneyWithDependenciesDto createOrder(@RequestBody CreateOrUpdateJourneyDto dto) {
-        var createdJourney = orderService.createOrUpdateOrder(
-                mapper.map(dto, Order.class)
+    public JourneyWithDependenciesDto createJourney(@RequestBody CreateOrUpdateJourneyDto dto) {
+        var createdJourney = journeyService.createOrUpdateJourney(
+                mapper.map(dto, Journey.class)
         );
         return mapper.map(createdJourney, JourneyWithDependenciesDto.class);
     }
 
     @RequestMapping(method = GET, path = "/{id}")
-    public OrderWithDependenciesDto getOrder(@PathVariable Long id) throws NotFoundException {
-        return mapper.map(orderService.findById(id), OrderWithDependenciesDto.class);
+    public JourneyWithDependenciesDto getJourney(@PathVariable Long id) throws NotFoundException {
+        return mapper.map(journeyService.findById(id), JourneyWithDependenciesDto.class);
     }
 
     @RequestMapping(method = DELETE, path = "/{id}")
     public void deleteDevice(@PathVariable Long id) throws NotFoundException {
-        orderService.deleteOrderById(id);
+        journeyService.deleteJourneyById(id);
     }
 }

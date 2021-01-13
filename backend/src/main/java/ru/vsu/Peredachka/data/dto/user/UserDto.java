@@ -1,4 +1,4 @@
-package ru.vsu.Peredachka.data.dto;
+package ru.vsu.Peredachka.data.dto.user;
 
 
 import lombok.*;

@@ -5,8 +5,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vsu.Peredachka.data.dto.JourneyWithDependenciesDto;
-import ru.vsu.Peredachka.data.dto.OrderWithDependenciesDto;
+import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
+import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
+import ru.vsu.Peredachka.data.dto.user.UserWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.service.UserService;
 
@@ -16,15 +17,20 @@ import java.util.stream.Collectors;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping("/api/v1")
-public class CurrentUserController {
+@RequestMapping("/api/v1/user")
+public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public CurrentUserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @RequestMapping(method = GET, path = "/{id}")
+    public UserWithDependenciesDto getUser(@PathVariable Long id) throws NotFoundException {
+        return modelMapper.map(userService.findById(id), UserWithDependenciesDto.class);
     }
 
     @RequestMapping(method = GET, path = "/{id}/orders")
