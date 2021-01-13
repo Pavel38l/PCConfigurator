@@ -7,6 +7,9 @@ import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.entity.UserRole;
 import ru.vsu.Peredachka.data.repository.*;
+import ru.vsu.Peredachka.service.OrderService;
+
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -17,14 +20,16 @@ public class TestController {
     private final JourneyRepository journeyRepository;
     private final TravelPointRepository travelPointRepository;
     private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
 
-    public TestController(UserRoleRepository userRoleRepository, UserRepository userRepository, JourneyRepository journeyRepository, TravelPointRepository travelPointRepository, OrderRepository orderRepository) {
+    public TestController(UserRoleRepository userRoleRepository, UserRepository userRepository, JourneyRepository journeyRepository, TravelPointRepository travelPointRepository, OrderRepository orderRepository, OrderService orderService) {
         this.userRoleRepository = userRoleRepository;
         this.userRepository = userRepository;
         this.journeyRepository = journeyRepository;
         this.travelPointRepository = travelPointRepository;
         this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @RequestMapping(method = GET, path = "/roles")
@@ -34,9 +39,10 @@ public class TestController {
     }
 
     @RequestMapping(method = GET, path = "/user")
-    public User user() {
-       User user = userRepository.findById(1L).orElseThrow();
-       return user;
+    public List<Order> user() {
+       User user = userRepository.findById(2L).orElseThrow();
+       var result = orderService.getAllUserOrders(user);
+       return result;
     }
 
     @RequestMapping(method = GET, path = "/point")
