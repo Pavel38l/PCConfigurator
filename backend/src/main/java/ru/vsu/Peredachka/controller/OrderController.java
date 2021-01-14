@@ -30,7 +30,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = GET, path = "")
-    public List<OrderWithDependenciesDto> getDevices() {
+    public List<OrderWithDependenciesDto> getOrders() {
         return orderService.getAllOrders().stream().map(
                 o -> mapper.map(o, OrderWithDependenciesDto.class)
         ).collect(Collectors.toList());

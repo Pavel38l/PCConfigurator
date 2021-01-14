@@ -21,23 +21,30 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class UserController {
 
     private final UserService userService;
-    private final ModelMapper modelMapper;
+    private final ModelMapper mapper;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper mapper) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
+        this.mapper = mapper;
     }
 
     @RequestMapping(method = GET, path = "/{id}")
     public UserWithDependenciesDto getUser(@PathVariable Long id) throws NotFoundException {
-        return modelMapper.map(userService.findById(id), UserWithDependenciesDto.class);
+        return mapper.map(userService.findById(id), UserWithDependenciesDto.class);
+    }
+
+    @RequestMapping(method = GET, path = "")
+    public List<UserWithDependenciesDto> getUsers() {
+        return userService.getAllUsers().stream().map(
+                o -> mapper.map(o, UserWithDependenciesDto.class)
+        ).collect(Collectors.toList());
     }
 
     @RequestMapping(method = GET, path = "/{id}/orders")
     public List<OrderWithDependenciesDto> getOrders(@PathVariable Long id) throws NotFoundException {
         User user = userService.findById(id);
         return user.getOrders().stream().map(
-                o -> modelMapper.map(o, OrderWithDependenciesDto.class)
+                o -> mapper.map(o, OrderWithDependenciesDto.class)
         ).collect(Collectors.toList());
     }
 
@@ -45,7 +52,7 @@ public class UserController {
     public List<JourneyWithDependenciesDto> getJourneys(@PathVariable Long id) throws NotFoundException {
         User user = userService.findById(id);
         return user.getJourneys().stream().map(
-                o -> modelMapper.map(o, JourneyWithDependenciesDto.class)
+                o -> mapper.map(o, JourneyWithDependenciesDto.class)
         ).collect(Collectors.toList());
     }
 }

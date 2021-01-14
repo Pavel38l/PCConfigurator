@@ -28,7 +28,7 @@ public class JourneyController {
     }
 
     @RequestMapping(method = GET, path = "")
-    public List<JourneyWithDependenciesDto> getDevices() {
+    public List<JourneyWithDependenciesDto> getJourneys() {
         return journeyService.getAllJourneys().stream().map(
                 o -> mapper.map(o, JourneyWithDependenciesDto.class)
         ).collect(Collectors.toList());

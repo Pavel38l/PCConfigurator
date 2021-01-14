@@ -2,11 +2,13 @@ package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
+import ru.vsu.Peredachka.data.entity.Journey;
 import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,4 +33,9 @@ public class UserService {
     }
 
 
+    public List<User> getAllUsers() {
+        var result = new ArrayList<User>();
+        userRepository.findAll().forEach(result::add);
+        return result;
+    }
 }
