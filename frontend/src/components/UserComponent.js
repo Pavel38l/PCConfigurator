@@ -29,6 +29,7 @@ class UserComponent extends React.Component {
                             <td> Rating </td>
                             <td> Date of birth </td>
                             <td> Sex </td>
+                            <td> Role </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,8 @@ class UserComponent extends React.Component {
                                         <td>{user.email}</td>
                                         <td>{user.rating}</td>
                                         <td>{user.dateOfBirth}</td>
+                                        <td>{user.sex}</td>
+                                        <td>{user.userRole.name}</td>
                                     </tr>
                             )
                         }
