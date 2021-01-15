@@ -13,6 +13,7 @@ class UserServiceTest {
     @Test
     void getAllUsers() {
         Assertions.assertEquals(2, 2);
+        Assertions.assertEquals(3, 3);
         //Assertions.assertEquals(4, userService.getAllUsers().size());
     }
 }
