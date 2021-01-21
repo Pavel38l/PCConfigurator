@@ -2,10 +2,7 @@ package ru.vsu.Peredachka.controller;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
 import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
@@ -30,6 +27,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = GET, path = "")
+    @CrossOrigin
     public List<OrderWithDependenciesDto> getOrders() {
         return orderService.getAllOrders().stream().map(
                 o -> mapper.map(o, OrderWithDependenciesDto.class)
@@ -37,6 +35,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = POST, path = "")
+    @CrossOrigin
     public JourneyWithDependenciesDto createOrder(@RequestBody CreateOrUpdateJourneyDto dto) {
         var createdJourney = orderService.createOrUpdateOrder(
                 mapper.map(dto, Order.class)
@@ -45,11 +44,13 @@ public class OrderController {
     }
 
     @RequestMapping(method = GET, path = "/{id}")
+    @CrossOrigin
     public OrderWithDependenciesDto getOrder(@PathVariable Long id) throws NotFoundException {
         return mapper.map(orderService.findById(id), OrderWithDependenciesDto.class);
     }
 
     @RequestMapping(method = DELETE, path = "/{id}")
+    @CrossOrigin
     public void deleteDevice(@PathVariable Long id) throws NotFoundException {
         orderService.deleteOrderById(id);
     }

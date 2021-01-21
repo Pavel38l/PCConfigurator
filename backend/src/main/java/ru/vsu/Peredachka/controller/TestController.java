@@ -2,6 +2,7 @@ package ru.vsu.Peredachka.controller;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vsu.Peredachka.data.dto.user.UserDto;
@@ -37,12 +38,14 @@ public class TestController {
     }
 
     @RequestMapping(method = GET, path = "/roles")
+    @CrossOrigin
     public Iterable<UserRole> userRole() {
         Iterable<UserRole> list = userRoleRepository.findAll();
         return list;
     }
 
     @RequestMapping(method = GET, path = "/user")
+    @CrossOrigin
     public UserDto user() throws NotFoundException {
        User user = userService.findById(10L);
        UserDto userDto = modelMapper.map(user, UserDto.class);
@@ -50,12 +53,14 @@ public class TestController {
     }
 
     @RequestMapping(method = GET, path = "/point")
+    @CrossOrigin
     public TravelPoint point() {
         TravelPoint point = travelPointRepository.findById(2L).orElseThrow();
         return point;
     }
 
     @RequestMapping(method = GET, path = "/order")
+    @CrossOrigin
     public Order order() {
         Order order = orderRepository.findById(1L).orElseThrow();
         return order;

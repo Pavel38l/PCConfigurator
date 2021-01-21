@@ -19,7 +19,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -31,11 +30,13 @@ public class UserController {
     }
 
     @RequestMapping(method = GET, path = "/{id}")
+    @CrossOrigin
     public UserWithDependenciesDto getUser(@PathVariable Long id) throws NotFoundException {
         return mapper.map(userService.findById(id), UserWithDependenciesDto.class);
     }
 
     @RequestMapping(method = GET, path = "")
+    @CrossOrigin
     public List<UserWithDependenciesDto> getUsers() {
         return userService.getAllUsers().stream().map(
                 o -> mapper.map(o, UserWithDependenciesDto.class)
@@ -43,6 +44,7 @@ public class UserController {
     }
 
     @RequestMapping(method = GET, path = "/{id}/orders")
+    @CrossOrigin
     public List<OrderWithDependenciesDto> getOrders(@PathVariable Long id) throws NotFoundException {
         User user = userService.findById(id);
         return user.getOrders().stream().map(
@@ -51,6 +53,7 @@ public class UserController {
     }
 
     @RequestMapping(method = GET, path = "/{id}/journeys")
+    @CrossOrigin
     public List<JourneyWithDependenciesDto> getJourneys(@PathVariable Long id) throws NotFoundException {
         User user = userService.findById(id);
         return user.getJourneys().stream().map(
