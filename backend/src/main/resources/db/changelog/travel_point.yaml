@@ -37,7 +37,12 @@ databaseChangeLog:
                   name: previous_id
                   type: bigint
                   constraints:
-                    nullable: true  
+                    nullable: true
+              - column:
+                  name: next_id
+                  type: bigint
+                  constraints:
+                    nullable: true
 
         - addForeignKeyConstraint:
             constraintName: fk_journey_id
@@ -50,6 +55,14 @@ databaseChangeLog:
         - addForeignKeyConstraint:
             constraintName: fk_previous_id
             baseColumnNames: previous_id
+            baseTableName: travel_point
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            validate: true
+
+        - addForeignKeyConstraint:
+            constraintName: fk_next_id
+            baseColumnNames: next_id
             baseTableName: travel_point
             referencedColumnNames: id
             referencedTableName: travel_point

@@ -20,8 +20,12 @@ public class TravelPoint {
     private Double x, y;
 
     @OneToOne
-    @JoinColumn(name = "previous_id", referencedColumnName = "id")
+    @JoinColumn(name = "previousId", referencedColumnName = "id")
     private TravelPoint previousTravelPoint;
+
+    @OneToOne
+    @JoinColumn(name = "nextId", referencedColumnName = "id")
+    private TravelPoint nextTravelPoint;
 
     @ManyToOne
     @JoinColumn(name = "journeyId")

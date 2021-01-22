@@ -20,6 +20,9 @@ databaseChangeLog:
               - column:
                   name: previous_id
                   value: null
+              - column:
+                  name: next_id
+                  value: null
             tableName: travel_point
         - insert:
             columns:
@@ -38,7 +41,17 @@ databaseChangeLog:
               - column:
                   name: previous_id
                   value: 1
+              - column:
+                  name: next_id
+                  value: null
             tableName: travel_point
+        - update:
+            columns:
+              - column:
+                  name: next_id
+                  value: 2
+            tableName: travel_point
+            where: id = 1
         - insert:
             columns:
               - column:
@@ -55,6 +68,9 @@ databaseChangeLog:
                   value: 39.216642
               - column:
                   name: previous_id
+                  value: null
+              - column:
+                  name: next_id
                   value: null
             tableName: travel_point
         - insert:
@@ -74,4 +90,14 @@ databaseChangeLog:
               - column:
                   name: previous_id
                   value: 3
+              - column:
+                  name: next_id
+                  value: null
             tableName: travel_point
+        - update:
+            columns:
+              - column:
+                  name: next_id
+                  value: 4
+            tableName: travel_point
+            where: id = 3
