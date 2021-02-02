@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 public class JourneyDto {
     private Long id;
-    private LocalDate dispatchDate;
-    private LocalDate arrivalDate;
     private Double cost;
+    private Integer maxOrderCount;
 }

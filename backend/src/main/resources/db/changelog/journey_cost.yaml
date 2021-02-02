@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 3
+      id: 14
       author: Burdyug Pavel
       changes:
         - createTable:
-            tableName: journey
+            tableName: journey_cost
             columns:
               - column:
                   name: id
@@ -14,25 +14,33 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: cost
-                  type: double
-                  constraints:
-                    nullable: false
-              - column:
-                  name: owner_id
+                  name: journey_id
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: max_order_count
-                  type: int
+                  name: order_size_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cost
+                  type: double
                   constraints:
                     nullable: false
 
         - addForeignKeyConstraint:
-            constraintName: fk_journey_user
-            baseColumnNames: owner_id
-            baseTableName: journey
+            constraintName: fk_journey_cost_journey
+            baseColumnNames: journey_id
+            baseTableName: journey_cost
             referencedColumnNames: id
-            referencedTableName: user
+            referencedTableName: journey
+            validate: true
+
+        - addForeignKeyConstraint:
+            constraintName: fk_journey_cost_order_size
+            baseColumnNames: order_size_id
+            baseTableName: journey_cost
+            referencedColumnNames: id
+            referencedTableName: order_size
             validate: true

@@ -1,6 +1,7 @@
 package ru.vsu.Peredachka.data.dto.journey;
 
 import lombok.*;
+import ru.vsu.Peredachka.data.dto.OrderSizeDto;
 import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.entity.User;
@@ -17,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class CreateOrUpdateJourneyDto {
-    private LocalDate dispatchDate;
-    private LocalDate arrivalDate;
     private Double cost;
+    private Integer maxOrderCount;
 }

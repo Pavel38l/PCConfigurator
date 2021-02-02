@@ -18,9 +18,8 @@ public class Journey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate dispatchDate;
-    private LocalDate arrivalDate;
     private Double cost;
+    private Integer maxOrderCount;
 
     @ManyToOne
     @JoinColumn(name = "ownerId")
@@ -32,5 +31,6 @@ public class Journey {
     @OneToMany(mappedBy = "journey")
     List<Order> orders;
 
-
+    @OneToMany(mappedBy = "journey")
+    List<JourneyCost> journeyCosts;
 }

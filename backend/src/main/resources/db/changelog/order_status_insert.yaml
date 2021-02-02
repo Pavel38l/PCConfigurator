@@ -13,13 +13,13 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
-                  value: defined
+                  value: offered
             tableName: order_status
         - insert:
             columns:
               - column:
                   name: name
-                  value: on_the_way
+                  value: defined
             tableName: order_status
         - insert:
             columns:

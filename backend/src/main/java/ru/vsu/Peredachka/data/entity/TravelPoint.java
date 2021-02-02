@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,14 +19,12 @@ public class TravelPoint {
     private Long id;
     private String comment;
     private Double x, y;
+    private LocalDate dispatchDate;
+    private LocalDate arrivalDate;
 
     @OneToOne
     @JoinColumn(name = "previousId", referencedColumnName = "id")
     private TravelPoint previousTravelPoint;
-
-    @OneToOne
-    @JoinColumn(name = "nextId", referencedColumnName = "id")
-    private TravelPoint nextTravelPoint;
 
     @ManyToOne
     @JoinColumn(name = "journeyId")

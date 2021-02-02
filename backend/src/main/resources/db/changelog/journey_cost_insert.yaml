@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15
+      author: Burdyug Pavel
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: order_size_id
+                  value: 1
+              - column:
+                  name: cost
+                  value: 100
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: order_size_id
+                  value: 2
+              - column:
+                  name: cost
+                  value: 500
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: order_size_id
+                  value: 3
+              - column:
+                  name: cost
+                  value: 2000
+            tableName: journey_cost
+
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 2
+              - column:
+                  name: order_size_id
+                  value: 1
+              - column:
+                  name: cost
+                  value: 100
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 2
+              - column:
+                  name: order_size_id
+                  value: 2
+              - column:
+                  name: cost
+                  value: 500
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 2
+              - column:
+                  name: order_size_id
+                  value: 3
+              - column:
+                  name: cost
+                  value: 2000
+            tableName: journey_cost
+
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 3
+              - column:
+                  name: order_size_id
+                  value: 1
+              - column:
+                  name: cost
+                  value: 100
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 3
+              - column:
+                  name: order_size_id
+                  value: 2
+              - column:
+                  name: cost
+                  value: 500
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 3
+              - column:
+                  name: order_size_id
+                  value: 3
+              - column:
+                  name: cost
+                  value: 2000
+            tableName: journey_cost
+
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 4
+              - column:
+                  name: order_size_id
+                  value: 1
+              - column:
+                  name: cost
+                  value: 100
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 4
+              - column:
+                  name: order_size_id
+                  value: 2
+              - column:
+                  name: cost
+                  value: 500
+            tableName: journey_cost
+        - insert:
+            columns:
+              - column:
+                  name: journey_id
+                  value: 4
+              - column:
+                  name: order_size_id
+                  value: 3
+              - column:
+                  name: cost
+                  value: 2000
+            tableName: journey_cost

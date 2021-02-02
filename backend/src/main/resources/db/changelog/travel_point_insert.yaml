@@ -21,7 +21,10 @@ databaseChangeLog:
                   name: previous_id
                   value: null
               - column:
-                  name: next_id
+                  name: dispatch_date
+                  value: 2020-12-12
+              - column:
+                  name: arrival_date
                   value: null
             tableName: travel_point
         - insert:
@@ -42,16 +45,12 @@ databaseChangeLog:
                   name: previous_id
                   value: 1
               - column:
-                  name: next_id
+                  name: dispatch_date
                   value: null
-            tableName: travel_point
-        - update:
-            columns:
               - column:
-                  name: next_id
-                  value: 2
+                  name: arrival_date
+                  value: 2021-01-01
             tableName: travel_point
-            where: id = 1
         - insert:
             columns:
               - column:
@@ -70,7 +69,10 @@ databaseChangeLog:
                   name: previous_id
                   value: null
               - column:
-                  name: next_id
+                  name: dispatch_date
+                  value: 2019-11-04
+              - column:
+                  name: arrival_date
                   value: null
             tableName: travel_point
         - insert:
@@ -91,13 +93,9 @@ databaseChangeLog:
                   name: previous_id
                   value: 3
               - column:
-                  name: next_id
+                  name: dispatch_date
                   value: null
-            tableName: travel_point
-        - update:
-            columns:
               - column:
-                  name: next_id
-                  value: 4
+                  name: arrival_date
+                  value: 2020-02-01
             tableName: travel_point
-            where: id = 3

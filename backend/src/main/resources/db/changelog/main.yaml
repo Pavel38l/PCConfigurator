@@ -41,4 +41,10 @@ databaseChangeLog:
   - include:
       file: order_insert.yaml
       relativeToChangelogFile: true
+  - include:
+      file: journey_cost.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: journey_cost_insert.yaml
+      relativeToChangelogFile: true
 
