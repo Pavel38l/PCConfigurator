@@ -14,7 +14,7 @@ import java.util.Objects;
 @Getter @Setter
 @EqualsAndHashCode
 @Table(name = "journey", schema = "public")
-public class Journey {
+public class Journey extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

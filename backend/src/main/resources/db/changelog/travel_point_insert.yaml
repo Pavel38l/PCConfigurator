@@ -99,3 +99,103 @@ databaseChangeLog:
                   name: arrival_date
                   value: 2020-02-01
             tableName: travel_point
+
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: comment
+              - column:
+                  name: journey_id
+                  value: 3
+              - column:
+                  name: x
+                  value: 55.024601
+              - column:
+                  name: y
+                  value: 82.928068
+              - column:
+                  name: previous_id
+                  value: null
+              - column:
+                  name: dispatch_date
+                  value: 2021-02-01
+              - column:
+                  name: arrival_date
+                  value: null
+            tableName: travel_point
+
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: end
+              - column:
+                  name: journey_id
+                  value: 3
+              - column:
+                  name: x
+                  value: 56.828614
+              - column:
+                  name: y
+                  value: 60.595279
+              - column:
+                  name: previous_id
+                  value: 5
+              - column:
+                  name: dispatch_date
+                  value: null
+              - column:
+                  name: arrival_date
+                  value: 2021-03-01
+            tableName: travel_point
+
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: Barnaul
+              - column:
+                  name: journey_id
+                  value: 4
+              - column:
+                  name: x
+                  value: 53.346833
+              - column:
+                  name: y
+                  value: 83.775099
+              - column:
+                  name: previous_id
+                  value: null
+              - column:
+                  name: dispatch_date
+                  value: 2021-03-02
+              - column:
+                  name: arrival_date
+                  value: null
+            tableName: travel_point
+
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: Belgorod
+              - column:
+                  name: journey_id
+                  value: 4
+              - column:
+                  name: x
+                  value: 50.579912
+              - column:
+                  name: y
+                  value: 36.586928
+              - column:
+                  name: previous_id
+                  value: 7
+              - column:
+                  name: dispatch_date
+                  value: null
+              - column:
+                  name: arrival_date
+                  value: 2021-03-10
+            tableName: travel_point

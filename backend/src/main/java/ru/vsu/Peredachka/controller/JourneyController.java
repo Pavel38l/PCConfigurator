@@ -2,10 +2,13 @@ package ru.vsu.Peredachka.controller;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.mapper.JourneyInfoCostMapper;
 import ru.vsu.Peredachka.service.JourneyService;
 
 import java.util.List;
@@ -18,17 +21,20 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class JourneyController {
     private final JourneyService journeyService;
     private final ModelMapper mapper;
+    private final JourneyInfoCostMapper journeyMapper;
 
-    public JourneyController(JourneyService journeyService, ModelMapper mapper) {
+    @Autowired
+    public JourneyController(JourneyService journeyService, ModelMapper mapper, JourneyInfoCostMapper journeyMapper) {
         this.journeyService = journeyService;
         this.mapper = mapper;
+        this.journeyMapper = journeyMapper;
     }
 
     @RequestMapping(method = GET, path = "")
     @CrossOrigin
-    public List<JourneyWithDependenciesDto> getJourneys() {
+    public List<JourneyInfoDto> getJourneys() {
         return journeyService.getAllJourneys().stream().map(
-                o -> mapper.map(o, JourneyWithDependenciesDto.class)
+                journeyMapper::toDto
         ).collect(Collectors.toList());
     }
 

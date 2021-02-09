@@ -4,6 +4,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 
+import java.util.Optional;
+
 @Component
 public interface TravelPointRepository extends CrudRepository<TravelPoint, Long> {
+    Optional<TravelPoint> findByJourneyIdAndPreviousTravelPointIsNull(Long journeyId);
+
+    Optional<TravelPoint> findByPreviousTravelPointId(Long id);
+
 }

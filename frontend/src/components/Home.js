@@ -10,66 +10,74 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            journeys: []
+            journeys: [],
+            journeyCost: []
         }
     }
 
     componentDidMount() {
         JourneyService.getJourneys().then((response) => {
-            this.setState({journeys: response.data})
+            this.setState({
+                journeys: response.data
+            })
         })
     }
 
     render() {
+        const journeys = this.state.journeys;
+        const journeyTable = journeys.map(
+            journey => {
+                const journeyCosts = journey.journeyCosts.slice();
+                return (
+                    <tr key={journey.id}>
+                        <td>{'x:' + journey.startTravelPoint.x + ' y:' + journey.startTravelPoint.y}</td>
+
+                        <td>{'x:' + journey.endTravelPoint.x + ' y:' + journey.endTravelPoint.y}</td>
+
+                        <td>{journey.startTravelPoint.dispatchDate}</td>
+                        <td>{journey.startTravelPoint.dispatchDate}</td>
+                        <td>{journey.maxOrderCount}</td>
+                        {
+                            journey.journeyCosts.map(
+                                cost =>
+                                    <td>{cost.cost}</td>
+                            )
+                        }
+                        <td>
+                            <Button variant="outline-success" className="float-right"
+                                    href={"journey/" + journey.id}>
+                                Details
+                            </Button>
+                        </td>
+                    </tr>
+                )
+            }
+        )
         return (
             <html>
             <h1 className="mt-5">Service for finding and sending passing links</h1>
-            <h2 className="mt-5">Trips:</h2>
-            <Container className>
-                <Accordion className="mt-5">
-                    {
-                        this.state.journeys.map(
-                            journey =>
-                                <Card key = {journey.id}>
-                                    <Card.Header>
-                                        <text className="float-left mr-5">
-                                            <span className="font-italic font-weight-bold">From:</span>
-                                        </text>
-                                        <text className="float-left mr-5">
-                                            <span className="font-italic font-weight-bold">To:</span>
-                                        </text>
-                                        <text className="float-left mr-5">
-                                            <span className="font-italic font-weight-bold">Dispatch date: </span>
-                                            {journey.dispatchDate}
-                                        </text>
-                                        <text className="float-left mr-5">
-                                            <span className="font-italic font-weight-bold">Last point arrival Date: </span>
-                                            {journey.arrivalDate}
-                                        </text>
-                                        <text className="float-left mr-5 ">
-                                            <span className="font-italic font-weight-bold">Cost: </span>
-                                            {journey.cost}
-                                        </text>
-                                        <ContextAwareToggle eventKey={journey.id}>Owner</ContextAwareToggle>
-                                    </Card.Header>
-                                    <Accordion.Collapse eventKey={journey.id}>
-                                        <Card.Body>
-                                            <span className="font-italic font-weight-bold">Email: </span>
-                                            <span className="mr-5">{journey.owner.email}</span>
-                                            <span className="font-italic font-weight-bold">First name: </span>
-                                            <span className="mr-5">{journey.owner.firstName}</span>
-                                            <span className="font-italic font-weight-bold">Last name: </span>
-                                            <span className="mr-5">{journey.owner.lastName}</span>
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                    <Button variant="outline-success" className="float-right" href={"journey/" + journey.id}>
-                                        Details
-                                    </Button>
-                                </Card>
-                        )
-                    }
-                </Accordion>
+            <Container className="mt-5">
+                <div>
+                    <table className = "table table-striped">
+                        <thead>
+                        <tr>
+                            <td> From </td>
+                            <td> To </td>
+                            <td> First point dispatch date </td>
+                            <td> Last point arrival Date </td>
+                            <td> Max order count</td>
+                            <td> Small order cost </td>
+                            <td> Avg order cost </td>
+                            <td> Max order cost </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {journeyTable}
+                        </tbody>
+                    </table>
+                </div>
             </Container>
+
             </html>
         );
     }
