@@ -31,21 +31,10 @@ public class JourneyInfoCostMapper extends AbstractMapper<Journey, JourneyInfoDt
 
     @Override
     void mapSpecificFields(Journey source, JourneyInfoDto destination) {
-        List<TravelPoint> path = Utils.getTravelPointsPath(source, travelPointRepository);
-        destination.setStartTravelPoint(mapper.map(path.get(0), TravelPointDto.class));
-        destination.setEndTravelPoint(mapper.map(path.get(path.size() - 1), TravelPointDto.class));
-    }
-
-    private TravelPoint getLastTravelPoint(Journey source) {
-        return getFirstTravelPoint(source);
-    }
-
-    private TravelPoint getFirstTravelPoint(Journey source) {
-        for (TravelPoint tp : source.getTravelPoints()) {
-            if (tp.getPreviousTravelPoint() == null) {
-                return tp;
-            }
-        }
-        return null;
+        destination.setStartTravelPoint(mapper.map(source.getTravelPoints().get(0), TravelPointDto.class));
+        destination.setEndTravelPoint(
+                mapper.map(source.getTravelPoints().get(source.getTravelPoints().size() - 1),
+                TravelPointDto.class)
+        );
     }
 }

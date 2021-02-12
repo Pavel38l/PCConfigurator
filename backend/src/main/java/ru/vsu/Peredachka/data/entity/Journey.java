@@ -26,11 +26,11 @@ public class Journey extends AbstractEntity {
     private User owner;
 
     @OneToMany(mappedBy = "journey")
-    List<TravelPoint> travelPoints;
+    private List<Order> orders;
 
     @OneToMany(mappedBy = "journey")
-    List<Order> orders;
+    private List<JourneyCost> journeyCosts;
 
-    @OneToMany(mappedBy = "journey")
-    List<JourneyCost> journeyCosts;
+    @Transient
+    private List<TravelPoint> travelPoints;
 }
