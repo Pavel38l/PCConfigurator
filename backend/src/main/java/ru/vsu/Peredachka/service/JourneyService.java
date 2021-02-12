@@ -2,10 +2,12 @@ package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
 import lombok.SneakyThrows;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.Peredachka.data.entity.Journey;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
+import ru.vsu.Peredachka.data.filter.JourneySpecification;
 import ru.vsu.Peredachka.data.repository.JourneyRepository;
 import ru.vsu.Peredachka.data.repository.TravelPointRepository;
 
@@ -21,6 +23,13 @@ public class JourneyService {
     public JourneyService(JourneyRepository journeyRepository, TravelPointRepository travelPointRepository) {
         this.journeyRepository = journeyRepository;
         this.travelPointRepository = travelPointRepository;
+    }
+
+    @Transactional
+    public List<Journey> getAllFilteredJourneys(JourneySpecification journeySpecification) {
+        var result = new ArrayList<Journey>();
+        journeyRepository.findAll(journeySpecification).forEach(element -> result.add(setupJourney(element)));
+        return result;
     }
 
     @Transactional

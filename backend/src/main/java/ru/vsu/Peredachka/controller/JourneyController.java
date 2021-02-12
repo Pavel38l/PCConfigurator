@@ -4,10 +4,12 @@ import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.Peredachka.data.dto.journey.JourneyFilterDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.filter.JourneySpecification;
 import ru.vsu.Peredachka.data.mapper.JourneyInfoCostMapper;
 import ru.vsu.Peredachka.service.JourneyService;
 
@@ -28,6 +30,14 @@ public class JourneyController {
         this.journeyService = journeyService;
         this.mapper = mapper;
         this.journeyMapper = journeyMapper;
+    }
+
+    @RequestMapping(method = GET, path = "/filter")
+    @CrossOrigin
+    public List<JourneyInfoDto> getFilteredJourneys(@RequestBody JourneyFilterDto journeyFilterDto) {
+        return journeyService.getAllFilteredJourneys(new JourneySpecification(journeyFilterDto)).stream().map(
+                journeyMapper::toDto
+        ).collect(Collectors.toList());
     }
 
     @RequestMapping(method = GET, path = "")
