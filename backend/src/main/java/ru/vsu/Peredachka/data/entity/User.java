@@ -14,7 +14,7 @@ import java.util.Objects;
 @EqualsAndHashCode
 @Entity
 @Table(name = "user", schema = "public")
-public class User {
+public class User extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

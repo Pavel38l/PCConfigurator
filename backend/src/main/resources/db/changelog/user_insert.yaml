@@ -16,7 +16,7 @@ databaseChangeLog:
                   value: popov@gmail.com
               - column:
                   name: password
-                  value: 1234
+                  value: $2a$10$KessrQ1npBezolG9JrZDWOuQDFECtWfwzsgIYQmQQ.G2ZtD96JpTe
               - column:
                   name: rating
                   value: 0
@@ -43,7 +43,7 @@ databaseChangeLog:
                   value: burdyug@gmail.com
               - column:
                   name: password
-                  value: 1234
+                  value: $2a$10$KessrQ1npBezolG9JrZDWOuQDFECtWfwzsgIYQmQQ.G2ZtD96JpTe
               - column:
                   name: rating
                   value: 0
@@ -70,7 +70,7 @@ databaseChangeLog:
                   value: andropov@gmail.com
               - column:
                   name: password
-                  value: 1234
+                  value: $2a$10$KessrQ1npBezolG9JrZDWOuQDFECtWfwzsgIYQmQQ.G2ZtD96JpTe
               - column:
                   name: rating
                   value: 0
@@ -97,7 +97,7 @@ databaseChangeLog:
                   value: month@gmail.com
               - column:
                   name: password
-                  value: 1234
+                  value: $2a$10$KessrQ1npBezolG9JrZDWOuQDFECtWfwzsgIYQmQQ.G2ZtD96JpTe
               - column:
                   name: rating
                   value: 100
