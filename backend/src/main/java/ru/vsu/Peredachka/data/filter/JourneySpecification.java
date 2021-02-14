@@ -3,11 +3,11 @@ package ru.vsu.Peredachka.data.filter;
 import org.springframework.data.jpa.domain.Specification;
 import ru.vsu.Peredachka.data.dto.journey.JourneyFilterDto;
 import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.entity.User;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JourneySpecification implements Specification<Journey> {
 
@@ -18,7 +18,14 @@ public class JourneySpecification implements Specification<Journey> {
     }
 
     @Override
-    public Predicate toPredicate(Root<Journey> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        return criteriaBuilder.greaterThanOrEqualTo(root.get("maxOrderCount"), criteria.getMaxOrderCount());
+    public Predicate toPredicate(Root<Journey> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+
+        Predicate maxOrderCount = criteria.getMaxOrderCount() == null ?
+                builder.and() : builder.greaterThanOrEqualTo(root.get("maxOrderCount"), criteria.getMaxOrderCount());
+        Join<Journey, User> journeyUserJoin = root.join("owner");
+        Predicate rating = criteria.getRating() == null ?
+                builder.and() : builder.greaterThanOrEqualTo(journeyUserJoin.get("rating"), criteria.getRating());
+        return builder.and(maxOrderCount, rating);
+
     }
 }

@@ -2,16 +2,24 @@ import Header from "./Header";
 import React, {useContext} from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import {AccordionContext, Container, useAccordionToggle} from "react-bootstrap";
+import {AccordionContext, Form, InputGroup, useAccordionToggle} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import JourneyService from "../services/JourneyService";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             journeys: [],
-            journeyCost: []
+            dispatchTime: '',
+            arrivalTime: '',
+            orderCount: '',
+            rating: '',
+            to: '',
+            from: ''
         }
     }
 
@@ -21,6 +29,25 @@ class Home extends React.Component {
                 journeys: response.data
             })
         })
+    }
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    submitHandler = event => {
+        event.preventDefault();
+        const filterDto = {
+            maxOrderCount: this.state.orderCount,
+            rating: this.state.rating
+        };
+        console.log("filter")
+        JourneyService.filterJourneys(filterDto).then((res => {
+            this.setState({
+                journeys: res.data
+            })
+        }))
+        //this.setState({journey: JourneyService.filterJourneys(filterDto)})
     }
 
     render() {
@@ -53,9 +80,92 @@ class Home extends React.Component {
                 )
             }
         )
+
+        const {dispatchTime, arrivalTime, orderCount, rating, to, from} = this.state
         return (
-            <html>
-            <h1 className="mt-5">Service for finding and sending passing links</h1>
+            <div>
+            <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
+             <Container className="mt-5">
+                <Form onSubmit={this.submitHandler}>
+                    <Form.Row>
+                        <Form.Group as={Col} md="4">
+                            <Form.Label>Dispatch time</Form.Label>
+                            <Form.Control
+                                required
+                                type="datetime-local"
+                                name="dispatchTime"
+                                value={dispatchTime}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="4">
+                            <Form.Label>Arrival time</Form.Label>
+                            <Form.Control
+                                required
+                                type="datetime-local"
+                                name="arrivalTime"
+                                value={arrivalTime}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="2">
+                            <Form.Label>Order count</Form.Label>
+                            <Form.Control
+                                type="number"
+                                min="1"
+                                name="orderCount"
+                                value={orderCount}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="2">
+                            <Form.Label>User rating</Form.Label>
+                            <Form.Control
+                                type="number"
+                                min="0"
+                                name="rating"
+                                value={rating}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} md="6" controlId="validationCustom03">
+                            <Form.Label>From: </Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Country, City, Address"
+                                required
+                                name="from"
+                                value={from}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid address.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom03">
+                            <Form.Label>To: </Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Country, City, Address"
+                                required
+                                name="to"
+                                value={to}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid address.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Form.Row>
+                    <Button type="submit">Filter</Button>
+                </Form>
+            </Container>
             <Container className="mt-5">
                 <div>
                     <table className = "table table-striped">
@@ -77,15 +187,12 @@ class Home extends React.Component {
                     </table>
                 </div>
             </Container>
-
-            </html>
+            </div>
         );
     }
-
-    renderUserFullName(user) {
-
-    }
 }
+
+
 
 
 function ContextAwareToggle({ children, eventKey, callback }) {

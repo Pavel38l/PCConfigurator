@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class JourneyFilterDto {
     private Integer maxOrderCount;
+    private Integer rating;
 }
