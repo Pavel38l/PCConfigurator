@@ -2,21 +2,25 @@ package ru.vsu.Peredachka.controller;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vsu.Peredachka.data.dto.MsgDto;
 import ru.vsu.Peredachka.data.dto.user.UserDto;
 import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.entity.UserRole;
 import ru.vsu.Peredachka.data.repository.*;
+import ru.vsu.Peredachka.security.CustomUserDetails;
 import ru.vsu.Peredachka.service.OrderService;
 import ru.vsu.Peredachka.service.UserService;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
+@RequestMapping("/test")
 public class TestController {
     private final UserRoleRepository userRoleRepository;
     private final UserService userService;
@@ -35,6 +39,20 @@ public class TestController {
         this.orderRepository = orderRepository;
         this.orderService = orderService;
         this.modelMapper = modelMapper;
+    }
+
+    @RequestMapping(method = GET, path = "/admin/1")
+    public MsgDto adminTest(Authentication auth) {
+        var details = (CustomUserDetails)auth.getPrincipal();
+        String email = details.getEmail();
+        return new MsgDto("Security admin endpoint! " + email + " has entered!");
+    }
+
+    @RequestMapping(method = GET, path = "/user/1")
+    public MsgDto userTest(Authentication auth) {
+        var details = (CustomUserDetails)auth.getPrincipal();
+        String email = details.getEmail();
+        return new MsgDto("Security user endpoint! " + email + " has entered!");
     }
 
     @RequestMapping(method = GET, path = "/roles")

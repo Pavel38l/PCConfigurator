@@ -6,4 +6,5 @@ import ru.vsu.Peredachka.data.entity.UserRole;
 
 @Component
 public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
+    UserRole findByName(String name);
 }

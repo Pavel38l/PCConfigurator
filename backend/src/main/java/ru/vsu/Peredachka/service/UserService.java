@@ -1,26 +1,38 @@
 package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.vsu.Peredachka.data.entity.Journey;
-import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User findById(Long id) throws NotFoundException {
        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
+    }
+
+    public Optional<User> findByLoginAndPassword(String email, String password) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 
     public User updateOrCreateUser(User user) {
