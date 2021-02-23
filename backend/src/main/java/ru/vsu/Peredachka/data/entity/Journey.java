@@ -18,7 +18,6 @@ public class Journey extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double cost;
     private Integer maxOrderCount;
 
     @ManyToOne
@@ -31,6 +30,7 @@ public class Journey extends AbstractEntity {
     @OneToMany(mappedBy = "journey")
     private List<JourneyCost> journeyCosts;
 
-    @Transient
+    @OneToMany(mappedBy = "journey")
+    @OrderBy("pointIndex asc")
     private List<TravelPoint> travelPoints;
 }

@@ -34,10 +34,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: previous_id
-                  type: bigint
+                  name: point_index
+                  type: int
                   constraints:
-                    nullable: true
+                    nullable: false
               - column:
                   name: dispatch_date
                   type: date
@@ -55,12 +55,4 @@ databaseChangeLog:
             baseTableName: travel_point
             referencedColumnNames: id
             referencedTableName: journey
-            validate: true
-
-        - addForeignKeyConstraint:
-            constraintName: fk_previous_id
-            baseColumnNames: previous_id
-            baseTableName: travel_point
-            referencedColumnNames: id
-            referencedTableName: travel_point
             validate: true

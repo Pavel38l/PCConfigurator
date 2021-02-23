@@ -1,17 +1,13 @@
 package ru.vsu.Peredachka.data.mapper;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
-import ru.vsu.Peredachka.data.dto.TravelPointDto;
+import ru.vsu.Peredachka.data.dto.travelPoint.TravelPointDto;
 import ru.vsu.Peredachka.data.entity.Journey;
-import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.repository.TravelPointRepository;
-import ru.vsu.Peredachka.data.utils.Utils;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 @Component
 public class JourneyInfoCostMapper extends AbstractMapper<Journey, JourneyInfoDto> {

@@ -22,9 +22,7 @@ public class TravelPoint {
     private LocalDate dispatchDate;
     private LocalDate arrivalDate;
 
-    @OneToOne
-    @JoinColumn(name = "previousId", referencedColumnName = "id")
-    private TravelPoint previousTravelPoint;
+    private Integer pointIndex;
 
     @ManyToOne
     @JoinColumn(name = "journeyId")

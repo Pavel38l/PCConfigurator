@@ -12,10 +12,11 @@ import Col from "react-bootstrap/Col";
 class Home extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             journeys: [],
-            dispatchTime: '',
-            arrivalTime: '',
+            dispatchDate: '',
+            arrivalDate: '',
             orderCount: '',
             rating: '',
             to: '',
@@ -37,17 +38,41 @@ class Home extends React.Component {
 
     submitHandler = event => {
         event.preventDefault();
+        //this.state = JSON.parse(localStorage.getItem('formData'));
         const filterDto = {
+            startTravelPoint: {
+                x: 51.66240415823041,
+                y: 39.18431486185959
+            },
+            endTravelPoint: {
+                x: 51.67078714524324,
+                y: 39.18284815419145
+            },
+            dispatchDate: this.state.dispatchDate,
+            arrivalDate: this.state.arrivalDate,
             maxOrderCount: this.state.orderCount,
             rating: this.state.rating
         };
-        console.log("filter")
         JourneyService.filterJourneys(filterDto).then((res => {
             this.setState({
-                journeys: res.data
+                journeys: res.data,
             })
         }))
-        //this.setState({journey: JourneyService.filterJourneys(filterDto)})
+    }
+
+    cancelHandler = event => {
+        event.preventDefault();
+        JourneyService.getJourneys().then((res => {
+            this.setState({
+                journeys: res.data,
+                dispatchDate: '',
+                arrivalDate: '',
+                orderCount: '',
+                rating: '',
+                to: '',
+                from: ''
+            })
+        }))
     }
 
     render() {
@@ -81,7 +106,7 @@ class Home extends React.Component {
             }
         )
 
-        const {dispatchTime, arrivalTime, orderCount, rating, to, from} = this.state
+        const {dispatchDate, arrivalDate, orderCount, rating, to, from} = this.state
         return (
             <div>
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
@@ -93,8 +118,8 @@ class Home extends React.Component {
                             <Form.Control
                                 required
                                 type="datetime-local"
-                                name="dispatchTime"
-                                value={dispatchTime}
+                                name="dispatchDate"
+                                value={dispatchDate}
                                 onChange={this.handleChange}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -104,8 +129,8 @@ class Home extends React.Component {
                             <Form.Control
                                 required
                                 type="datetime-local"
-                                name="arrivalTime"
-                                value={arrivalTime}
+                                name="arrivalDate"
+                                value={arrivalDate}
                                 onChange={this.handleChange}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -113,6 +138,7 @@ class Home extends React.Component {
                         <Form.Group as={Col} md="2">
                             <Form.Label>Order count</Form.Label>
                             <Form.Control
+                                required
                                 type="number"
                                 min="1"
                                 name="orderCount"
@@ -124,6 +150,7 @@ class Home extends React.Component {
                         <Form.Group as={Col} md="2">
                             <Form.Label>User rating</Form.Label>
                             <Form.Control
+                                required
                                 type="number"
                                 min="0"
                                 name="rating"
@@ -163,7 +190,10 @@ class Home extends React.Component {
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
-                    <Button type="submit">Filter</Button>
+                    <Form.Row>
+                        <Button type="submit" className="mr-2">Filter</Button>
+                        <Button variant="secondary" onClick={this.cancelHandler}>Cancel</Button>
+                    </Form.Row>
                 </Form>
             </Container>
             <Container className="mt-5">

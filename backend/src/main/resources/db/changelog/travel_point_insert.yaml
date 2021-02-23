@@ -13,13 +13,13 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: x
-                  value: 51.660481
+                  value: 51.66242771442517
               - column:
                   name: y
-                  value: 39.173461
+                  value: 39.200949906971886
               - column:
-                  name: previous_id
-                  value: null
+                  name: point_index
+                  value: 0
               - column:
                   name: dispatch_date
                   value: 2020-12-12
@@ -37,13 +37,37 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: x
-                  value: 51.681187
+                  value: 51.662282872398166
               - column:
                   name: y
-                  value: 39.218316
+                  value: 39.18531533495624
               - column:
-                  name: previous_id
+                  name: point_index
                   value: 1
+              - column:
+                  name: dispatch_date
+                  value: 2021-01-02
+              - column:
+                  name: arrival_date
+                  value: 2021-01-01
+            tableName: travel_point
+        - insert:
+            columns:
+              - column:
+                  name: comment
+                  value: null
+              - column:
+                  name: journey_id
+                  value: 1
+              - column:
+                  name: x
+                  value: 51.67078714524324
+              - column:
+                  name: y
+                  value: 39.18284815419145
+              - column:
+                  name: point_index
+                  value: 2
               - column:
                   name: dispatch_date
                   value: null
@@ -66,8 +90,8 @@ databaseChangeLog:
                   name: y
                   value: 39.216642
               - column:
-                  name: previous_id
-                  value: null
+                  name: point_index
+                  value: 0
               - column:
                   name: dispatch_date
                   value: 2019-11-04
@@ -90,8 +114,8 @@ databaseChangeLog:
                   name: y
                   value: 37.631478
               - column:
-                  name: previous_id
-                  value: 3
+                  name: point_index
+                  value: 1
               - column:
                   name: dispatch_date
                   value: null
@@ -115,8 +139,8 @@ databaseChangeLog:
                   name: y
                   value: 82.928068
               - column:
-                  name: previous_id
-                  value: null
+                  name: point_index
+                  value: 0
               - column:
                   name: dispatch_date
                   value: 2021-02-01
@@ -140,8 +164,8 @@ databaseChangeLog:
                   name: y
                   value: 60.595279
               - column:
-                  name: previous_id
-                  value: 5
+                  name: point_index
+                  value: 1
               - column:
                   name: dispatch_date
                   value: null
@@ -165,11 +189,11 @@ databaseChangeLog:
                   name: y
                   value: 83.775099
               - column:
-                  name: previous_id
-                  value: null
+                  name: point_index
+                  value: 0
               - column:
                   name: dispatch_date
-                  value: 2021-03-02
+                  value: 2021-03-08
               - column:
                   name: arrival_date
                   value: null
@@ -190,8 +214,8 @@ databaseChangeLog:
                   name: y
                   value: 36.586928
               - column:
-                  name: previous_id
-                  value: 7
+                  name: point_index
+                  value: 1
               - column:
                   name: dispatch_date
                   value: null

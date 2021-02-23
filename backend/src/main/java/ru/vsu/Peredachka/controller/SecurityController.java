@@ -2,20 +2,24 @@ package ru.vsu.Peredachka.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.Peredachka.data.dto.MsgDto;
 import ru.vsu.Peredachka.data.dto.security.AuthResponseDto;
 import ru.vsu.Peredachka.data.dto.security.LoginUserDto;
 import ru.vsu.Peredachka.data.dto.security.RegisterUserDto;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.entity.UserRole;
 import ru.vsu.Peredachka.data.mapper.UserRegisterMapper;
+import ru.vsu.Peredachka.security.CustomUserDetails;
 import ru.vsu.Peredachka.security.JwtProvider;
 import ru.vsu.Peredachka.service.UserRoleService;
 import ru.vsu.Peredachka.service.UserService;
 
 import java.util.Optional;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -33,6 +37,15 @@ public class SecurityController {
         this.mapper = mapper;
         this.userService = userService;
         this.jwtProvider = jwtProvider;
+    }
+
+    @RequestMapping(method = GET, path = "/getCurrentUser")
+    public MsgDto getAuth(Authentication auth) {
+        if (auth != null) {
+            var details = (CustomUserDetails) auth.getPrincipal();
+            return new MsgDto(details.getEmail());
+        }
+        return null;
     }
 
     @RequestMapping(method = POST, path = "/register")
