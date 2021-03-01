@@ -5,6 +5,8 @@ import UserComponent from "./components/UserComponent";
 import React from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import Login from "./components/Login";
+import Registration from "./components/Registration";
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,6 +23,8 @@ function App() {
               <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/registration" component={Registration} />
               </Switch>
           </Router>
       </div>
