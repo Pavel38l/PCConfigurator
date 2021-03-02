@@ -109,113 +109,114 @@ class Home extends React.Component {
         const {dispatchDate, arrivalDate, orderCount, rating, to, from} = this.state
         return (
             <div>
-            <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
+
         <Container className="mt-5">
-            <Form onSubmit={this.submitHandler}>
-        <Form.Row>
-        <Form.Group as={Col} md="4">
-            <Form.Label>Dispatch time</Form.Label>
-        <Form.Control
-        required
-        type="datetime-local"
-        name="dispatchDate"
-        value={dispatchDate}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="4">
-            <Form.Label>Arrival time</Form.Label>
-        <Form.Control
-        required
-        type="datetime-local"
-        name="arrivalDate"
-        value={arrivalDate}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="2">
-            <Form.Label>Order count</Form.Label>
-        <Form.Control
-        required
-        type="number"
-        min="1"
-        name="orderCount"
-        value={orderCount}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="2">
-            <Form.Label>User rating</Form.Label>
-        <Form.Control
-        required
-        type="number"
-        min="0"
-        name="rating"
-        value={rating}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        </Form.Row>
-        <Form.Row>
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
-            <Form.Label>From: </Form.Label>
-        <Form.Control
-        type="text"
-        placeholder="Country, City, Address"
-        required
-        name="from"
-        value={from}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback type="invalid">
-            Please provide a valid address.
-        </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
-            <Form.Label>To: </Form.Label>
-        <Form.Control
-        type="text"
-        placeholder="Country, City, Address"
-        required
-        name="to"
-        value={to}
-        onChange={this.handleChange}
-        />
-        <Form.Control.Feedback type="invalid">
-            Please provide a valid address.
-        </Form.Control.Feedback>
-        </Form.Group>
-        </Form.Row>
-        <Form.Row>
-        <Button type="submit" className="mr-2">Filter</Button>
-            <Button variant="secondary" onClick={this.cancelHandler}>Cancel</Button>
-            </Form.Row>
-            </Form>
+            <h1 className="mt-5">Service for finding and sending passing links</h1>
+            <Form onSubmit={this.submitHandler} className="mt-5">
+                <Form.Row>
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Dispatch time</Form.Label>
+                <Form.Control
+                required
+                type="datetime-local"
+                name="dispatchDate"
+                value={dispatchDate}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Arrival time</Form.Label>
+                <Form.Control
+                required
+                type="datetime-local"
+                name="arrivalDate"
+                value={arrivalDate}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="2">
+                    <Form.Label>Order count</Form.Label>
+                <Form.Control
+                required
+                type="number"
+                min="1"
+                name="orderCount"
+                value={orderCount}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="2">
+                    <Form.Label>User rating</Form.Label>
+                <Form.Control
+                required
+                type="number"
+                min="0"
+                name="rating"
+                value={rating}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                <Form.Group as={Col} md="6" controlId="validationCustom03">
+                    <Form.Label>From: </Form.Label>
+                <Form.Control
+                type="text"
+                placeholder="Country, City, Address"
+                required
+                name="from"
+                value={from}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                    Please provide a valid address.
+                </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="6" controlId="validationCustom03">
+                    <Form.Label>To: </Form.Label>
+                <Form.Control
+                type="text"
+                placeholder="Country, City, Address"
+                required
+                name="to"
+                value={to}
+                onChange={this.handleChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                    Please provide a valid address.
+                </Form.Control.Feedback>
+                </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                <Button type="submit" className="mr-2">Filter</Button>
+                    <Button variant="secondary" onClick={this.cancelHandler}>Cancel</Button>
+                    </Form.Row>
+                </Form>
             </Container>
             <Container className="mt-5">
-            <div>
-            <table className = "table table-striped">
-            <thead>
-            <tr>
-            <td> From </td>
-            <td> To </td>
-            <td> First point dispatch date </td>
-        <td> Last point arrival Date </td>
-        <td> Max order count</td>
-        <td> Small order cost </td>
-        <td> Avg order cost </td>
-        <td> Max order cost </td>
-        </tr>
-        </thead>
-        <tbody>
-        {journeyTable}
-        </tbody>
-        </table>
-        </div>
+                <div>
+                    <table className = "table table-striped">
+                        <thead>
+                            <tr>
+                            <td> From </td>
+                            <td> To </td>
+                            <td> First point dispatch date </td>
+                            <td> Last point arrival Date </td>
+                            <td> Max order count</td>
+                            <td> Small order cost </td>
+                            <td> Avg order cost </td>
+                            <td> Max order cost </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {journeyTable}
+                        </tbody>
+                    </table>
+                </div>
         </Container>
         </div>
     );
