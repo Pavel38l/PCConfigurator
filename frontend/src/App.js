@@ -5,6 +5,7 @@ import UserComponent from "./components/UserComponent";
 import React from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import EditTrip from "./components/EditTrip";
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,6 +22,7 @@ function App() {
               <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
+                  <Route exact path="/edit_trip" component={EditTrip} />
               </Switch>
           </Router>
       </div>

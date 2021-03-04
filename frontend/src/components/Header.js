@@ -27,6 +27,8 @@ class Header extends React.Component {
             return (
                 <Nav>
                     <NavDropdown title="UserName" id="collasible-nav-dropdown" className="mr-5">
+                        <NavDropdown.Item href="/edit_trip/">Create trip</NavDropdown.Item>
+                        <NavDropdown.Divider />
                         <NavDropdown.Item href="/user/">Profile</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Sign out</NavDropdown.Item>
