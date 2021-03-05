@@ -1,5 +1,5 @@
 import Header from "./Header";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import {AccordionContext, Form, InputGroup, useAccordionToggle} from "react-bootstrap";
@@ -8,6 +8,9 @@ import JourneyService from "../services/JourneyService";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import "antd/dist/antd.css";
+import SearchComplete from "./SearchComplete";
+import { YMaps, Map } from "react-yandex-maps";
 
 class Home extends React.Component {
     constructor(props) {
@@ -20,9 +23,12 @@ class Home extends React.Component {
             orderCount: '',
             rating: '',
             to: '',
-            from: ''
+            from: '',
+            ymaps: null
         }
     }
+
+
 
     componentDidMount() {
         JourneyService.getJourneys().then((response) => {
@@ -70,12 +76,14 @@ class Home extends React.Component {
                 orderCount: '',
                 rating: '',
                 to: '',
-                from: ''
+                from: '',
+                result: []
             })
         }))
     }
 
     render() {
+
         const journeys = this.state.journeys;
         const journeyTable = journeys.map(
             journey => {
@@ -108,6 +116,11 @@ class Home extends React.Component {
 
         const {dispatchDate, arrivalDate, orderCount, rating, to, from} = this.state
         return (
+            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
+                   onApiAvaliable={ymaps => this.setState({
+                       ymaps: ymaps,
+                   })}
+            >
             <div>
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
              <Container className="mt-5">
@@ -161,6 +174,7 @@ class Home extends React.Component {
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
+                        <SearchComplete />
                         <Form.Group as={Col} md="6" controlId="validationCustom03">
                             <Form.Label>From: </Form.Label>
                             <Form.Control
@@ -218,6 +232,7 @@ class Home extends React.Component {
                 </div>
             </Container>
             </div>
+            </YMaps>
         );
     }
 }
