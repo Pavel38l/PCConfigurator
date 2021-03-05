@@ -10,6 +10,8 @@ import {
 } from "react-sortable-hoc";
 import { Table, Column, defaultTableRowRenderer } from "react-virtualized";
 import { YMaps, Map, Clusterer, Placemark } from "react-yandex-maps";
+import { Form} from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
 
 
@@ -27,25 +29,114 @@ class EditTrip extends React.Component {
         this.state = {
             mapState: defmapState,
             data: [],
-            minvalue: [0,0,0],
-            maxvalue:[100,100,100],
-            value : 20,
+            minvalue: [0,10,20],
+            maxvalue:[10,50,100],
+            value : [3,11,30],
+            count: [0,0,0],
             ymaps: null,
             selectedPoint: null,
-            width: 750, 
+            width: 600, 
             height: 300,
             //points: POINTS,
             coords: []
         }
     }
 
-    renderSlider(i){
+    renderSlider(){
         return(
-        <RangeSlider
-                value={this.state.value}
-                min={this.state.minvalue[i]}
-                max={this.state.maxvalue[i]}
-                onChange={changeEvent => this.setState({value:changeEvent.target.value}) } />);
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <Form.Group md="2">
+                  <Form.Label>Small count</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      min="1"
+                      name="smallCount"
+                      value={this.state.count[0]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.count;
+                        newValues[0] = changeEvent.target.value;
+                        this.setState({count:newValues})
+                    }}
+                    />
+                    <Form.Label>Small cost</Form.Label>
+                    <RangeSlider
+                      value={this.state.value[0]}
+                      min={this.state.minvalue[0]}
+                      max={this.state.maxvalue[0]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.value;
+                        newValues[0] = changeEvent.target.value;
+                        this.setState({value:newValues})
+                        }} />
+                </Form.Group>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-sm">
+                <Form.Group md="2">
+                  <Form.Label>Avg count</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      min="1"
+                      name="avgCount"
+                      value={this.state.count[1]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.count;
+                        newValues[1] = changeEvent.target.value;
+                        this.setState({count:newValues})
+                    }}
+                    />
+                    <Form.Label>Avg cost</Form.Label>
+                    <RangeSlider
+                      value={this.state.value[1]}
+                      min={this.state.minvalue[1]}
+                      max={this.state.maxvalue[1]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.value;
+                        newValues[1] = changeEvent.target.value;
+                        this.setState({value:newValues})
+                        }} />
+                </Form.Group>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-sm">
+                <Form.Group md="2">
+                  <Form.Label>Big count</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      min="1"
+                      name="bigCount"
+                      value={this.state.count[2]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.count;
+                        newValues[2] = changeEvent.target.value;
+                        this.setState({count:newValues})
+                    }}
+                    />
+                    <Form.Label>Big cost</Form.Label>
+                    <RangeSlider
+                      value={this.state.value[2]}
+                      min={this.state.minvalue[2]}
+                      max={this.state.maxvalue[2]}
+                      onChange={changeEvent => {
+                        let newValues = this.state.value;
+                        newValues[2] = changeEvent.target.value;
+                        this.setState({value:newValues})
+                        }} />
+                </Form.Group>
+                </div>
+            </div>
+            
+          </div>
+            
+            
+          );
     }
 
     
@@ -54,6 +145,7 @@ class EditTrip extends React.Component {
       ID: ({ rowData }) => rowData.ID,
       Address: ({ rowData }) =>rowData.Address,
     };
+
     _handleSort = ({ oldIndex, newIndex }) => {
       this.setState(prevState => ({
         data: arrayMove(prevState.data, oldIndex, newIndex)
@@ -63,10 +155,12 @@ class EditTrip extends React.Component {
       return this.state.data[index];
     };
     _rowRenderer = props => {
-      return <SortableTableRowRenderer {...props} />;
+      return <div><div><SortableTableRowRenderer {...props} /></div></div>;
+      
+      
     };
     onMapClick(event) {
-      const target = "https://geocode-maps.yandex.ru/1.x/?apikey=!!!!!!!!!!!!!!!!!aff&format=json&geocode="
+      const target = "https://geocode-maps.yandex.ru/1.x/?apikey=c23fb47e-a86c-40a3-95a6-866811b17aff&format=json&geocode="
         let result = event.get("coords");
         let adress = "";
         fetch(target+result[1]+", "+result[0])
@@ -90,10 +184,13 @@ class EditTrip extends React.Component {
     })  
       console.log(this.state.coords);
     }
+
+    clearList= () => {this.setState({data:[], coords:[]})}
   
 
     renderList(){
       return (
+        <div>
         <SortableTable
           width={400}
           height={300}
@@ -108,18 +205,22 @@ class EditTrip extends React.Component {
           onSortEnd={this._handleSort}
         >
           <Column
-            width={200}
+            width={50}
             dataKey="ID"
             flexGrow={1}
             cellRenderer={this._cellRenderer.ID}
+            
           />
           <Column
-            width={100}
+            width={250}
             dataKey="Address"
             cellRenderer={this._cellRenderer.Address}
+            
           />
 
         </SortableTable>
+        <button onClick={this.clearList}>Очистить</button>
+        </div>
       );
     }
 
@@ -148,20 +249,27 @@ class EditTrip extends React.Component {
 
 
     
-    
+    //TODO comment field
     
     
     render(){
-        return (
-            <div className="container-fluid">
+        return ( 
+        <div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
                 {this.renderMap()}
+              </div>
+              <div class="col-sm">
                 {this.renderList()}
-                {this.renderSlider(0)}
-                <button onClick={clicked=> console.log(this.state.data)}>test</button>
+              </div>
             </div>
+          </div>
+          {this.renderSlider()}
+        </div>
         );
     }
 
-}
+} 
 
 export default EditTrip
