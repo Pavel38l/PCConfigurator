@@ -1,40 +1,61 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { AutoComplete } from 'antd';
-import YandexService from "../services/YandexService";
 const { Option } = AutoComplete;
 
-const SearchComplete = () => {
-    const [result, setResult] = useState([]);
+const _ = require('lodash');
 
-    const handleSearch = (value) => {
-        let res = [];
-        YandexService.getSearch('Дворцовая площадь, 3')
-        if (!value || value.indexOf('@') >= 0) {
-            res = [];
-        } else {
-            res = ['gmail.com', '163.com', 'qq.com'].map((domain) => `${value}@${domain}`);
+class SearchComplete extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            result: []
         }
+    }
 
-        setResult(res);
-    };
+    render () {
 
-    return (
-        <AutoComplete
-            style={{
-                width: 200,
-            }}
-            onSearch={handleSearch}
-            placeholder="input here"
-        >
-            {result.map((email) => (
-                <Option key={email} value={email}>
-                    {email}
-                </Option>
-            ))}
-        </AutoComplete>
-    );
-};
+        const handleSearch = (value) => {
+            // this.setState({
+            //     result: search(this.props.ymaps, value)
+            // })
+            const searchControl = new this.props.ymaps.control.SearchControl({
+                options: {
+                    provider: 'yandex#map'
+                }
+            });
+            const promise = searchControl.search(value);
+            promise.then( (ans) => {
+                let localRes = ans.geoObjects.toArray().map((addr) => addr.getAddressLine());
+                localRes = Array.from(new Set(localRes));
+                console.log(localRes);
+                this.setState({result: localRes})
+                //console.log(address);
+            })
+        };
+        const handleWithDelay = (value) => {
+            _.delay(handleSearch, 100, value);
+        }
+        const results = this.state.result;
+        results.map((address) => console.log(address));
+        return (
+            <AutoComplete
+                style={{
+                    width: 300,
+                }}
+                onSearch={handleWithDelay}
+                placeholder="input here"
+            >
+                {results.map((address) => (
+                    <Option key={address} value={address}>
+                        {address}
+                    </Option>
+                ))}
+            </AutoComplete>
+        );
+    }
+
+}
 
 export default SearchComplete;

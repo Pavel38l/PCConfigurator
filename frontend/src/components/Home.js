@@ -100,7 +100,9 @@ class Home extends React.Component {
                         {
                             journey.journeyCosts.map(
                                 cost =>
-                                    <td>{cost.cost}</td>
+                                    <td key={cost.id}>
+                                        {cost.cost}
+                                    </td>
                             )
                         }
                         <td>
@@ -174,7 +176,7 @@ class Home extends React.Component {
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
-                        <SearchComplete />
+                        <SearchComplete ymaps={this.state.ymaps} />
                         <Form.Group as={Col} md="6" controlId="validationCustom03">
                             <Form.Label>From: </Form.Label>
                             <Form.Control
