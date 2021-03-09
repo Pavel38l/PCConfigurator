@@ -32,8 +32,8 @@ public class JourneyService {
                 dto.getEndTravelPoint().getY(),
                 dto.getDispatchDate(),
                 dto.getArrivalDate(),
-                dto.getMaxOrderCount(),
-                dto.getRating(),
+                dto.getMaxOrderCount() == null ? 1 : dto.getMaxOrderCount(),
+                dto.getRating() == null ? 0 : dto.getRating(),
                 3
         );
         return journeyRepository.findAllById(list);
