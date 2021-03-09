@@ -10,9 +10,6 @@ import {
     Form,
     Input,
     Button,
-    Radio,
-    Select,
-    Cascader,
     DatePicker,
     InputNumber,
     TreeSelect,
@@ -22,18 +19,13 @@ import {
 } from 'antd';
 
 class Home extends React.Component {
+    formRef = React.createRef();
     constructor(props) {
         super(props);
 
         this.state = {
             journeys: [],
-            dispatchDate: '',
-            arrivalDate: '',
-            orderCount: '',
-            rating: '',
-            to: '',
-            from: '',
-            ymaps: null
+            ymaps: null,
         }
     }
 
@@ -47,17 +39,7 @@ class Home extends React.Component {
         })
     }
 
-    handleChange  = name => value => {
-        this.setState({ [name]: value });
-    }
-
-    handleDateChange  = name => value => {
-        this.setState({ [name]: value ? value.format() : ''});
-    }
-
-    submitHandler = event => {
-        event.preventDefault();
-        //this.state = JSON.parse(localStorage.getItem('formData'));
+    submitHandler = data => {
         const filterDto = {
             startTravelPoint: {
                 x: 51.66240415823041,
@@ -67,10 +49,10 @@ class Home extends React.Component {
                 x: 51.67078714524324,
                 y: 39.18284815419145
             },
-            dispatchDate: this.state.dispatchDate,
-            arrivalDate: this.state.arrivalDate,
-            maxOrderCount: this.state.orderCount,
-            rating: this.state.rating
+            dispatchDate: data.dispatchDate.format(),
+            arrivalDate: data.arrivalDate.format(),
+            maxOrderCount: data.maxOrderCount,
+            rating: data.rating
         };
         JourneyService.filterJourneys(filterDto).then((res => {
             this.setState({
@@ -80,19 +62,13 @@ class Home extends React.Component {
     }
 
     cancelHandler = event => {
-        //event.preventDefault();
+        event.preventDefault();
         JourneyService.getJourneys().then((res => {
             this.setState({
-                journeys: res.data,
-                dispatchDate: '',
-                arrivalDate: '',
-                orderCount: '',
-                rating: '',
-                to: '',
-                from: '',
-                result: []
-            })
-        }))
+                journeys: res.data
+            });
+        }));
+        this.formRef.current.resetFields();
     }
 
     render() {
@@ -129,9 +105,8 @@ class Home extends React.Component {
             }
         )
 
-        const {dispatchDate, arrivalDate, orderCount, rating, to, from} = this.state
         const onFinish = (values) => {
-            console.log('Success:', values);
+            console.log(values.arrivalDate);
         };
 
         const onFinishFailed = (errorInfo) => {
@@ -154,6 +129,7 @@ class Home extends React.Component {
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
              <Container className="mt-5">
                  <Form
+                     ref={this.formRef}
                      labelCol={{
                          span: 4,
                      }}
@@ -161,7 +137,7 @@ class Home extends React.Component {
                          span: 14,
                      }}
                      name="basic"
-                     onFinish={onFinish}
+                     onFinish={this.submitHandler}
                      onFinishFailed={onFinishFailed}
                  >
                      <Form.Item label="From" style={{ marginBottom: 0 }}>
@@ -171,21 +147,17 @@ class Home extends React.Component {
                              rules={[{ required: true, message: 'Please input dispatch point address!', }]}
                              style={{ display: 'inline-block', width: 'calc(70% - 8px)' }}
                          >
-                             <SearchComplete ymaps={this.state.ymaps}
-                                             onChange={this.handleChange("from")}
-                                             value={from}
-                             />
+                             <SearchComplete ymaps={this.state.ymaps}/>
                          </Form.Item>
                          <Form.Item
                              name="dispatchDate"
                              label="Dispatch date"
-                             value={dispatchDate}
                              rules={[
                                  { required: true, message: 'Please input dispatch date!', }
                              ]}
                              style={{ display: 'inline-block', width: 'calc(30% - 8px)', margin: '0 8px' }}
                          >
-                             <DatePicker showTime value={dispatchDate} onChange={this.handleDateChange("dispatchDate")}/>
+                             <DatePicker showTime/>
                          </Form.Item>
                     </Form.Item>
                      <Form.Item label="To" style={{ marginBottom: 0 }}>
@@ -195,10 +167,7 @@ class Home extends React.Component {
                              rules={[{ required: true, message: 'Please input arrival point address!', }]}
                              style={{ display: 'inline-block', width: 'calc(70% - 8px)' }}
                          >
-                             <SearchComplete ymaps={this.state.ymaps}
-                                             onChange={this.handleChange("to")}
-                                             value={to}
-                             />
+                             <SearchComplete ymaps={this.state.ymaps}/>
                          </Form.Item>
                          <Form.Item
                              label="Arrival date"
@@ -208,37 +177,41 @@ class Home extends React.Component {
                              ]}
                              style={{ display: 'inline-block', width: 'calc(30% - 8px)', margin: '0 8px' }}
                          >
-                             <DatePicker showTime value={arrivalDate} onChange={this.handleDateChange("arrivalDate")} />
+                             <DatePicker showTime />
                          </Form.Item>
                      </Form.Item>
-                     <Form.Item {...tailLayout}>
-                     <Form.Item
-                         label="Min owner rating"
-                         tooltip="Each author of the trip has a rating, the higher it is, the more trust in him
-                          "
-                         rules={[
-                             {
-                                 type: 'number',
-                                 min: 0,
-                             },
-                         ]}
-                         style={{ display: 'inline-block', width: 'calc(30% - 8px)' }}
-                     >
-                         <InputNumber value={rating} onChange={this.handleChange("rating")}/>
-                     </Form.Item>
-                     <Form.Item
-                         label="The number of orders"
-                         tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
-                         rules={[
-                             {
-                                 type: 'number',
-                                 min: 1,
-                             },
-                         ]}
-                         style={{ display: 'inline-block', width: 'calc(30% - 8px)', margin: '0 8px' }}
-                     >
-                         <InputNumber value={orderCount} onChange={this.handleChange("orderCount")}/>
-                     </Form.Item>
+                     <Form.Item {...tailLayout} >
+                         <Form.Item
+                             name="rating"
+                             label="Min owner rating"
+                             tooltip="Each author of the trip has a rating, the higher it is, the more trust in him
+                              "
+                             rules={[
+                                 {
+                                     required: false,
+                                     type: 'number',
+                                     min: 0,
+                                 },
+                             ]}
+                             style={{ display: 'inline-block', width: 'calc(30% - 8px)' }}
+                         >
+                             <InputNumber />
+                         </Form.Item>
+                         <Form.Item
+                             name="orderCount"
+                             label="The number of orders"
+                             tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
+                             rules={[
+                                 {
+                                     required: false,
+                                     type: 'number',
+                                     min: 1,
+                                 },
+                             ]}
+                             style={{ display: 'inline-block', width: 'calc(30% - 8px)', margin: '0 8px' }}
+                         >
+                             <InputNumber />
+                         </Form.Item>
                      </Form.Item>
 
 
@@ -247,7 +220,11 @@ class Home extends React.Component {
                              Filter
                          </Button>
                          <Button htmlType="button"
-                                 onClick={this.cancelHandler}
+                                 onClick={this.cancelHandler    }
+                                 // onClick={(e) => {
+                                 //     this.formRef.current.resetFields();
+                                 // }}
+
                          >
                              Reset
                          </Button>
