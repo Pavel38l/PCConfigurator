@@ -50,18 +50,19 @@ public class SecurityController {
 
     @RequestMapping(method = POST, path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegisterUserDto dto) {
+    public User register(@RequestBody RegisterUserDto dto) {
         UserRole userRole = userRoleService.findByName("ROLE_USER");
         User user = mapper.toEntity(dto);
         user.setUserRole(userRole);
-        userService.updateOrCreateUser(user);
+        return userService.updateOrCreateUser(user);
     }
 
     @RequestMapping(method = POST, path = "/login")
     public AuthResponseDto login(@RequestBody LoginUserDto dto) {
         Optional<User> userOptional = userService.findByLoginAndPassword(dto.getEmail(), dto.getPassword());
         if (userOptional.isEmpty()) {
-            throw new RuntimeException("Invalid username or password!");
+            //throw new RuntimeException("Invalid username or password!");
+            return new AuthResponseDto("");
         }
         User user = userOptional.get();
         String token = jwtProvider.generateToken(user.getEmail(), user.getUserRole());
