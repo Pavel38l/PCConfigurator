@@ -1,5 +1,5 @@
 
-import React, {useContext, useState} from "react";
+import React from "react";
 import JourneyService from "../services/JourneyService";
 import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
@@ -20,6 +20,9 @@ import {
 
 class Home extends React.Component {
     formRef = React.createRef();
+    // promise = new Promise(
+    //     function (res, reject) {}
+    // );
     constructor(props) {
         super(props);
 
@@ -29,36 +32,83 @@ class Home extends React.Component {
         }
     }
 
-
+    prepareJourneys() {
+        // this.promise.then(e => {
+        //
+        // })
+        JourneyService.getJourneys().then((response) => {
+            const data = response.data;
+            const res = data.map(
+                journey => {
+                    const fromPromise = this.state.ymaps.geocode(journey.startTravelPoint.x + ' ' + journey.startTravelPoint.y)
+                        .then(result => {
+                                return result.geoObjects.get(0).getAddressLine();
+                            }
+                        )
+                    ;
+                    const toPromise = this.state.ymaps.geocode(journey.endTravelPoint.x + ' ' + journey.endTravelPoint.y)
+                        .then(result => {
+                                return result.geoObjects.get(0).getAddressLine();
+                            }
+                        );
+                    Promise.all([fromPromise, toPromise]).then(points => {
+                        journey.startTravelPointName = points[0];
+                        journey.endTravelPointName = points[1];
+                    })
+                    return journey
+                }
+            );
+            this.setState({
+                journeys: res
+            });
+        })
+    }
 
     componentDidMount() {
+        //this.prepareJourneys();
         JourneyService.getJourneys().then((response) => {
             this.setState({
                 journeys: response.data
-            })
+            });
         })
     }
 
     submitHandler = data => {
-        const filterDto = {
-            startTravelPoint: {
-                x: 51.66240415823041,
-                y: 39.18431486185959
-            },
-            endTravelPoint: {
-                x: 51.67078714524324,
-                y: 39.18284815419145
-            },
-            dispatchDate: data.dispatchDate.format(),
-            arrivalDate: data.arrivalDate.format(),
-            maxOrderCount: data.maxOrderCount,
-            rating: data.rating
-        };
-        JourneyService.filterJourneys(filterDto).then((res => {
-            this.setState({
-                journeys: res.data,
-            })
-        }))
+        const fromPromise = this.state.ymaps.geocode(data.from)
+            .then(result => {
+                    return result.geoObjects.get(0).geometry.getCoordinates();
+                }
+            )
+        ;
+        const toPromise = this.state.ymaps.geocode(data.to)
+            .then(result => {
+                    return result.geoObjects.get(0).geometry.getCoordinates();
+                }
+            );
+        Promise.all([fromPromise, toPromise]).then(points => {
+            console.log(points[0])
+            const filterDto = {
+                startTravelPoint: {
+                    x: points[0][0],
+                    y: points[0][1]
+                },
+                endTravelPoint: {
+                    x: points[1][0],
+                    y: points[1][1]
+                },
+                dispatchDate: data.dispatchDate.format(),
+                arrivalDate: data.arrivalDate.format(),
+                maxOrderCount: data.maxOrderCount,
+                rating: data.rating
+            };
+            JourneyService.filterJourneys(filterDto).then((res => {
+                this.setState({
+                    journeys: res.data,
+                })
+            }))
+        }).catch(err => alert('Can\'t find the specified destinations! Please check the entered data!'))
+
+
     }
 
     cancelHandler = event => {
@@ -79,7 +129,7 @@ class Home extends React.Component {
                 const journeyCosts = journey.journeyCosts.slice();
                 return (
                     <tr key={journey.id}>
-                        <td>{'x:' + journey.startTravelPoint.x + ' y:' + journey.startTravelPoint.y}</td>
+                        <td>{journey.startTravelPointName}</td>
 
                         <td>{'x:' + journey.endTravelPoint.x + ' y:' + journey.endTravelPoint.y}</td>
 
@@ -120,10 +170,13 @@ class Home extends React.Component {
             },
         };
         return (
-            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
-                   onApiAvaliable={ymaps => this.setState({
-                       ymaps: ymaps,
-                   })}
+            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "!!!!!!!!!!!" }}
+                   onApiAvaliable={ymaps => {
+                       this.setState({
+                           ymaps: ymaps,
+                       })
+                       //this.promise.resolve();
+                   }}
             >
             <div>
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
@@ -220,10 +273,7 @@ class Home extends React.Component {
                              Filter
                          </Button>
                          <Button htmlType="button"
-                                 onClick={this.cancelHandler    }
-                                 // onClick={(e) => {
-                                 //     this.formRef.current.resetFields();
-                                 // }}
+                                 onClick={this.cancelHandler}
 
                          >
                              Reset
