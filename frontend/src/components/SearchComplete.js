@@ -23,12 +23,13 @@ class SearchComplete extends React.Component {
             }
             const searchControl = new this.props.ymaps.control.SearchControl({
                 options: {
-                    provider: 'yandex#map'
+                    provider: 'yandex#search'
                 }
             });
             const promise = searchControl.search(value);
             promise.then( (ans) => {
-                let localRes = ans.geoObjects.toArray().map((addr) => addr.getAddressLine());
+                //console.log(ans.geoObjects.toArray()[0].properties.getAll());
+                let localRes = ans.geoObjects.toArray().map((addr) => addr.properties.getAll());
                 localRes = Array.from(new Set(localRes));
                 //console.log(localRes);
                 this.setState({result: localRes})
@@ -38,6 +39,7 @@ class SearchComplete extends React.Component {
             _.delay(handleSearch, 100, value);
         }
         const results = this.state.result;
+        let i = 0;
         return (
             <AutoComplete
 
@@ -46,8 +48,12 @@ class SearchComplete extends React.Component {
                 placeholder="Input address"
             >
                 {results.map((address) => (
-                    <Option key={address} value={address}>
-                        {address}
+                    <Option key={i++} value={address.address}>
+                        <span>{address.name}</span><br/>
+                        <span style={{
+                            color: "grey",
+                            fontSize: "90%"
+                        }}>{address.address}</span>
                     </Option>
                 ))}
             </AutoComplete>

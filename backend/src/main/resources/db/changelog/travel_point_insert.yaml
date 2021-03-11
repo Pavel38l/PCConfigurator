@@ -7,16 +7,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: comment
-                  value: here
+                  value: VSU1
               - column:
                   name: journey_id
                   value: 1
               - column:
                   name: x
-                  value: 51.66242771442517
+                  value: 51.656495
               - column:
                   name: y
-                  value: 39.200949906971886
+                  value: 39.206099
               - column:
                   name: point_index
                   value: 0
@@ -26,21 +26,24 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: null
+              - column:
+                  name: address
+                  value: Россия, Воронеж, Университетская площадь, 1
             tableName: travel_point
         - insert:
             columns:
               - column:
                   name: comment
-                  value: null
+                  value: VSU2
               - column:
                   name: journey_id
                   value: 1
               - column:
                   name: x
-                  value: 51.662282872398166
+                  value: 51.662714
               - column:
                   name: y
-                  value: 39.18531533495624
+                  value: 39.202227
               - column:
                   name: point_index
                   value: 1
@@ -50,21 +53,24 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: 2021-01-01
+              - column:
+                  name: address
+                  value: Россия, Воронеж, площадь Ленина, 10
             tableName: travel_point
         - insert:
             columns:
               - column:
                   name: comment
-                  value: null
+                  value: VSU
               - column:
                   name: journey_id
                   value: 1
               - column:
                   name: x
-                  value: 51.67078714524324
+                  value: 51.656495
               - column:
                   name: y
-                  value: 39.18284815419145
+                  value: 39.206099
               - column:
                   name: point_index
                   value: 2
@@ -74,21 +80,24 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: 2021-01-01
+              - column:
+                  name: address
+                  value: Россия, Воронеж, Университетская площадь, 1
             tableName: travel_point
         - insert:
             columns:
               - column:
                   name: comment
-                  value: hello
+                  value: Voronezh Goverment
               - column:
                   name: journey_id
                   value: 2
               - column:
                   name: x
-                  value: 51.683156
+                  value: 51.660283
               - column:
                   name: y
-                  value: 39.216642
+                  value: 39.199101
               - column:
                   name: point_index
                   value: 0
@@ -98,21 +107,24 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: null
+              - column:
+                  name: address
+                  value: Россия, Воронеж, площадь Ленина, 1
             tableName: travel_point
         - insert:
             columns:
               - column:
                   name: comment
-                  value: hello
+                  value: Voronezh Theatre
               - column:
                   name: journey_id
                   value: 2
               - column:
                   name: x
-                  value: 55.773237
+                  value: 51.663686
               - column:
                   name: y
-                  value: 37.631478
+                  value: 39.204734
               - column:
                   name: point_index
                   value: 1
@@ -122,22 +134,25 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: 2020-02-01
+              - column:
+                  name: address
+                  value: Россия, Воронеж, проспект Революции, 55
             tableName: travel_point
 
         - insert:
             columns:
               - column:
                   name: comment
-                  value: comment
+                  value: the Moscow Kremlin
               - column:
                   name: journey_id
                   value: 3
               - column:
                   name: x
-                  value: 55.024601
+                  value: 55.751518
               - column:
                   name: y
-                  value: 82.928068
+                  value: 37.61874
               - column:
                   name: point_index
                   value: 0
@@ -147,22 +162,25 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: null
+              - column:
+                  name: address
+                  value: Россия, Москва, Ивановская площадь
             tableName: travel_point
 
         - insert:
             columns:
               - column:
                   name: comment
-                  value: end
+                  value: the White house
               - column:
                   name: journey_id
                   value: 3
               - column:
                   name: x
-                  value: 56.828614
+                  value: 38.897681
               - column:
                   name: y
-                  value: 60.595279
+                  value: -77.036581
               - column:
                   name: point_index
                   value: 1
@@ -172,22 +190,25 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: 2021-03-01
+              - column:
+                  name: address
+                  value: Соединённые Штаты Америки, округ Колумбия, Вашингтон, Pennsylvania Avenue Northwest, 1600
             tableName: travel_point
 
         - insert:
             columns:
               - column:
                   name: comment
-                  value: Barnaul
+                  value: VSU
               - column:
                   name: journey_id
                   value: 4
               - column:
                   name: x
-                  value: 53.346833
+                  value: 51.656495
               - column:
                   name: y
-                  value: 83.775099
+                  value: 39.206099
               - column:
                   name: point_index
                   value: 0
@@ -197,22 +218,25 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: null
+              - column:
+                  name: address
+                  value: Россия, Воронеж, Университетская площадь, 1
             tableName: travel_point
 
         - insert:
             columns:
               - column:
                   name: comment
-                  value: Belgorod
+                  value: Netcracker
               - column:
                   name: journey_id
                   value: 4
               - column:
                   name: x
-                  value: 50.579912
+                  value: 51.654489
               - column:
                   name: y
-                  value: 36.586928
+                  value: 39.192696
               - column:
                   name: point_index
                   value: 1
@@ -222,4 +246,7 @@ databaseChangeLog:
               - column:
                   name: arrival_date
                   value: 2021-03-10
+              - column:
+                  name: address
+                  value: Россия, Воронеж, Красноармейская улица, 52Д
             tableName: travel_point

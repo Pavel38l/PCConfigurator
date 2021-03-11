@@ -20,9 +20,6 @@ import {
 
 class Home extends React.Component {
     formRef = React.createRef();
-    // promise = new Promise(
-    //     function (res, reject) {}
-    // );
     constructor(props) {
         super(props);
 
@@ -32,40 +29,7 @@ class Home extends React.Component {
         }
     }
 
-    prepareJourneys() {
-        // this.promise.then(e => {
-        //
-        // })
-        JourneyService.getJourneys().then((response) => {
-            const data = response.data;
-            const res = data.map(
-                journey => {
-                    const fromPromise = this.state.ymaps.geocode(journey.startTravelPoint.x + ' ' + journey.startTravelPoint.y)
-                        .then(result => {
-                                return result.geoObjects.get(0).getAddressLine();
-                            }
-                        )
-                    ;
-                    const toPromise = this.state.ymaps.geocode(journey.endTravelPoint.x + ' ' + journey.endTravelPoint.y)
-                        .then(result => {
-                                return result.geoObjects.get(0).getAddressLine();
-                            }
-                        );
-                    Promise.all([fromPromise, toPromise]).then(points => {
-                        journey.startTravelPointName = points[0];
-                        journey.endTravelPointName = points[1];
-                    })
-                    return journey
-                }
-            );
-            this.setState({
-                journeys: res
-            });
-        })
-    }
-
     componentDidMount() {
-        //this.prepareJourneys();
         JourneyService.getJourneys().then((response) => {
             this.setState({
                 journeys: response.data
@@ -87,6 +51,7 @@ class Home extends React.Component {
             );
         Promise.all([fromPromise, toPromise]).then(points => {
             console.log(points[0])
+            console.log(points[1])
             const filterDto = {
                 startTravelPoint: {
                     x: points[0][0],
@@ -126,12 +91,11 @@ class Home extends React.Component {
         const journeys = this.state.journeys;
         const journeyTable = journeys.map(
             journey => {
-                const journeyCosts = journey.journeyCosts.slice();
                 return (
                     <tr key={journey.id}>
-                        <td>{journey.startTravelPointName}</td>
+                        <td>{journey.startTravelPoint.address}</td>
 
-                        <td>{'x:' + journey.endTravelPoint.x + ' y:' + journey.endTravelPoint.y}</td>
+                        <td>{journey.endTravelPoint.address}</td>
 
                         <td>{journey.startTravelPoint.dispatchDate}</td>
                         <td>{journey.startTravelPoint.dispatchDate}</td>
@@ -155,10 +119,6 @@ class Home extends React.Component {
             }
         )
 
-        const onFinish = (values) => {
-            console.log(values.arrivalDate);
-        };
-
         const onFinishFailed = (errorInfo) => {
             console.log('Failed:', errorInfo);
         };
@@ -170,7 +130,7 @@ class Home extends React.Component {
             },
         };
         return (
-            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "!!!!!!!!!!!" }}
+            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "!!!!!!!!!!!!" }}
                    onApiAvaliable={ymaps => {
                        this.setState({
                            ymaps: ymaps,

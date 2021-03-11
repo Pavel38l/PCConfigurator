@@ -40,7 +40,8 @@ public class JourneyService {
     }
 
     @Transactional
-    public List<Journey> getAllJourneys() {
+    public List<Journey>
+    getAllJourneys() {
         return journeyRepository.findAll();
     }
 

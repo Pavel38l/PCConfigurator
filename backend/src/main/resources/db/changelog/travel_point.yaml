@@ -48,6 +48,11 @@ databaseChangeLog:
                   type: date
                   constraints:
                     nullable: true
+              - column:
+                  name: address
+                  type: varchar(500)
+                  constraints:
+                    nullable: true
 
         - addForeignKeyConstraint:
             constraintName: fk_journey_id
