@@ -23,6 +23,8 @@ const defmapState = {
 };
 
 
+
+
 class EditTrip extends React.Component {
     constructor(props) {
         super(props);
@@ -34,11 +36,12 @@ class EditTrip extends React.Component {
             value : [3,11,30],
             count: [0,0,0],
             ymaps: null,
-            selectedPoint: null,
+            selectedPoint: 0,
             width: 600, 
             height: 300,
             //points: POINTS,
-            coords: []
+            coords: [],
+            dateState: ''
         }
     }
 
@@ -138,27 +141,8 @@ class EditTrip extends React.Component {
             
           );
     }
-
-    
-
-    _cellRenderer = {
-      ID: ({ rowData }) => rowData.ID,
-      Address: ({ rowData }) =>rowData.Address,
-    };
-
-    _handleSort = ({ oldIndex, newIndex }) => {
-      this.setState(prevState => ({
-        data: arrayMove(prevState.data, oldIndex, newIndex)
-      }));
-    };
-    _rowGetter = ({ index }) => {
-      return this.state.data[index];
-    };
-    _rowRenderer = props => {
-      return <div><div><SortableTableRowRenderer {...props} /></div></div>;
       
-      
-    };
+
     onMapClick(event) {
       const target = "https://geocode-maps.yandex.ru/1.x/?apikey=c23fb47e-a86c-40a3-95a6-866811b17aff&format=json&geocode="
         let result = event.get("coords");
@@ -171,61 +155,65 @@ class EditTrip extends React.Component {
               this.setState(state => {
                 //alert(event.get("coords"))
                 return {
-                  coords: [...state.coords, event.get("coords")], //TODO Delete
+                  coords: [...state.coords, event.get("coords")], 
                   data: [...state.data, {
                     'ID': state.coords.length+1,
                     'Address': adress,
-                    'Coords': event.get("coords")
+                    'Coords': event.get("coords"),
+                    'Date': "2000-03-12T12:00",
+                    'Comment': state.coords.length+1
                   }]
                 };
               });
               console.log(this.state.data);
-            } catch(e) {console.log("Ошибка при обращении к Геокодеру");}
+            } catch(e) {console.log("Geocoder error");}
     })  
       console.log(this.state.coords);
     }
 
     clearList= () => {this.setState({data:[], coords:[]})}
+    testList= () => {console.log(this.state.data[this.state.selectedPoint])}
+
+    handleDateChange = event => {
+      let newValues = this.state.data;
+      let id = this.state.selectedPoint;
+      newValues[id].Date = event.target.value;
+      this.setState({data:newValues})
+      //this.setState({ [event.target.name]: event.target.value });
+  }
   
 
     renderList(){
+      if(this.state.data.length>0){
+        let mark = this.state.selectedPoint;
+        let date = this.state.data[mark].date;
+        let comment = this.state.data[mark].comment;
       return (
         <div>
-        <SortableTable
-          width={400}
-          height={300}
-          getContainer={wrappedInstance =>
-            ReactDOM.findDOMNode(wrappedInstance.Grid)
-          }
-          rowRenderer={this._rowRenderer}
-          rowGetter={this._rowGetter}
-          rowHeight={50}
-          rowCount={this.state.data.length}
-          data={this.state.data}
-          onSortEnd={this._handleSort}
-        >
-          <Column
-            width={50}
-            dataKey="ID"
-            flexGrow={1}
-            cellRenderer={this._cellRenderer.ID}
-            
-          />
-          <Column
-            width={250}
-            dataKey="Address"
-            cellRenderer={this._cellRenderer.Address}
-            
-          />
+        <button onClick={this.clearList}>Clear all</button>
+        <button onClick={this.testList}>test all</button>
+        <h5>Point: {this.state.selectedPoint+1}</h5>
+        <Form.Control
+          required
+          type="datetime-local"
+          name="datePick"
+          value={date}
+          onChange={this.handleDateChange}
+        />
+        <Form.Control
+          required
+          name="comment"
+          value={comment}
+        />
 
-        </SortableTable>
-        <button onClick={this.clearList}>Очистить</button>
+        
+       
         </div>
-      );
+      );}
     }
 
     renderMap(){
-      return(<YMaps query={{ lang: "ru_RU", load: "package.full" }}>
+      return(<YMaps query={{ lang: "en-US", load: "package.full" }}> 
           <Map
             state={this.state.mapState}
             width={this.state.width} height={this.state.height}
@@ -236,7 +224,10 @@ class EditTrip extends React.Component {
             <Placemark
               key={el.Coords.join(",")}
               geometry={{ coordinates: el.Coords }}
-              properties={{iconCaption: el.ID }}
+              properties={
+                {iconCaption: el.ID }
+              }
+              onClick={this.onPlacemarkClick(el)}
             />
           ))}
             
@@ -248,8 +239,12 @@ class EditTrip extends React.Component {
 
 
 
-    
-    //TODO comment field
+  onPlacemarkClick = point => () => {
+    this.setState({ selectedPoint: point.ID-1 });
+    //console.log(point);
+  };
+
+  
     
     
     render(){
@@ -261,11 +256,13 @@ class EditTrip extends React.Component {
                 {this.renderMap()}
               </div>
               <div class="col-sm">
-                {this.renderList()}
+                { this.renderList()}
               </div>
             </div>
           </div>
           {this.renderSlider()}
+          
+                            
         </div>
         );
     }
