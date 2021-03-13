@@ -11,6 +11,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import Profile from "./components/Profile";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
+                  <Route exact path="/profile/:id" component={Profile} />
               </Switch>
           </Router>
       </div>

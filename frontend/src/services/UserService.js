@@ -8,8 +8,8 @@ class UserService {
         return axios.get(USERS_REST_API_URL);
     }
 
-    getAuthUser() {
-
+    getUserById(id) {
+        return axios.get(USERS_REST_API_URL + "/" + id);
     }
 }
 
