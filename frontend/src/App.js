@@ -12,6 +12,7 @@ import {
     Link
 } from "react-router-dom";
 import Profile from "./components/Profile";
+import JourneyEdit from "./components/JourneyEdit";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
                   <Route exact path="/profile/:id" component={Profile} />
+                  <Route exact path="/journeyEdit" component={JourneyEdit} />
               </Switch>
           </Router>
       </div>
