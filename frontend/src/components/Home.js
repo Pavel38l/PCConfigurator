@@ -136,7 +136,7 @@ class Home extends React.Component {
             },
         };
         return (
-            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "!!!!!!!!!!!" }}
+            <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
                    onApiAvaliable={ymaps => {
                        this.setState({
                            ymaps: ymaps,
