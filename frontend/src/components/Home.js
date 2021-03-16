@@ -4,7 +4,7 @@ import JourneyService from "../services/JourneyService";
 import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
-import { YMaps } from "react-yandex-maps";
+import {Map, YMaps} from "react-yandex-maps";
 import 'antd/dist/antd.css';
 import {
     Form,
@@ -93,7 +93,10 @@ class Home extends React.Component {
     }
 
     render() {
-
+        const defmapState = {
+            center: [55.751574, 37.573856],
+            zoom: 5
+        };
         const journeys = this.state.journeys;
         const journeyTable = journeys.map(
             journey => {
@@ -137,12 +140,13 @@ class Home extends React.Component {
         };
         return (
             <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
-                   onApiAvaliable={ymaps => {
-                       this.setState({
-                           ymaps: ymaps,
-                       })
-                   }}
             >
+                <Map
+                    defaultState={defmapState}
+                    width={0}
+                    height={0}
+                    onLoad={ymaps => this.setState({ymaps: ymaps})}
+                >]</Map>
             <div>
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
              <Container className="mt-5">
@@ -158,7 +162,7 @@ class Home extends React.Component {
                      onFinish={this.submitHandler}
                      onFinishFailed={onFinishFailed}
                  >
-                     <Form.Item label="From" style={{ marginBottom: 0 }}>
+                     <Form.Item label="From">
                          <Form.Item
                              label="Dispatch point"
                              name="from"
@@ -178,7 +182,7 @@ class Home extends React.Component {
                              <DatePicker showTime/>
                          </Form.Item>
                     </Form.Item>
-                     <Form.Item label="To" style={{ marginBottom: 0 }}>
+                     <Form.Item label="To">
                          <Form.Item
                              label="Arrival point"
                              name="to"

@@ -49,11 +49,13 @@ class SearchComplete extends React.Component {
             >
                 {results.map((address) => (
                     <Option key={i++} value={address.address}>
-                        <span>{address.name}</span><br/>
+                        <span style={{
+                            fontSize: "95%"
+                        }}>{address.address}</span>
+                        <br/>
                         <span style={{
                             color: "grey",
-                            fontSize: "90%"
-                        }}>{address.address}</span>
+                        }}>{address.name}</span>
                     </Option>
                 ))}
             </AutoComplete>
