@@ -29,7 +29,7 @@ class App extends React.Component {
         }
     }
     upTitle = (title) =>{
-        this.setState({title:jwtdecoder(title.sub)})
+        this.setState({title:jwtdecoder(title).sub})
     }
     render(){
         return (
@@ -39,7 +39,7 @@ class App extends React.Component {
               <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
-                  <Route exact path="/login" upTitle={this.upTitle} component={Login}  />
+                  <Route exact path="/login" render={()=><Login upTitle={this.upTitle}/>} />
                   <Route exact path="/registration" component={Registration} />
               </Switch>
           </Router>

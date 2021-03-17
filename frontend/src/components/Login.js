@@ -88,7 +88,7 @@ class Login extends Component {
 
         <Form.Row>
         <Col sm={{ span: 2}}>
-    <button type="submit" className="mr-2" >submit</button>
+         <button type="submit" className="mr-2" >submit</button>
             </Col>
         </Form.Row>
 
