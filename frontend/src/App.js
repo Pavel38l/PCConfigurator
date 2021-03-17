@@ -14,11 +14,6 @@ import {
     Route,
     Link
 } from "react-router-dom";
-//TODO с функционального на не
-// email хранить тут, а не  в state header
-//передать в компонент header через props
-// передать в login функцию которая будет обновлять state app
-// вызвать функцию при успешном логине в login
 
 class App extends React.Component {
     constructor(props) {

@@ -24,7 +24,7 @@ class Header extends React.Component {
                         <Nav.Link href="/orders">Search for orders</Nav.Link>
 
                     </Nav>
-                    { this.renderUserState(true)}
+                    { this.renderUserState(false)}
                 </Navbar.Collapse>
             </Navbar>
         )
