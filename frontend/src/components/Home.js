@@ -143,10 +143,9 @@ class Home extends React.Component {
             >
                 <Map
                     defaultState={defmapState}
-                    width={0}
-                    height={0}
                     onLoad={ymaps => this.setState({ymaps: ymaps})}
-                >]</Map>
+                    style={{appearance: "none"}}
+                ></Map>
             <div>
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
              <Container className="mt-5">

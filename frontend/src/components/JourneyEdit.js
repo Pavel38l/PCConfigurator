@@ -20,6 +20,7 @@ const { Title } = Typography;
 function JourneyEdit() {
     const [ymaps, setYmaps] = useState(null);
     const [points, setPoints] = useState([]);
+    const [currPoints, setCurrPoints] = useState([]);
     const defmapState = {
         center: [55.751574, 37.573856],
         zoom: 5
@@ -36,13 +37,15 @@ function JourneyEdit() {
                 let newPoints = points.slice();
                 let newPoint = result.geoObjects.get(0).properties.getAll();
                 newPoint.coordinates = position;
-                if (newPoints.length > 0) {
-                    newPoints[newPoints.length - 1] = newPoint;
-                } else {
-                    newPoints.push(newPoint);
-                }
+                setCurrPoints([newPoint]);
+                // if (newPoints.length > 0) {
+                //     newPoints[newPoints.length - 1] = newPoint;
+                // } else {
+                //     newPoints.push(newPoint);
+                // }
 
-                console.log(newPoint);
+                console.log(currPoints[0]);
+                console.log(points.concat(currPoints)[0]);
                 setPoints(newPoints);
                 console.log(points);
             })
@@ -50,7 +53,16 @@ function JourneyEdit() {
     }
 
     const onPointAddSubmit = (values) => {
-        console.log('Success:', values);
+        //let newPoint = currPoints[0];
+        currPoints[0].arrivalDate = values.arrivalDate.format();
+        currPoints[0].dispatchDate = values.dispatchDate.format();
+        currPoints[0].comment = values.comment;
+        let newPoints = points.slice();
+        newPoints.push(currPoints[0]);
+        setCurrPoints([]);
+        setPoints(newPoints);
+
+        console.log('Success:', currPoints[0]);
     };
 
     return (
@@ -71,10 +83,10 @@ function JourneyEdit() {
                             <SearchControl
                                 options={{ provider: 'yandex#search' }}
                             />
-                            {points.map(point =>
+                            {points.concat(currPoints).map(point =>
                                 <Placemark
                                     key={i++}
-                                    geometry={point.coordinates}
+                                            geometry={point.coordinates}
                                     properties={{
                                         hintContent: point.text,
                                         balloonContent: point.balloonContent,
@@ -85,9 +97,10 @@ function JourneyEdit() {
                                     }}
                                 />
                             )}
+
                             <Polyline
                                 geometry={
-                                    points.map(point =>
+                                    points.concat(currPoints).map(point =>
                                         point.coordinates
                                     )
                                 }
@@ -104,26 +117,27 @@ function JourneyEdit() {
                         >
                             <Row justify="space-between">
                                 <Form.Item
-                                    name="dispatchDate"
-                                    label="Dispatch date"
-                                    rules={[
-                                        { required: true, message: 'Please input dispatch date!', }
-                                    ]}
-                                    style={{ display: 'inline-block' }}
-                                    tooltip="Time of arrival at this point"
-                                >
-                                    <DatePicker showTime/>
-                                </Form.Item>
-                                <Form.Item
                                     label="Arrival date"
                                     name="arrivalDate"
                                     rules={[
                                         { required: true, message: 'Please input arrival date!', }
                                     ]}
                                     style={{ display: 'inline-block' }}
-                                    tooltip="Departure time from this point"
+                                    tooltip="Time of arrival at this point"
                                 >
                                     <DatePicker showTime />
+                                </Form.Item>
+                                <Form.Item
+                                    name="dispatchDate"
+                                    label="Dispatch date"
+                                    rules={[
+                                        { required: true, message: 'Please input dispatch date!', }
+                                    ]}
+                                    style={{ display: 'inline-block' }}
+                                    tooltip="Departure time from this point"
+
+                                >
+                                    <DatePicker showTime/>
                                 </Form.Item>
                                 <Form.Item
 
