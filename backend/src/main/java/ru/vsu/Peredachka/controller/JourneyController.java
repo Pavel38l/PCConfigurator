@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.Peredachka.data.dto.journey.JourneyCriteriaDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
@@ -18,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping("/api/v1/journey")
+@CrossOrigin
 public class JourneyController {
     private final JourneyService journeyService;
     private final ModelMapper mapper;
@@ -30,8 +32,14 @@ public class JourneyController {
         this.journeyMapper = journeyMapper;
     }
 
+    @RequestMapping(method = POST, path = "/filter")
+    public List<JourneyInfoDto> getFilteredJourneys(@RequestBody JourneyCriteriaDto journeyCriteriaDto) {
+        return journeyService.getAllFilteredJourneys(journeyCriteriaDto).stream().map(
+                journeyMapper::toDto
+        ).collect(Collectors.toList());
+    }
+
     @RequestMapping(method = GET, path = "")
-    @CrossOrigin
     public List<JourneyInfoDto> getJourneys() {
         return journeyService.getAllJourneys().stream().map(
                 journeyMapper::toDto
@@ -39,7 +47,6 @@ public class JourneyController {
     }
 
     @RequestMapping(method = POST, path = "")
-    @CrossOrigin
     public JourneyWithDependenciesDto createJourney(@RequestBody CreateOrUpdateJourneyDto dto) {
         var createdJourney = journeyService.createOrUpdateJourney(
                 mapper.map(dto, Journey.class)
@@ -48,13 +55,11 @@ public class JourneyController {
     }
 
     @RequestMapping(method = GET, path = "/{id}")
-    @CrossOrigin
     public JourneyWithDependenciesDto getJourney(@PathVariable Long id) throws NotFoundException {
         return mapper.map(journeyService.findById(id), JourneyWithDependenciesDto.class);
     }
 
     @RequestMapping(method = DELETE, path = "/{id}")
-    @CrossOrigin
     public void deleteDevice(@PathVariable Long id) throws NotFoundException {
         journeyService.deleteJourneyById(id);
     }

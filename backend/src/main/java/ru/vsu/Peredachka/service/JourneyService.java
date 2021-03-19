@@ -2,8 +2,10 @@ package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
 import lombok.SneakyThrows;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vsu.Peredachka.data.dto.journey.JourneyCriteriaDto;
 import ru.vsu.Peredachka.data.entity.Journey;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.repository.JourneyRepository;
@@ -16,25 +18,36 @@ import java.util.Optional;
 @Service
 public class JourneyService {
     private final JourneyRepository journeyRepository;
-    private final TravelPointRepository travelPointRepository;
 
-    public JourneyService(JourneyRepository journeyRepository, TravelPointRepository travelPointRepository) {
+    public JourneyService(JourneyRepository journeyRepository) {
         this.journeyRepository = journeyRepository;
-        this.travelPointRepository = travelPointRepository;
     }
 
     @Transactional
-    public List<Journey> getAllJourneys() {
-        var result = new ArrayList<Journey>();
-        journeyRepository.findAll().forEach(element -> result.add(setupJourney(element)));
-        return result;
+    public List<Journey> getAllFilteredJourneys(JourneyCriteriaDto dto) {
+        List<Long> list = journeyRepository.findFilteredJourney(
+                dto.getStartTravelPoint().getX(),
+                dto.getStartTravelPoint().getY(),
+                dto.getEndTravelPoint().getX(),
+                dto.getEndTravelPoint().getY(),
+                dto.getDispatchDate(),
+                dto.getArrivalDate(),
+                dto.getMaxOrderCount() == null ? 1 : dto.getMaxOrderCount(),
+                dto.getRating() == null ? 0 : dto.getRating(),
+                3
+        );
+        return journeyRepository.findAllById(list);
+    }
+
+    @Transactional
+    public List<Journey>
+    getAllJourneys() {
+        return journeyRepository.findAll();
     }
 
     @Transactional
     public Journey findById(Long id) throws NotFoundException {
-        Journey journey = journeyRepository.findById(id).orElseThrow(() -> new NotFoundException("Journey not found!"));
-        setupJourney(journey);
-        return journey;
+        return journeyRepository.findById(id).orElseThrow(() -> new NotFoundException("Journey not found!"));
     }
 
     public Journey createOrUpdateJourney(Journey journey) {
@@ -46,26 +59,4 @@ public class JourneyService {
         journeyRepository.delete(journey);
     }
 
-    @SneakyThrows
-    private Journey setupJourney(Journey journey) {
-        return setJourneyTravelPoints(journey);
-    }
-
-    private Journey setJourneyTravelPoints(Journey journey) throws NotFoundException {
-
-        List<TravelPoint> path = new ArrayList<>();
-        TravelPoint firstTravelPoint = travelPointRepository.findByJourneyIdAndPreviousTravelPointIsNull(
-                journey.getId()
-        ).orElseThrow(() -> new NotFoundException("First travel point not found!"));
-        path.add(firstTravelPoint);
-        TravelPoint current = firstTravelPoint;
-        Optional<TravelPoint> next = travelPointRepository.findByPreviousTravelPointId(current.getId());
-        while (next.isPresent()) {
-            current = next.orElseThrow(() -> new NotFoundException("Travel point not found!"));
-            path.add(current);
-            next = travelPointRepository.findByPreviousTravelPointId(current.getId());
-        }
-        journey.setTravelPoints(path);
-        return journey;
-    }
 }

@@ -19,12 +19,11 @@ public class TravelPoint {
     private Long id;
     private String comment;
     private Double x, y;
+    private String address;
     private LocalDate dispatchDate;
     private LocalDate arrivalDate;
 
-    @OneToOne
-    @JoinColumn(name = "previousId", referencedColumnName = "id")
-    private TravelPoint previousTravelPoint;
+    private Integer pointIndex;
 
     @ManyToOne
     @JoinColumn(name = "journeyId")

@@ -3,10 +3,7 @@ package ru.vsu.Peredachka.data.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.vsu.Peredachka.data.dto.TravelPointDto;
-import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.security.RegisterUserDto;
-import ru.vsu.Peredachka.data.entity.Journey;
 import ru.vsu.Peredachka.data.entity.User;
 
 import javax.annotation.PostConstruct;

@@ -7,6 +7,10 @@ class UserService {
     getUsers() {
         return axios.get(USERS_REST_API_URL);
     }
+
+    getAuthUser() {
+
+    }
 }
 
 export default new UserService();

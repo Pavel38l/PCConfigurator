@@ -14,11 +14,6 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: cost
-                  type: double
-                  constraints:
-                    nullable: false
-              - column:
                   name: owner_id
                   type: bigint
                   constraints:
