@@ -25,6 +25,7 @@ public class UserService {
     }
 
     public Optional<User> findByLoginAndPassword(String email, String password) {
+        logger.debug("method findByLoginAndPassword started. Params: {}, {}", email, password);
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
