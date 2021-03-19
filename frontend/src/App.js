@@ -28,7 +28,7 @@ class App extends React.Component {
     }
     render(){
         return (
-      <div className="App">
+
 
           <Router>
               <Header title={this.state.title} />
@@ -39,7 +39,7 @@ class App extends React.Component {
                   <Route exact path="/registration" component={Registration} />
               </Switch>
           </Router>
-      </div>
+
 
 
 
