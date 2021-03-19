@@ -1,4 +1,3 @@
-
 import React from "react";
 import JourneyService from "../services/JourneyService";
 import Container from "react-bootstrap/Container";
@@ -72,8 +71,6 @@ class Home extends React.Component {
                 })
             }))
         }).catch(err => alert('Can\'t find the specified destinations! Please check the entered data!'))
-
-
     }
 
     cancelHandler = event => {
@@ -116,6 +113,15 @@ class Home extends React.Component {
                         </td>
                     </tr>
                 )
+                }
+            <td>
+                <Button variant="outline-success" className="float-right"
+                href={"journey/" + journey.id}>
+                    Details
+                    </Button>
+                    </td>
+                    </tr>
+            )
             }
         )
 
@@ -240,12 +246,13 @@ class Home extends React.Component {
                          </Button>
                      </Form.Item>
                  </Form>
+
             </Container>
             <Container className="mt-5">
                 <div>
                     <table className = "table table-striped">
                         <thead>
-                        <tr>
+                            <tr>
                             <td> From </td>
                             <td> To </td>
                             <td> First point dispatch date </td>
@@ -254,13 +261,14 @@ class Home extends React.Component {
                             <td> Small order cost </td>
                             <td> Avg order cost </td>
                             <td> Max order cost </td>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody>
-                            {journeyTable}
+                        {journeyTable}
                         </tbody>
                     </table>
                 </div>
+
             </Container>
             </div>
             </YMaps>
