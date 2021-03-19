@@ -8,8 +8,5 @@ import java.util.Optional;
 
 @Component
 public interface TravelPointRepository extends CrudRepository<TravelPoint, Long> {
-    Optional<TravelPoint> findByJourneyIdAndPreviousTravelPointIsNull(Long journeyId);
-
-    Optional<TravelPoint> findByPreviousTravelPointId(Long id);
 
 }

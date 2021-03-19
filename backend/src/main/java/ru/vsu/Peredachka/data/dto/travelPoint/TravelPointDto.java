@@ -1,4 +1,4 @@
-package ru.vsu.Peredachka.data.dto;
+package ru.vsu.Peredachka.data.dto.travelPoint;
 
 import lombok.*;
 
@@ -13,6 +13,7 @@ public class TravelPointDto {
     private Long id;
     private String comment;
     private Double x, y;
+    private String address;
     private LocalDate dispatchDate;
     private LocalDate arrivalDate;
 }

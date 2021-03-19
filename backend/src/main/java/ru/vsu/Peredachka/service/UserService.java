@@ -1,6 +1,8 @@
 package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.vsu.Peredachka.data.entity.User;
@@ -10,11 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private static final Logger logger = LoggerFactory.getLogger(
+            UserService.class);
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -30,14 +34,21 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (passwordEncoder.matches(password, user.getPassword())) {
+                logger.info("Just a log message.");
+                //logger.debug("Message for debug level.");
                 return Optional.of(user);
             }
         }
         return Optional.empty();
     }
 
+
     public User updateOrCreateUser(User user) {
-        return userRepository.save(user);
+        Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
+        if(userOptional.isEmpty())
+            return userRepository.save(user);
+        else
+            return null;
     }
 
     public void deleteUserById(Long id) throws NotFoundException {

@@ -5,7 +5,7 @@
         <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
             by default -->
         <encoder>
-            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -20,20 +20,17 @@
             <!-- Храним файлы логов 10 дней -->
             <maxHistory>10</maxHistory>
 
-            <!-- Максимальный размер файлов лога 10 гигабайт -->
-            <totalSizeCap>10MB</totalSizeCap>
+            <!-- Максимальный размер файлов лога 30 гигабайт -->
+            <totalSizeCap>10GB</totalSizeCap>
 
         </rollingPolicy>
         <encoder>
-            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger name="ru.vsu.Peredachka.security" level="DEBUG" additivity="false">
-        <appender-ref ref="FILE"/>
-    </logger>
-
 
     <root level="debug">
-        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>

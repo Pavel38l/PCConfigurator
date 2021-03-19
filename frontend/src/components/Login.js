@@ -22,8 +22,6 @@ class Login extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-
-
         const user = {
             email: this.state.email,
             password: this.state.password
@@ -42,7 +40,6 @@ class Login extends Component {
                 else
                     alert("Неверный логин или пароль");
 
-                //react router
             })
 
 

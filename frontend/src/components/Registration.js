@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Col } from "react-bootstrap";
+import { Form, Button, FormGroup, FormControl, ControlLabel, Col,Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import { Link, Redirect } from 'react-router-dom';
 class Registration extends Component {
     constructor(props) {
         super(props);
@@ -9,15 +11,16 @@ class Registration extends Component {
             password: '',
             firstName: '',
             lastName: '',
-            sex: '',
-            dateOfBrith: '',
+            dateOfBirth: '',
+            sex: 'male',
+
 
         }
     }
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
-        console.log(event);
+
     }
 
     handleSubmit = event => {
@@ -29,101 +32,119 @@ class Registration extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             sex: this.state.sex,
-            dateOfBrith: this.state.dateOfBrith
+            dateOfBirth: this.state.dateOfBirth,
+            redirect: false
         };
 
-        axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+        axios.post(`http://localhost:8080/api/v1/security/register`, user)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                console.log(user);
+                if(res.data)
+                    this.setState({redirect: true});
+                else
+                    alert("Данная почта уже существует");
             })
     }
     render() {
-        const {email, password, firstName, lastName, sex, dateOfBrith, from} = this.state
-        return (
-        <div>
+        const {email, password, firstName, lastName, sex, dateOfBirth, from, redirect} = this.state
+        if(redirect) return <Redirect to="/login"/>;
+        else return (
+            <div>
+
             <Form onSubmit={this.handleSubmit}>
 
-            <Form.Group as={Col} md="4" controlId="email">
-                  <Form.Label>Email: </Form.Label>
-                 <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  required
-                  name="email"
-                  value={email}
-                  onChange={this.handleChange}
-                />
-          </Form.Group >
-
-
-        <Form.Group as={Col} md="4" controlId="password">
-              <Form.Label>Password: </Form.Label>
-              <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    required
-                    name="password"
-                    value={password}
-                    onChange={this.handleChange}
-                    />
-        </Form.Group >
-
-        <Form.Group as={Col} md="4" controlId="firstName">
-            <Form.Label>firstName: </Form.Label>
-                <Form.Control
-                type="text"
-                placeholder="Enter first name"
-                required
-                name="firstName"
-                value={firstName}
-                onChange={this.handleChange}
-                />
+        <Form.Group as={Row} md="6" controlId="email">
+            <Form.Label>Email: </Form.Label>
+        <Form.Control
+        type="email"
+        placeholder="Enter email"
+        required
+        name="email"
+        value={email}
+        onChange={this.handleChange}
+        />
         </Form.Group >
 
 
-        <Form.Group as={Col} md="4" controlId="lastName">
-            <Form.Label>LastName: </Form.Label>
-                <Form.Control
-                type="text"
-                placeholder="Enter last name"
-                required
-                name="lastName"
-                value={lastName}
-                onChange={this.handleChange}
-                />
+        <Form.Group as={Row} md="6" controlId="password">
+            <Form.Label>Password: </Form.Label>
+        <Form.Control
+        type="password"
+        placeholder="Enter password"
+        required
+        name="password"
+        value={password}
+        onChange={this.handleChange}
+        />
         </Form.Group >
 
-        <Form.Row className="align-items-center">
-        <Form.Group as={Col} md="4">
-        <Form.Label>sex</Form.Label>
-        <Form.Control as="select" className="mr-sm-2" id="inlineFormCustomSelect" value={sex} onChange={this.handleChange} custom>
-        <option value="male">male</option>
+        <Form.Group as={Row} md="6" controlId="firstName">
+            <Form.Label>First name: </Form.Label>
+        <Form.Control
+        type="text"
+        placeholder="Enter first name"
+        required
+        name="firstName"
+        value={firstName}
+        onChange={this.handleChange}
+        />
+        </Form.Group >
+
+
+        <Form.Group as={Row} md="6" controlId="lastName">
+            <Form.Label>Last name: </Form.Label>
+        <Form.Control
+        type="text"
+        placeholder="Enter last name"
+        required
+        name="lastName"
+        value={lastName}
+        onChange={this.handleChange}
+        />
+        </Form.Group>
+
+        <Form.Group as={Row} md="6">
+        <Form.Label>Sex</Form.Label>
+
+        <Form.Control as="select"
+        className="mr-sm-2"
+        name="sex"
+        id="inlineFormCustomSelect"
+        value={sex}
+        onChange={this.handleChange}
+            >
+            <option value="male">male</option>
             <option value="female">female</option>
         </Form.Control>
         </Form.Group>
 
-        <Form.Group as={Col} md="4">
-            <Form.Label>Arrival time</Form.Label>
+
+        <Form.Group as={Row} md="6">
+            <Form.Label>Date of birth</Form.Label>
+
         <Form.Control
         required
         type="datetime-local"
-        name="arrivalDate"
-        value={dateOfBrith}
+        name="dateOfBirth"
+        value={dateOfBirth}
         onChange={this.handleChange}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
 
-        </Form.Row>
 
+        <Form.Row>
+        <Col sm={{ span: 2}}>
         <Button  type="submit">
             Submit
             </Button>
+            </Col>
+            </Form.Row>
 
 
             </Form>
+
             </div>
 
 
