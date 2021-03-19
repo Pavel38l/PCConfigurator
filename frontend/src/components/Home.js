@@ -150,6 +150,7 @@ class Home extends React.Component {
             <h1 className="mt-5 Align">Service for finding and sending passing links</h1>
              <Container className="mt-5">
                  <Form
+                     colon={false}
                      ref={this.formRef}
                      labelCol={{
                          span: 4,
