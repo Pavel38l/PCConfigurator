@@ -113,15 +113,6 @@ class Home extends React.Component {
                         </td>
                     </tr>
                 )
-                }
-            <td>
-                <Button variant="outline-success" className="float-right"
-                href={"journey/" + journey.id}>
-                    Details
-                    </Button>
-                    </td>
-                    </tr>
-            )
             }
         )
 

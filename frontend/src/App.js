@@ -28,8 +28,7 @@ class App extends React.Component {
     }
     render(){
         return (
-      <div className="App">
-
+      <div>
           <Router>
               <Header title={this.state.title} />
               <Switch>
