@@ -1,6 +1,5 @@
 import { YMaps, Map, SearchControl, Placemark, Polyline } from 'react-yandex-maps';
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
 import 'antd/dist/antd.css';
 import '../App.css';
 import {
@@ -28,7 +27,6 @@ function JourneyEdit() {
     const [ymaps, setYmaps] = useState(null);
     const [points, setPoints] = useState([]);
     const [currPoints, setCurrPoints] = useState([]);
-    const [add, setAdd] = useState(null);
     const [smallCost, setSmallCost] = useState(0);
     const [avgCost, setAvgCost] = useState(0);
     const [largeCost, setLargeCost] = useState(0);
@@ -39,44 +37,19 @@ function JourneyEdit() {
 
     const width = 600;
     const height = 500;
-    let i = 1;
 
     function onMapClick(event) {
         let position = event.get('coords');
         console.log(position);
         ymaps.geocode(position)
             .then(result => {
-                let newPoints = points.slice();
                 let newPoint = result.geoObjects.get(0).properties.getAll();
                 newPoint.coordinates = position;
-                //setCurrPoints([newPoint]);
-                // if (newPoints.length > 0) {
-                //     newPoints[newPoints.length - 1] = newPoint;
-                // } else {
-                //     newPoints.push(newPoint);
-                // }
-                newPoints.push(newPoint);
-                console.log(newPoint);
-                //console.log(currPoints[0]);
-                //console.log(points.concat(currPoints)[0]);
-                setPoints(newPoints);
                 addOutside(newPoint);
-            })
-            ;
+                onPointsListChange();
+            });
     }
 
-    const onPointAddSubmit = (values) => {
-        //let newPoint = currPoints[0];
-        currPoints[0].arrivalDate = values.arrivalDate.format();
-        currPoints[0].dispatchDate = values.dispatchDate.format();
-        currPoints[0].comment = values.comment;
-        let newPoints = points.slice();
-        newPoints.push(currPoints[0]);
-        setCurrPoints([]);
-        setPoints(newPoints);
-
-        console.log('Success:', currPoints[0]);
-    };
 
     const onJourneyFinish = (values) => {
         console.log('Success:', values);
@@ -85,16 +58,60 @@ function JourneyEdit() {
     const [pointsForm] = Form.useForm();
 
     const onArrivalDateChange = (index, value) => {
-        const name = [index, 'dispatchDate'];
-        //pointsForm.setFields({name: value});
-        console.log(index, value);
+        const pointsList = pointsForm.getFieldsValue("points").points || [];
+        const point = pointsList[index];
+        point.dispatchDate = value;
+        pointsForm.setFieldsValue({points: pointsList});
+    }
+
+    const onPointsListChange = () => {
+        setPoints(pointsForm.getFieldsValue("points").points || []);
     }
 
     const addOutside = (newPoint) => {
         const pointsList = pointsForm.getFieldsValue("points").points || [];
-        console.log(pointsList);
-        pointsList.push({address: newPoint.text, point: newPoint});
+        pointsList.push({address: newPoint.text, geoData: newPoint});
         pointsForm.setFieldsValue({points: pointsList});
+    }
+
+    const renderPoints = () => {
+        const ps = points.map((point, index) => {
+            return {geoData: point ? point.geoData : undefined, index: index};
+        }).filter(point => point.geoData);
+        return (
+            <>
+                {ps.map(el =>
+                    <Placemark
+                        key={el.index + 1}
+                        geometry={el.geoData.coordinates}
+                        properties={{
+                            hintContent: el.geoData.text,
+                            balloonContent: el.geoData.balloonContent,
+                            iconContent: el.index + 1
+                        }}
+                        options={{
+                            draggable: false
+                        }}
+                    />
+                )}
+                <Polyline
+                    key={1}
+                    geometry={
+                        ps.map(el =>
+                            el.geoData.coordinates
+                        )
+                    }
+                    options={{
+                        balloonCloseButton: false,
+                        strokeColor: '#1E90FF',
+                        strokeWidth: 4,
+                        strokeOpacity: 0.5,
+                    }}
+                />
+            </>
+        )
+
+
     }
 
     return (
@@ -112,9 +129,10 @@ function JourneyEdit() {
                             layout='vertical'
                             name="dynamic_form_nest_item"
                             autoComplete="off"
-
                         >
-                            <Form.List name="points">
+                            <Form.List name="points"
+                                       initialValue={[{}, {}]}
+                            >
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(field => (
@@ -166,7 +184,13 @@ function JourneyEdit() {
                                                 </Form.Item>
 
 
-                                                <MinusCircleOutlined key={field.key} onClick={() => remove(field.name)} />
+                                                <MinusCircleOutlined
+                                                    key={field.key}
+                                                    onClick={() => {
+                                                        remove(field.name);
+                                                        onPointsListChange();
+                                                    }}
+                                                />
                                             </Space>
                                                 <Form.Item
                                                     name={[field.name, 'comment']}
@@ -181,7 +205,10 @@ function JourneyEdit() {
                                         <Form.Item>
                                             <Button
                                                 type="dashed"
-                                                onClick={() => add()} block
+                                                onClick={() => {
+                                                    add();
+                                                    onPointsListChange();
+                                                }} block
                                                 icon={<PlusOutlined />}>
                                                 Add point
                                             </Button>
@@ -207,34 +234,7 @@ function JourneyEdit() {
                             <SearchControl
                                 options={{ provider: 'yandex#search' }}
                             />
-                            {points.map(point =>
-                                <Placemark
-                                    key={i++}
-                                    geometry={point.coordinates}
-                                    properties={{
-                                        hintContent: point.text,
-                                        balloonContent: point.balloonContent,
-                                        iconContent: i
-                                    }}
-                                    options={{
-                                        draggable: false
-                                    }}
-                                />
-                            )}
-
-                            <Polyline
-                                geometry={
-                                    points.map(point =>
-                                        point.coordinates
-                                    )
-                                }
-                                options={{
-                                    balloonCloseButton: false,
-                                    strokeColor: '#1E90FF',
-                                    strokeWidth: 4,
-                                    strokeOpacity: 0.5,
-                                }}
-                            />
+                            {renderPoints()}
                         </Map>
 
                     </Col>

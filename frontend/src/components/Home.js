@@ -35,12 +35,6 @@ class Home extends React.Component {
                 journeys: response.data
             });
         })
-    }componentDidMount() {
-        JourneyService.getJourneys().then((response) => {
-            this.setState({
-                journeys: response.data
-            });
-        })
     }
 
     submitHandler = data => {
