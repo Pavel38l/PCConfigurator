@@ -18,6 +18,7 @@ import {
     Slider
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import SearchComplete from "./SearchComplete";
 import CustomSlider from "./CustomSlider";
 const { Title } = Typography;
@@ -55,10 +56,11 @@ function JourneyEdit() {
                 //     newPoints.push(newPoint);
                 // }
                 newPoints.push(newPoint);
+                console.log(newPoint);
                 //console.log(currPoints[0]);
                 //console.log(points.concat(currPoints)[0]);
                 setPoints(newPoints);
-                add();
+                addOutside(newPoint);
             })
             ;
     }
@@ -80,11 +82,19 @@ function JourneyEdit() {
         console.log('Success:', values);
     };
 
-    const [pointsForms] = Form.useForm();
+    const [pointsForm] = Form.useForm();
 
-    const onArrivalDateChange = (name, value) => {
-        //pointsForms.setFields({name: value});
-        console.log(name, value);
+    const onArrivalDateChange = (index, value) => {
+        const name = [index, 'dispatchDate'];
+        //pointsForm.setFields({name: value});
+        console.log(index, value);
+    }
+
+    const addOutside = (newPoint) => {
+        const pointsList = pointsForm.getFieldsValue("points").points || [];
+        console.log(pointsList);
+        pointsList.push({address: newPoint.text, point: newPoint});
+        pointsForm.setFieldsValue({points: pointsList});
     }
 
     return (
@@ -97,7 +107,7 @@ function JourneyEdit() {
                     <Col>
                         <Title level={3}>Trip points:</Title>
                         <Form
-                            form={pointsForms}
+                            form={pointsForm}
                             colon={false}
                             layout='vertical'
                             name="dynamic_form_nest_item"
@@ -156,7 +166,7 @@ function JourneyEdit() {
                                                 </Form.Item>
 
 
-                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                                <MinusCircleOutlined key={field.key} onClick={() => remove(field.name)} />
                                             </Space>
                                                 <Form.Item
                                                     name={[field.name, 'comment']}

@@ -46,6 +46,7 @@ class SearchComplete extends React.Component {
                 onSearch={handleWithDelay}
                 onChange={this.props.onChange}
                 placeholder="Input address"
+                value={this.props.value}
             >
                 {results.map((address) => (
                     <Option key={i++} value={address.address}>
