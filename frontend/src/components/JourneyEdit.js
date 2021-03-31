@@ -50,6 +50,22 @@ function JourneyEdit() {
             });
     }
 
+    function getPointGeoData(address) {
+    }
+
+    const onAddressSelect = (index, value) => {
+        console.log(index, value);
+        ymaps.geocode(value)
+            .then(result => {
+                let newPoint = result.geoObjects.get(0).properties.getAll();
+                newPoint.coordinates = result.geoObjects.get(0).geometry.getCoordinates();
+                const pointsList = pointsForm.getFieldsValue("points").points || [];
+                const point = pointsList[index];
+                point.geoData = newPoint;
+                pointsForm.setFieldsValue({points: pointsList});
+                onPointsListChange();
+            });
+    }
 
     const onJourneyFinish = (values) => {
         console.log('Success:', values);
@@ -147,7 +163,13 @@ function JourneyEdit() {
                                                     rules={[{ required: true, message: 'Please input point address!', }]}
                                                     style={{ width: 250, display: 'inline-block' }}
                                                 >
-                                                    <SearchComplete ymaps={ymaps}/>
+                                                    <SearchComplete
+                                                        onSelect={(value) => {
+                                                            console.log(value);
+                                                            onAddressSelect(field.name, value);
+                                                        }}
+                                                        ymaps={ymaps}
+                                                    />
                                                 </Form.Item>
                                                 <Form.Item
                                                     {...field}
