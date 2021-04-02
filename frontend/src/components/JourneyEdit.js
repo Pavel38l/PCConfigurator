@@ -86,8 +86,20 @@ function JourneyEdit() {
 
     const addOutside = (newPoint) => {
         const pointsList = pointsForm.getFieldsValue("points").points || [];
-        pointsList.push({address: newPoint.text, geoData: newPoint});
+        const geo = {address: newPoint.text, geoData: newPoint};
+        if (pointsList.length > 0) {
+            let point = pointsList[pointsList.length - 1] ? pointsList[pointsList.length - 1] : {};
+            if (!point.geoData) {
+                point = {...point, ...geo};
+                pointsList[pointsList.length - 1] = point;
+            } else {
+                pointsList.push(geo);
+            }
+        } else {
+            pointsList.push(geo);
+        }
         pointsForm.setFieldsValue({points: pointsList});
+
     }
 
     const renderPoints = () => {
@@ -147,7 +159,7 @@ function JourneyEdit() {
                             autoComplete="off"
                         >
                             <Form.List name="points"
-                                       initialValue={[{}, {}]}
+                                       initialValue={[{}]}
                             >
                                 {(fields, { add, remove }) => (
                                     <>
@@ -251,7 +263,7 @@ function JourneyEdit() {
                             width={width}
                             height={height}
                             onClick={onMapClick.bind(this)}
-                            onLoad={ymaps => setYmaps(ymaps)}
+                            onLoad={ymaps => {setYmaps(ymaps);console.log(ymaps)}}
                         >
                             <SearchControl
                                 options={{ provider: 'yandex#search' }}
