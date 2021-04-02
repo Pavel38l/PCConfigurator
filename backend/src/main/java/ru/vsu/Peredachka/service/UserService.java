@@ -19,13 +19,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(
             UserService.class);
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public User findById(Long id) throws NotFoundException {
-       return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
     public Optional<User> findByLoginAndPassword(String email, String password) {
@@ -42,13 +43,21 @@ public class UserService {
         return Optional.empty();
     }
 
+    public User findByEmail(String email) throws NotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found!"));
+    }
 
-    public User updateOrCreateUser(User user) {
-        Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-        if(userOptional.isEmpty())
-            return userRepository.save(user);
-        else
-            return null;
+    public boolean isUserExist(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+    public User update(User user){
+        Optional<User> user1 = userRepository.findById(user.getId());
+        user.setPassword(user1.get().getPassword());
+        return userRepository.save(user);
     }
 
     public void deleteUserById(Long id) throws NotFoundException {

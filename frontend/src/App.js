@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import jwtdecoder from 'jwt-decode';
 import Registration from "./components/Registration";
+import ProfileWrapper from "./components/Profile";
 import {
     BrowserRouter as Router,
     Switch,
@@ -37,6 +38,7 @@ class App extends React.Component {
                   <Route exact path="/users" component={UserComponent} />
                   <Route exact path="/login" render={()=><Login upTitle={this.upTitle}/>} />
                   <Route exact path="/registration" component={Registration} />
+                  <Route exact path="/profile/:id" component={ProfileWrapper} />
               </Switch>
           </Router>
 

@@ -57,8 +57,8 @@ class Login extends Component {
             <div>
                 <form onSubmit={this.handleSubmit} >
                     <Form.Group as={Row} md="6" controlId="email">
-                        <Form.Label   >Email: </Form.Label>
-                        <Col sm="0">
+                        <Form.Label column sm={2}  >Email: </Form.Label>
+                        
                             <Form.Control
                                 type="email"
                                 placeholder="Enter email"
@@ -67,7 +67,7 @@ class Login extends Component {
                                 value={email}
                                 onChange={this.handleChange}
                             />
-                        </Col>
+                        
                     </Form.Group >
 
 

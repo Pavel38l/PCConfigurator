@@ -29,7 +29,7 @@ public class JwtProvider {
             .build();
     }
 
-    public String generateToken(String email, UserRole userRole) {
+    public String generateToken(String email, UserRole userRole, Long id) {
         Date exDate = Date.from(
                 LocalDate.now()
                 .plusDays(15)
@@ -38,6 +38,7 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setExpiration(exDate)
+                .setId(Long.toString(id))
                 .setSubject(email)
                 .claim("role", userRole.getName())
                 .signWith(key)

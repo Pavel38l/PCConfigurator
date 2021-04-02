@@ -1,9 +1,7 @@
 package ru.vsu.Peredachka.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.Peredachka.data.dto.MsgDto;
 import ru.vsu.Peredachka.data.dto.security.AuthResponseDto;
@@ -51,10 +49,14 @@ public class SecurityController {
     @RequestMapping(method = POST, path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User register(@RequestBody RegisterUserDto dto) {
-        UserRole userRole = userRoleService.findByName("ROLE_USER");
         User user = mapper.toEntity(dto);
-        user.setUserRole(userRole);
-        return userService.updateOrCreateUser(user);
+        if (userService.isUserExist(user.getEmail())) {
+            return null;
+        } else {
+            UserRole userRole = userRoleService.findByName("ROLE_USER");
+            user.setUserRole(userRole);
+            return userService.createUser(user);
+        }
     }
 
     @RequestMapping(method = POST, path = "/login")
@@ -65,7 +67,8 @@ public class SecurityController {
             return new AuthResponseDto("");
         }
         User user = userOptional.get();
-        String token = jwtProvider.generateToken(user.getEmail(), user.getUserRole());
+        String token = jwtProvider.generateToken(user.getEmail(), user.getUserRole(), user.getId());
         return new AuthResponseDto(token);
     }
+
 }
