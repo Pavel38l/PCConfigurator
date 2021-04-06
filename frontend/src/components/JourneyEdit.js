@@ -115,7 +115,7 @@ function JourneyEdit() {
                                         {fields.map(field => (
                                             <>
                                             <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                <Title level={3}>{field.name + 1}</Title>
+                                                <Title level={3} key={field.key}>{field.name + 1}</Title>
                                                 <Form.Item
                                                     {...field}
                                                     label="Point address"
@@ -176,6 +176,7 @@ function JourneyEdit() {
                                                 />
                                             </Space>
                                                 <Form.Item
+                                                    key={[field.key, 'comment']}
                                                     name={[field.name, 'comment']}
                                                     label="Comment"
                                                     tooltip="Comment on this point (tips how to find and so on)"
