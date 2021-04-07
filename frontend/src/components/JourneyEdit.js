@@ -19,6 +19,7 @@ import moment from 'moment';
 import SearchComplete from "./SearchComplete";
 import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
+import JourneyService from "../services/JourneyService";
 const { Title } = Typography;
 
 
@@ -58,6 +59,29 @@ function JourneyEdit() {
 
     const onJourneyFinish = (values) => {
         console.log('Success:', values);
+        const dto = {
+            maxOrderCount: values.maxOrderCount,
+            travelPoints: values.points.map((point, index) => {
+                return {
+                    comment: point.comment,
+                    x: point.geoData.coordinates[0],
+                    y: point.geoData.coordinates[1],
+                    address: point.geoData.text,
+                    dispatchDate: point.dispatchDate.format(),
+                    arrivalDate: point.arrivalDate.format(),
+                    pointIndex: index,
+                };
+            }),
+            journeyCosts: [
+                {orderSizeId: 1, cost: values.smallCost},
+                {orderSizeId: 2, cost: values.avgCost},
+                {orderSizeId: 3, cost: values.largeCost},
+            ],
+            ownerId: 1
+        }
+        console.log(dto);
+        JourneyService.createJourney(dto).then();
+
     };
 
     const [pointsForm] = Form.useForm();
@@ -97,156 +121,146 @@ function JourneyEdit() {
                 query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
             >
                 <Title level={2} style={{ textAlign: 'center' }}>Create trip</Title>
-                <Row justify="space-between">
-                    <Col>
-                        <Title level={3}>Trip points:</Title>
-                        <Form
-                            form={pointsForm}
-                            colon={false}
-                            layout='vertical'
-                            name="dynamic_form_nest_item"
-                            autoComplete="off"
-                        >
-                            <Form.List name="points"
-                                       initialValue={[{}]}
-                            >
-                                {(fields, { add, remove }) => (
-                                    <>
-                                        {fields.map(field => (
-                                            <>
-                                            <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                <Title level={3} key={field.key}>{field.name + 1}</Title>
-                                                <Form.Item
-                                                    {...field}
-                                                    label="Point address"
-                                                    name={[field.name, 'address']}
-                                                    key={[field.fieldKey, 'address']}
-                                                    rules={[{ required: true, message: 'Please input point address!', }]}
-                                                    style={{ width: 250, display: 'inline-block' }}
-                                                >
-                                                    <SearchComplete
-                                                        onSelect={(value) => {
-                                                            console.log(value);
-                                                            onAddressSelect(field.name, value);
-                                                        }}
-                                                        ymaps={ymaps}
-                                                    />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...field}
-                                                    label="Arrival date"
-                                                    name={[field.name, 'arrivalDate']}
-                                                    key={[field.fieldKey, 'arrivalDate']}
-                                                    rules={[
-                                                        { required: true, message: 'Please input arrival date!', }
-                                                    ]}
-                                                    style={{ width: 140}}
-                                                    tooltip="Time of arrival at this point"
-                                                >
-                                                    <DatePicker
-                                                                showTime
-                                                                name={[field.name, 'arrivalDate']}
-                                                                onChange={(value) => {
-                                                                    onArrivalDateChange(field.name, value)
-                                                                }}
-                                                    />
-                                                </Form.Item>
-                                                <Form.Item
-                                                    {...field}
-                                                    name={[field.name, 'dispatchDate']}
-                                                    key={[field.fieldKey, 'dispatchDate']}
-                                                    label="Dispatch date"
-                                                    rules={[
-                                                        { required: true, message: 'Please input dispatch date!', }
-                                                    ]}
-                                                    style={{ width: 140}}
-                                                    tooltip="Departure time from this point"
-
-                                                >
-                                                    <DatePicker showTime />
-                                                </Form.Item>
-
-
-                                                <MinusCircleOutlined
-                                                    key={field.key}
-                                                    onClick={() => {
-                                                        remove(field.name);
-                                                        onPointsListChange();
-                                                    }}
-                                                />
-                                            </Space>
-                                                <Form.Item
-                                                    key={[field.key, 'comment']}
-                                                    name={[field.name, 'comment']}
-                                                    label="Comment"
-                                                    tooltip="Comment on this point (tips how to find and so on)"
-                                                >
-                                                    <Input.TextArea rows={1} />
-                                                </Form.Item>
-                                            </>
-
-                                        ))}
-                                        <Form.Item>
-                                            <Button
-                                                type="dashed"
-                                                onClick={() => {
-                                                    add();
-                                                    onPointsListChange();
-                                                }} block
-                                                icon={<PlusOutlined />}>
-                                                Add point
-                                            </Button>
-                                        </Form.Item>
-                                    </>
-                                )}
-                            </Form.List>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </Col>
-                    <Col>
-                        <JourneyMap
-                            onMapLoad={onMapLoad}
-                            onMapClick={onMapClick}
-                            pointsList={(pointsForm.getFieldsValue("points").points || [])}
-                        />
-                    </Col>
-                </Row>
-            </YMaps>
-            <Title level={2} style={{ textAlign: 'center' }} className="mt-5"> Trip order info</Title>
-            <Form
-                colon={false}
-                name="journey"
-                onFinish={onJourneyFinish}
-            >
-                <Form.Item
-                    name="orderCount"
-                    label="The number of orders"
-                    tooltip="Indicate the maximum number of orders that you can take on a trip"
-                    rules={[
-                        {
-                            required: true,
-                            type: 'number',
-                            min: 1,
-                        },
-                    ]}
-
+                <Form
+                    onFinish={onJourneyFinish}
+                    form={pointsForm}
+                    colon={false}
+                    layout='vertical'
+                    name="dynamic_form_nest_item"
+                    autoComplete="off"
                 >
-                    <InputNumber />
-                </Form.Item>
-                <CustomSlider name="smallCost" label="Small order cost" max={5000}/>
-                <CustomSlider name="avgCost" label="Average order cost" max={10000}/>
-                <CustomSlider name="largeCost" label="Large order cost" max={20000}/>
+                    <Row justify="space-between">
+                        <Col>
+                            <Title level={3}>Trip points:</Title>
+                                <Form.List name="points"
+                                           initialValue={[{}]}
+                                >
+                                    {(fields, { add, remove }) => (
+                                        <>
+                                            {fields.map(field => (
+                                                <>
+                                                <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                    <Title level={3} key={field.key}>{field.name + 1}</Title>
+                                                    <Form.Item
+                                                        {...field}
+                                                        label="Point address"
+                                                        name={[field.name, 'address']}
+                                                        key={[field.fieldKey, 'address']}
+                                                        rules={[{ required: true, message: 'Please input point address!', }]}
+                                                        style={{ width: 250, display: 'inline-block' }}
+                                                    >
+                                                        <SearchComplete
+                                                            onSelect={(value) => {
+                                                                console.log(value);
+                                                                onAddressSelect(field.name, value);
+                                                            }}
+                                                            ymaps={ymaps}
+                                                        />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        {...field}
+                                                        label="Arrival date"
+                                                        name={[field.name, 'arrivalDate']}
+                                                        key={[field.fieldKey, 'arrivalDate']}
+                                                        rules={[
+                                                            { required: true, message: 'Please input arrival date!', }
+                                                        ]}
+                                                        style={{ width: 140}}
+                                                        tooltip="Time of arrival at this point"
+                                                    >
+                                                        <DatePicker
+                                                                    showTime
+                                                                    name={[field.name, 'arrivalDate']}
+                                                                    onChange={(value) => {
+                                                                        onArrivalDateChange(field.name, value)
+                                                                    }}
+                                                        />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        {...field}
+                                                        name={[field.name, 'dispatchDate']}
+                                                        key={[field.fieldKey, 'dispatchDate']}
+                                                        label="Dispatch date"
+                                                        rules={[
+                                                            { required: true, message: 'Please input dispatch date!', }
+                                                        ]}
+                                                        style={{ width: 140}}
+                                                        tooltip="Departure time from this point"
 
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Create journey
-                    </Button>
-                </Form.Item>
-            </Form>
+                                                    >
+                                                        <DatePicker showTime />
+                                                    </Form.Item>
+
+
+                                                    <MinusCircleOutlined
+                                                        key={field.key}
+                                                        onClick={() => {
+                                                            remove(field.name);
+                                                            onPointsListChange();
+                                                        }}
+                                                    />
+                                                </Space>
+                                                    <Form.Item
+                                                        key={[field.key, 'comment']}
+                                                        name={[field.name, 'comment']}
+                                                        label="Comment"
+                                                        tooltip="Comment on this point (tips how to find and so on)"
+                                                    >
+                                                        <Input.TextArea rows={1} />
+                                                    </Form.Item>
+                                                </>
+
+                                            ))}
+                                            <Form.Item>
+                                                <Button
+                                                    type="dashed"
+                                                    onClick={() => {
+                                                        add();
+                                                        onPointsListChange();
+                                                    }} block
+                                                    icon={<PlusOutlined />}>
+                                                    Add point
+                                                </Button>
+                                            </Form.Item>
+                                        </>
+                                    )}
+                                </Form.List>
+
+                        </Col>
+                        <Col>
+                            <JourneyMap
+                                onMapLoad={onMapLoad}
+                                onMapClick={onMapClick}
+                                pointsList={(pointsForm.getFieldsValue("points").points || [])}
+                            />
+                        </Col>
+                    </Row>
+                    <Title level={2} style={{ textAlign: 'center' }} className="mt-5"> Trip order info</Title>
+                    <Form.Item
+                        name="maxOrderCount"
+                        label="The number of orders"
+                        tooltip="Indicate the maximum number of orders that you can take on a trip"
+                        rules={[
+                            {
+                                required: true,
+                                type: 'number',
+                                min: 1,
+                            },
+                        ]}
+
+                    >
+                        <InputNumber />
+                    </Form.Item>
+                    <CustomSlider name="smallCost" label="Small order cost" max={5000}/>
+                    <CustomSlider name="avgCost" label="Average order cost" max={10000}/>
+                    <CustomSlider name="largeCost" label="Large order cost" max={20000}/>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            Create journey
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </YMaps>
         </div>
     )
 }

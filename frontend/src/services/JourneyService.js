@@ -12,6 +12,10 @@ class JourneyService {
     filterJourneys(dto) {
         return axios.post(JOURNEY_FILTER_API_URL, dto)
     }
+
+    createJourney(dto) {
+        return axios.post(JOURNEY_REST_API_URL + '/create', dto)
+    }
 }
 
 export default new JourneyService();

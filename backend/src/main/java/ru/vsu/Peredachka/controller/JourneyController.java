@@ -46,10 +46,11 @@ public class JourneyController {
         ).collect(Collectors.toList());
     }
 
-    @RequestMapping(method = POST, path = "")
-    public JourneyWithDependenciesDto createJourney(@RequestBody CreateOrUpdateJourneyDto dto) {
+    @RequestMapping(method = POST, path = "/create")
+        public JourneyWithDependenciesDto createJourney(@RequestBody CreateOrUpdateJourneyDto dto) {
+        var map = mapper.map(dto, Journey.class);
         var createdJourney = journeyService.createOrUpdateJourney(
-                mapper.map(dto, Journey.class)
+                map
         );
         return mapper.map(createdJourney, JourneyWithDependenciesDto.class);
     }
@@ -57,10 +58,5 @@ public class JourneyController {
     @RequestMapping(method = GET, path = "/{id}")
     public JourneyWithDependenciesDto getJourney(@PathVariable Long id) throws NotFoundException {
         return mapper.map(journeyService.findById(id), JourneyWithDependenciesDto.class);
-    }
-
-    @RequestMapping(method = DELETE, path = "/{id}")
-    public void deleteDevice(@PathVariable Long id) throws NotFoundException {
-        journeyService.deleteJourneyById(id);
     }
 }
