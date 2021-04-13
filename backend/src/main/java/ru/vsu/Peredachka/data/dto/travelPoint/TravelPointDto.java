@@ -3,6 +3,8 @@ package ru.vsu.Peredachka.data.dto.travelPoint;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -14,6 +16,6 @@ public class TravelPointDto {
     private String comment;
     private Double x, y;
     private String address;
-    private LocalDate dispatchDate;
-    private LocalDate arrivalDate;
+    private Date dispatchDate;
+    private Date arrivalDate;
 }

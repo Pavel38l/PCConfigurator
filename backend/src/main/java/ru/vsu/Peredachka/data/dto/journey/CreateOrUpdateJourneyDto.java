@@ -18,6 +18,7 @@ import java.util.List;
 
 @Data
 public class CreateOrUpdateJourneyDto {
+    private Long id;
     private Integer maxOrderCount;
     private List<CreateTravelPointDto> travelPoints;
     private List<JourneyCostCreateDto> journeyCosts;

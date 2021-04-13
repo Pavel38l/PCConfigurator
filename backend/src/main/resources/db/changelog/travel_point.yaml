@@ -40,12 +40,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: dispatch_date
-                  type: date
+                  type: timestamp
                   constraints:
                     nullable: true
               - column:
                   name: arrival_date
-                  type: date
+                  type: timestamp
                   constraints:
                     nullable: true
               - column:

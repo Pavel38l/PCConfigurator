@@ -10,6 +10,7 @@ import ru.vsu.Peredachka.data.entity.OrderSize;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JourneyCostCreateDto {
+    private Long id;
     private Long orderSizeId;
     private Double cost;
 }

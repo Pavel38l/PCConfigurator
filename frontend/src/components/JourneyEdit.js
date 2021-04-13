@@ -73,14 +73,20 @@ function JourneyEdit() {
                 };
             }),
             journeyCosts: [
-                {orderSizeId: 1, cost: values.smallCost},
-                {orderSizeId: 2, cost: values.avgCost},
-                {orderSizeId: 3, cost: values.largeCost},
+                {orderSize: {id: 3}, cost: values.smallCost},
+                {orderSize: {id: 2}, cost: values.avgCost},
+                {orderSize: {id: 3}, cost: values.largeCost},
             ],
-            ownerId: 1
+            owner: {id: 1}
         }
-        console.log(dto);
-        JourneyService.createJourney(dto).then();
+        if (values.points.length > 1) {
+            JourneyService.createJourney(dto).then();
+            //console.log(dto);
+        } else {
+            alert('You must create more then 1 travel point!');
+        }
+
+
 
     };
 

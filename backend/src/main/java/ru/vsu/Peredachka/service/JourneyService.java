@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.Peredachka.data.dto.journey.JourneyCriteriaDto;
 import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.entity.JourneyCost;
 import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.repository.JourneyRepository;
 import ru.vsu.Peredachka.data.repository.TravelPointRepository;
@@ -51,6 +52,12 @@ public class JourneyService {
     }
 
     public Journey createOrUpdateJourney(Journey journey) {
+        for (JourneyCost jc : journey.getJourneyCosts()) {
+            jc.setJourney(journey);
+        }
+        for (TravelPoint tp : journey.getTravelPoints()) {
+            tp.setJourney(journey);
+        }
         return journeyRepository.save(journey);
     }
 
