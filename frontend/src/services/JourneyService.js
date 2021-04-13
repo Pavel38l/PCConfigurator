@@ -1,17 +1,22 @@
 import axios from 'axios'
 
-const JOURNEY_REST_API_URL = "http://localhost:8080/api/v1/journey";
-const JOURNEY_FILTER_API_URL = "http://localhost:8080/api/v1/journey/filter"
+
 
 class JourneyService {
-
+    httpClient = axios.create({
+        baseURL: "http://localhost:8080/api/v1/journey"
+    })
     getJourneys() {
-        return axios.get(JOURNEY_REST_API_URL);
+        return this.httpClient.get();
     }
 
     filterJourneys(dto) {
-        return axios.post(JOURNEY_FILTER_API_URL, dto)
+        return this.httpClient.post("/filter", dto);
     }
+    deleteJourney(id){
+        return this.httpClient.delete(`/${id}`)
+    } 
+    
 }
 
 export default new JourneyService();
