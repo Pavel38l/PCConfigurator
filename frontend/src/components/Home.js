@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import {Map, YMaps} from "react-yandex-maps";
 import 'antd/dist/antd.css';
+import { UserOutlined } from '@ant-design/icons';
 import {
     Form,
     Input,
@@ -15,7 +16,14 @@ import {
     Switch,
     Row,
     Col,
+    Card,
+    Timeline,
+    Avatar,
+    Typography,
+    Space
 } from 'antd';
+
+const { Text, Link } = Typography;
 
 class Home extends React.Component {
     formRef = React.createRef();
@@ -89,6 +97,44 @@ class Home extends React.Component {
             zoom: 5
         };
         const journeys = this.state.journeys;
+        const journeyCards = journeys.map(
+            journey => {
+                return (
+                    <Card
+                        key={journey.id}
+                        title={journey.startTravelPoint.pointName + " - " + journey.endTravelPoint.pointName}
+                        extra={<Button href={"/journey/" + journey.id} primar>Details</Button>}
+                    >
+                        <Row justify="space-between">
+                            <Col span={8}>
+                                <Timeline mode={'left'}>
+                                    <Timeline.Item label={journey.startTravelPoint.dispatchDate}>{journey.startTravelPoint.address}</Timeline.Item>
+                                    <Timeline.Item label={journey.endTravelPoint.arrivalDate}>{journey.endTravelPoint.address}</Timeline.Item>
+                                </Timeline>
+                            </Col>
+                            <Col>
+                                <Space>
+                                    <a href={"/profile/" + journey.owner.id}><Avatar  size="large">{journey.owner.firstName}</Avatar></a>
+                                    <Space direction="vertical">
+                                        <Text strong>{journey.owner.email}</Text>
+                                        <Text>{(journey.owner.firstName ? journey.owner.firstName : '')
+                                        + " " + (journey.owner.lastName ? journey.owner.lastName : '')}</Text>
+                                    </Space>
+                                </Space>
+                            </Col>
+                            <Col>
+                                <Text>Max parcel count: {journey.maxOrderCount}</Text>
+                            </Col>
+                            <Col>
+                                <p>Small parcel: <Text strong>{journey.journeyCosts[0].cost} $/km</Text></p>
+                                <p>Avg parcel: <Text strong>{journey.journeyCosts[1].cost} $/km</Text></p>
+                                <p>Large parcel: <Text strong>{journey.journeyCosts[2].cost} $/km</Text></p>
+                            </Col>
+                        </Row>
+                    </Card>
+                )
+            }
+        )
         const journeyTable = journeys.map(
             journey => {
                 return (
@@ -261,6 +307,9 @@ class Home extends React.Component {
                         {journeyTable}
                         </tbody>
                     </table>
+                    <Space direction="vertical">
+                        {journeyCards}
+                    </Space>
                 </div>
 
             </Container>

@@ -15,6 +15,7 @@ public class CreateTravelPointDto {
     private String comment;
     private Double x, y;
     private String address;
+    private String pointName;
     private Date dispatchDate;
     private Date arrivalDate;
 
