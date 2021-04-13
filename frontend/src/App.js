@@ -14,6 +14,8 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import Profile from "./components/Profile";
+import JourneyEdit from "./components/JourneyEdit";
 
 class App extends React.Component {
     constructor(props) {
@@ -34,8 +36,11 @@ class App extends React.Component {
               <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/users" component={UserComponent} />
+                  <Route exact path="/profile/:id" component={Profile} />
+                  <Route exact path="/journeyEdit" component={JourneyEdit} />
                   <Route exact path="/login" render={()=><Login upTitle={this.upTitle}/>} />
                   <Route exact path="/registration" component={Registration} />
+
               </Switch>
           </Router>
       </div>
