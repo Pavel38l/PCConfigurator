@@ -19,6 +19,8 @@ class Profile extends React.Component {
         this.state = {
             user: null,
             edit: true,
+            journeys: [],
+            orders: [],
         }
     }
 
@@ -31,6 +33,22 @@ class Profile extends React.Component {
             });
             console.log(this.state.user)
         })
+        UserService.getUserOrders(this.props.userId).then((response) => {
+            this.setState({
+                orders: response.data
+
+            });
+            console.log(this.state.orders)
+        })
+        UserService.getUserJourneys(this.props.userId).then((response) => {
+            this.setState({
+                journeys: response.data
+            });
+            console.log(this.state.journeys)
+
+        })
+
+
     }
     toggleEdit = () => {
         this.setState(prev => ({
@@ -55,10 +73,84 @@ class Profile extends React.Component {
             })
 
     }
+    deliteJourney = id => {
+        axios.delete(`/api/v1/journey/${id}`)
+    }
 
     render() {
         const { TabPane } = Tabs;
+        const journeys = this.state.journeys;
+        const orders = this.state.orders;
         const user = this.state.user;
+        const journeyTable = journeys.map(
+            journey => {
+                return (
+                    <tr key={journey.id}>
+                        <td>{journey.startTravelPoint.address}</td>
+
+                        <td>{journey.endTravelPoint.address}</td>
+
+                        <td>{journey.startTravelPoint.dispatchDate}</td>
+                        <td>{journey.startTravelPoint.dispatchDate}</td>
+                        <td>{journey.maxOrderCount}</td>
+                        {
+                            journey.journeyCosts.map(
+                                cost =>
+                                    <td key={cost.id}>
+                                        {cost.cost}
+                                    </td>
+                            )
+                        }
+                        <td>
+                            {(this.props.userId === jwtdecoder(localStorage.getItem("token")).jti && !this.state.edit) ? (
+                                <Button variant="outline-success" className="float-right" danger
+                                >
+                                    Delete
+                                </Button>
+                            ) : (
+                                <Button variant="outline-success" className="float-right"
+                                >
+                                    Details
+                                </Button>
+                            )
+                            }
+                        </td>
+
+
+
+                    </tr>
+                )
+            }
+
+        )
+        const ordersTable = orders.map(
+            orders => {
+                return (
+                    <tr key={orders.id}>
+                        <td>{orders.arrivalPoint.address}</td>
+                        <td>{orders.dispatchPoint.address}</td>
+                        <td>{orders.orderValue}</td>
+                        <td>{orders.orderStatus.name}</td>
+                        <td>
+                            {this.props.userId === jwtdecoder(localStorage.getItem("token")).jti && !this.state.edit ? (
+                                <Button variant="outline-success" className="float-right" danger
+                                >
+                                    Delite
+                                </Button>
+                            ) : (
+                                <Button variant="outline-success" className="float-right"
+                                >
+                                    Details
+                                </Button>
+                            )
+                            }
+
+                        </td>
+                    </tr>
+                )
+            }
+
+        )
         if (this.state.edit) {
             return user ? (
                 <Container className="mt-5">
@@ -74,7 +166,7 @@ class Profile extends React.Component {
                                 </Tooltip>
                             ) : null
                             }
-                            
+
                             <p>Name: {user.firstName} {user.lastName}</p>
                             <p>Gender: {user.sex}</p>
                             <p>Date of birthday: {user.dateOfBirth.format("DD-MM-yyyy")}</p>
@@ -85,11 +177,49 @@ class Profile extends React.Component {
 
                         </TabPane>
                         <TabPane tab="Journeys" key="2">
-                            Journeys
-                </TabPane>
+                            <Container className="mt-5">
+                                <div>
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td> From </td>
+                                                <td> To </td>
+                                                <td> First point dispatch date </td>
+                                                <td> Last point arrival Date </td>
+                                                <td> Max order count</td>
+                                                <td> Small order cost </td>
+                                                <td> Avg order cost </td>
+                                                <td> Max order cost </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {journeyTable}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </Container>
+                        </TabPane>
                         <TabPane tab="Orders" key="3">
-                            Orders
-                </TabPane>
+                            <Container className="mt-5">
+                                <div>
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td> From </td>
+                                                <td> To </td>
+                                                <td> Order Value </td>
+                                                <td> Order Status </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {ordersTable}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </Container>
+                        </TabPane>
                     </Tabs>
                 </Container>
             ) : (<div>loading...</div>);
@@ -149,11 +279,49 @@ class Profile extends React.Component {
 
                         </TabPane>
                         <TabPane tab="Journeys" key="2">
-                            Journeys
-                </TabPane>
+                            <Container className="mt-5">
+                                <div>
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td> From </td>
+                                                <td> To </td>
+                                                <td> First point dispatch date </td>
+                                                <td> Last point arrival Date </td>
+                                                <td> Max order count</td>
+                                                <td> Small order cost </td>
+                                                <td> Avg order cost </td>
+                                                <td> Max order cost </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {journeyTable}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </Container>
+                        </TabPane>
                         <TabPane tab="Orders" key="3">
-                            Orders
-                </TabPane>
+                            <Container className="mt-5">
+                                <div>
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td> From </td>
+                                                <td> To </td>
+                                                <td> Order Value </td>
+                                                <td> Order Status </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {ordersTable}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </Container>
+                        </TabPane>
                     </Tabs>
                 </Container >
             );

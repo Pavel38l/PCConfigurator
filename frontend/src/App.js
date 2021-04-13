@@ -15,6 +15,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import ProfileTabs from './components/profile/profileTabs';
 
 class App extends React.Component {
     constructor(props) {
@@ -24,28 +25,28 @@ class App extends React.Component {
             title: title
         }
     }
-    upTitle = (title) =>{
-        this.setState({title:jwtdecoder(title).sub})
+    upTitle = (title) => {
+        this.setState({ title: jwtdecoder(title).sub })
     }
-    render(){
+    render() {
         return (
 
 
-          <Router>
-              <Header title={this.state.title} />
-              <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route exact path="/users" component={UserComponent} />
-                  <Route exact path="/login" render={()=><Login upTitle={this.upTitle}/>} />
-                  <Route exact path="/registration" component={Registration} />
-                  <Route exact path="/profile/:id" component={ProfileWrapper} />
-              </Switch>
-          </Router>
+            <Router>
+                <Header title={this.state.title} />
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/users" component={UserComponent} />
+                    <Route exact path="/login" render={() => <Login upTitle={this.upTitle} />} />
+                    <Route exact path="/registration" component={Registration} />
+                    <Route exact path="/profile/:id"  ><><ProfileTabs></ProfileTabs></></Route>
+                </Switch>
+            </Router>
 
 
 
 
-     );
+        );
     }
 }
 export default App;

@@ -38,7 +38,7 @@ class Login extends Component {
                     this.setState({ redirect: true });
                 }
                 else
-                    alert("Неверный логин или пароль");
+                    alert("wrong login or password");
 
             })
 
