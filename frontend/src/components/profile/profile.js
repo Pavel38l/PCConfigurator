@@ -51,7 +51,7 @@ const Profile = () => {
     const updateUser = { ...user, ...data };
     console.log("update user ", updateUser);
     const res = await axios.post(
-      `http://localhost:8080/api/v1/user/update`,
+      `http://localhost:8080/api/v1/user/update`, //поменять
       updateUser
     );
     console.log("update res ", res);
@@ -66,8 +66,8 @@ const Profile = () => {
       {!edit ? (
         <Container>
           <Space align="baseline">
-            <h3>Profile</h3>
-            {id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            
+            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
               <Tooltip title="Edit">
                 <Button
                   type="primary"

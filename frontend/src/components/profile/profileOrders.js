@@ -58,7 +58,7 @@ const ProfileOrders = () => {
               Details
             </Button>
 
-            {id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
               <Button variant="outline-success" className="float-right" danger onClick={() => deleteOrder(orders.id) }>
                 Delete
               </Button>
@@ -79,7 +79,7 @@ const ProfileOrders = () => {
 
   return (
     <>
-      <h3>Profile</h3>
+      
 
       <Container className="mt-5">
         <div>

@@ -32,14 +32,17 @@ const ProfileJourneys = () => {
   const { id } = useParams();
   const [form] = useForm();
   const [edit, setEdit] = useState(false);
+  const load = async () => {
+    const response = await UserService.getUserJourneys(id);
+    setJourneys(response.data);
+  };
   const deleteJourney = async (id) => {
     try {
       await JourneyService.deleteJourney(id);
-      this.load();
+      await load();
+    } catch (error) {
+      console.error("delete journey: ", error);
     }
-    catch (error){
-        console.error("delete journey: ", error);
-    } 
   };
   const journeyTable = journeys.map((journey) => {
     return (
@@ -65,8 +68,13 @@ const ProfileJourneys = () => {
               Details
             </Button>
 
-            {id === jwtdecoder(localStorage.getItem("token")).jti ? (
-              <Button variant="outline-success" className="float-right" danger onClick={() => deleteJourney(journey.id) }>
+            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+              <Button
+                variant="outline-success"
+                className="float-right"
+                danger
+                onClick={() => deleteJourney(journey.id)}
+              >
                 Delete
               </Button>
             ) : null}
@@ -77,16 +85,12 @@ const ProfileJourneys = () => {
   });
 
   useEffect(() => {
-    const load = async () => {
-      const response = await UserService.getUserJourneys(id);
-      setJourneys(response.data);
-    };
     load();
   }, [id]);
-
+  //поменять
   return (
     <>
-      <h3>Profile</h3>
+      
 
       <Container className="mt-5">
         <div>
