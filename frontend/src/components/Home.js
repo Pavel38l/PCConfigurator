@@ -22,6 +22,7 @@ import {
     Typography,
     Space
 } from 'antd';
+import RatingComponent from "./home/RatingComponent";
 
 const { Text, Link } = Typography;
 
@@ -103,13 +104,17 @@ class Home extends React.Component {
                     <Card
                         key={journey.id}
                         title={journey.startTravelPoint.pointName + " - " + journey.endTravelPoint.pointName}
-                        extra={<Button href={"/journey/" + journey.id} primar>Details</Button>}
+                        extra={<Button href={"/journey/" + journey.id}>Details</Button>}
                     >
                         <Row justify="space-between">
                             <Col span={8}>
                                 <Timeline mode={'left'}>
-                                    <Timeline.Item label={journey.startTravelPoint.dispatchDate}>{journey.startTravelPoint.address}</Timeline.Item>
-                                    <Timeline.Item label={journey.endTravelPoint.arrivalDate}>{journey.endTravelPoint.address}</Timeline.Item>
+                                    <Timeline.Item label={new Date(journey.startTravelPoint.dispatchDate).toLocaleString()}>
+                                        {journey.startTravelPoint.address}
+                                    </Timeline.Item>
+                                    <Timeline.Item label={new Date(journey.endTravelPoint.arrivalDate).toLocaleString()}>
+                                        {journey.endTravelPoint.address}
+                                    </Timeline.Item>
                                 </Timeline>
                             </Col>
                             <Col>
@@ -119,8 +124,10 @@ class Home extends React.Component {
                                         <Text strong>{journey.owner.email}</Text>
                                         <Text>{(journey.owner.firstName ? journey.owner.firstName : '')
                                         + " " + (journey.owner.lastName ? journey.owner.lastName : '')}</Text>
+                                        <Text>Rating: <RatingComponent value={journey.owner.rating} /></Text>
                                     </Space>
                                 </Space>
+
                             </Col>
                             <Col>
                                 <Text>Max parcel count: {journey.maxOrderCount}</Text>
@@ -290,23 +297,6 @@ class Home extends React.Component {
             </Container>
             <Container className="mt-5">
                 <div>
-                    <table className = "table table-striped">
-                        <thead>
-                            <tr>
-                            <td> From </td>
-                            <td> To </td>
-                            <td> First point dispatch date </td>
-                            <td> Last point arrival Date </td>
-                            <td> Max order count</td>
-                            <td> Small order cost </td>
-                            <td> Avg order cost </td>
-                            <td> Max order cost </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {journeyTable}
-                        </tbody>
-                    </table>
                     <Space direction="vertical">
                         {journeyCards}
                     </Space>
