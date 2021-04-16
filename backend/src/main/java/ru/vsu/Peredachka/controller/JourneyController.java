@@ -65,4 +65,9 @@ public class JourneyController {
     public JourneyWithDependenciesDto getJourney(@PathVariable Long id) throws NotFoundException {
         return mapper.map(journeyService.findById(id), JourneyWithDependenciesDto.class);
     }
+
+    @RequestMapping(method = DELETE, path = "/{id}")
+    public void deleteDevice(@PathVariable Long id) throws NotFoundException {
+        journeyService.deleteJourneyById(id);
+    }
 }
