@@ -29,6 +29,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, Университетская площадь, 1
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
         - insert:
             columns:
@@ -56,6 +59,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, площадь Ленина, 10
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
         - insert:
             columns:
@@ -83,6 +89,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, Университетская площадь, 1
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
         - insert:
             columns:
@@ -110,6 +119,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, площадь Ленина, 1
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
         - insert:
             columns:
@@ -137,6 +149,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, проспект Революции, 55
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
 
         - insert:
@@ -165,6 +180,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Москва, Ивановская площадь
+              - column:
+                  name: point_name
+                  value: Москва
             tableName: travel_point
 
         - insert:
@@ -193,6 +211,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Соединённые Штаты Америки, округ Колумбия, Вашингтон, Pennsylvania Avenue Northwest, 1600
+              - column:
+                  name: point_name
+                  value: округ Колумбия
             tableName: travel_point
 
         - insert:
@@ -221,6 +242,9 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, Университетская площадь, 1
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point
 
         - insert:
@@ -249,4 +273,7 @@ databaseChangeLog:
               - column:
                   name: address
                   value: Россия, Воронеж, Красноармейская улица, 52Д
+              - column:
+                  name: point_name
+                  value: Воронеж
             tableName: travel_point

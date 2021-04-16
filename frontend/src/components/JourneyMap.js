@@ -56,9 +56,6 @@ function JourneyMap(props) {
             onClick={props.onMapClick.bind(this)}
             onLoad={props.onMapLoad}
         >
-            <SearchControl
-                options={{ provider: 'yandex#search' }}
-            />
             {renderPoints()}
         </Map>
     );

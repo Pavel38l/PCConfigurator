@@ -53,6 +53,11 @@ databaseChangeLog:
                   type: varchar(500)
                   constraints:
                     nullable: true
+              - column:
+                  name: point_name
+                  type: varchar(500)
+                  constraints:
+                    nullable: true
 
         - addForeignKeyConstraint:
             constraintName: fk_journey_id

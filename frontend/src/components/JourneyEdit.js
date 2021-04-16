@@ -1,4 +1,4 @@
-import { YMaps, Map, SearchControl, Placemark, Polyline } from 'react-yandex-maps';
+import { YMaps } from 'react-yandex-maps';
 import React, { useState, useEffect } from "react";
 import 'antd/dist/antd.css';
 import '../App.css';
@@ -12,14 +12,14 @@ import {
     Row,
     Col,
     Space,
-    Slider
+    message
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import SearchComplete from "./SearchComplete";
 import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
+import jwtdecoder from "jwt-decode";
 const { Title } = Typography;
 
 
@@ -33,7 +33,9 @@ function JourneyEdit() {
         ymaps.geocode(position)
             .then(result => {
                 let newPoint = result.geoObjects.get(0).properties.getAll();
+                console.log(newPoint);
                 newPoint.coordinates = position;
+                newPoint.pointName = newPoint.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName;
                 addOutside(newPoint);
                 onPointsListChange();
             });
@@ -49,6 +51,7 @@ function JourneyEdit() {
             .then(result => {
                 let newPoint = result.geoObjects.get(0).properties.getAll();
                 newPoint.coordinates = result.geoObjects.get(0).geometry.getCoordinates();
+                newPoint.pointName = newPoint.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName;
                 const pointsList = pointsForm.getFieldsValue("points").points || [];
                 const point = pointsList[index];
                 point.geoData = newPoint;
@@ -67,6 +70,7 @@ function JourneyEdit() {
                     x: point.geoData.coordinates[0],
                     y: point.geoData.coordinates[1],
                     address: point.geoData.text,
+                    pointName: point.geoData.pointName,
                     dispatchDate: point.dispatchDate.format(),
                     arrivalDate: point.arrivalDate.format(),
                     pointIndex: index,
@@ -77,10 +81,13 @@ function JourneyEdit() {
                 {orderSize: {id: 2}, cost: values.avgCost},
                 {orderSize: {id: 3}, cost: values.largeCost},
             ],
-            owner: {id: 1}
+            owner: {id: jwtdecoder(localStorage.getItem("token")).jti}
         }
         if (values.points.length > 1) {
-            JourneyService.createJourney(dto).then();
+            JourneyService.createJourney(dto).then(
+                message.success('Journey created!')
+            );
+
             //console.log(dto);
         } else {
             alert('You must create more then 1 travel point!');
