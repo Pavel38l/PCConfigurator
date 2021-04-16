@@ -1,6 +1,7 @@
 package ru.vsu.Peredachka.controller;
 
 import javassist.NotFoundException;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +10,11 @@ import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.journey.CreateOrUpdateJourneyDto;
 import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.entity.JourneyCost;
+import ru.vsu.Peredachka.data.entity.TravelPoint;
 import ru.vsu.Peredachka.data.mapper.JourneyInfoCostMapper;
 import ru.vsu.Peredachka.service.JourneyService;
+import ru.vsu.Peredachka.service.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +28,14 @@ public class JourneyController {
     private final JourneyService journeyService;
     private final ModelMapper mapper;
     private final JourneyInfoCostMapper journeyMapper;
+    private final UserService userService;
 
     @Autowired
-    public JourneyController(JourneyService journeyService, ModelMapper mapper, JourneyInfoCostMapper journeyMapper) {
+    public JourneyController(JourneyService journeyService, ModelMapper mapper, JourneyInfoCostMapper journeyMapper, UserService userService) {
         this.journeyService = journeyService;
         this.mapper = mapper;
         this.journeyMapper = journeyMapper;
+        this.userService = userService;
     }
 
     @RequestMapping(method = POST, path = "/filter")
@@ -46,10 +52,11 @@ public class JourneyController {
         ).collect(Collectors.toList());
     }
 
-    @RequestMapping(method = POST, path = "")
-    public JourneyWithDependenciesDto createJourney(@RequestBody CreateOrUpdateJourneyDto dto) {
+    @SneakyThrows
+    @RequestMapping(method = POST, path = "/create")
+        public JourneyWithDependenciesDto createJourney(@RequestBody Journey journey) {
         var createdJourney = journeyService.createOrUpdateJourney(
-                mapper.map(dto, Journey.class)
+                journey
         );
         return mapper.map(createdJourney, JourneyWithDependenciesDto.class);
     }

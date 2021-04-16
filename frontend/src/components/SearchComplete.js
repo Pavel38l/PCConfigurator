@@ -1,65 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { AutoComplete } from 'antd';
-const { Option } = AutoComplete;
+import { AutoComplete, Select } from 'antd';
 
+const { Option } = Select;
 const _ = require('lodash');
 
-class SearchComplete extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            result: []
+
+const SearchComplete = ({ onSelect, onChange, ymaps, value }) => {
+    const [results, setResults] = useState([]);
+    const searchWithDebounce = _.debounce(async (ymaps, changedValue, setResults) => {
+        if (!changedValue) {
+            setResults([]);
+            return;
         }
-    }
+        const ans = await ymaps.search(changedValue);
+        //console.log(ans.geoObjects.toArray()[0].properties.getAll());
+        const localRes = ans.geoObjects.toArray().map((addr) => {
+            const point = addr.properties.getAll();
+            point.coordinates = ans.geoObjects.get(0).geometry.getCoordinates();
+            return point;
+        });
+        console.log(localRes);
+        setResults(localRes);
+    }, 200);
 
-    render () {
-
-        const handleSearch = (value) => {
-            if (!value) {
-                this.setState({result: []});
-                return;
-            }
-            const searchControl = new this.props.ymaps.control.SearchControl({
-                options: {
-                    provider: 'yandex#search'
-                }
-            });
-            const promise = searchControl.search(value);
-            promise.then( (ans) => {
-                //console.log(ans.geoObjects.toArray()[0].properties.getAll());
-                let localRes = ans.geoObjects.toArray().map((addr) => addr.properties.getAll());
-                localRes = Array.from(new Set(localRes));
-                //console.log(localRes);
-                this.setState({result: localRes})
-            })
-        };
-        const handleWithDelay = (value) => {
-            _.delay(handleSearch, 100, value);
-        }
-        const results = this.state.result;
-        let i = 0;
-        return (
-            <AutoComplete
-
-                onSearch={handleWithDelay}
-                onChange={this.props.onChange}
-                placeholder="Input address"
-            >
-                {results.map((address) => (
-                    <Option key={i++} value={address.address}>
-                        <span>{address.name}</span><br/>
-                        <span style={{
-                            color: "grey",
-                            fontSize: "90%"
-                        }}>{address.address}</span>
-                    </Option>
-                ))}
-            </AutoComplete>
-        );
-    }
-
+    return (
+        <Select
+            showSearch
+            onSelect={onSelect}
+            onSearch={value => searchWithDebounce(ymaps, value, setResults)}
+            onChange={onChange}
+            placeholder="Input address"
+            filterOption={false}
+            value={value}
+        >
+            {results.map((address, i) => (
+                <Option key={`${i}-option`} value={address.address}>
+                     <span style={{
+                         fontSize: "95%"
+                     }}>{address.address}</span>
+                    <br/>
+                    <span style={{
+                        color: "grey",
+                    }}>{address.name}</span>
+                </Option>
+            ))}
+        </Select>
+    );
 }
 
 export default SearchComplete;

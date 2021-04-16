@@ -4,8 +4,6 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import jwtdecoder from 'jwt-decode';
-import { Link, Redirect } from 'react-router-dom';
-
 
 class Header extends React.Component {
     constructor(props) {
@@ -38,8 +36,8 @@ class Header extends React.Component {
     }
     renderUserState() {
         if (localStorage.getItem("token")) {
-        //   this.state.title = jwtdecoder(localStorage.getItem("token")).sub;
-         //   this.setState({title: jwtdecoder(localStorage.getItem("token")).sub});
+        //  this.state.title = jwtdecoder(localStorage.getItem("token")).sub;
+            // this.setState({title: jwtdecoder(localStorage.getItem("token")).sub});
             return (
                 <Nav>
                     <NavDropdown title={this.props.title} id="collasible-nav-dropdown" className="mr-5">

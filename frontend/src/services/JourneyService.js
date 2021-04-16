@@ -13,10 +13,14 @@ class JourneyService {
     filterJourneys(dto) {
         return this.httpClient.post("/filter", dto);
     }
+
     deleteJourney(id){
         return this.httpClient.delete(`/${id}`)
-    } 
-    
+    }
+
+    createJourney(dto) {
+        return this.httpClient.post("/create", dto);
+    }
 }
 
 export default new JourneyService();

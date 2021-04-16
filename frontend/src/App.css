@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.App-container {
+  padding: 10%;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .Align {
   text-align: center;
 }
