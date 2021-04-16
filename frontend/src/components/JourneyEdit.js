@@ -129,7 +129,7 @@ function JourneyEdit() {
     }
 
     return (
-        <div className="App-container">
+        <div>
             <YMaps
                 query={{ lang: "ru_RU", load: "package.full", apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff" }}
             >
@@ -160,7 +160,7 @@ function JourneyEdit() {
                                                         name={[field.name, 'address']}
                                                         key={[field.fieldKey, 'address']}
                                                         rules={[{ required: true, message: 'Please input point address!', }]}
-                                                        style={{ width: 250, display: 'inline-block' }}
+                                                        style={{ width: 300, display: 'inline-block' }}
                                                     >
                                                         <SearchComplete
                                                             onSelect={(value) => {
@@ -178,7 +178,6 @@ function JourneyEdit() {
                                                         rules={[
                                                             { required: true, message: 'Please input arrival date!', }
                                                         ]}
-                                                        style={{ width: 140}}
                                                         tooltip="Time of arrival at this point"
                                                     >
                                                         <DatePicker
@@ -197,7 +196,6 @@ function JourneyEdit() {
                                                         rules={[
                                                             { required: true, message: 'Please input dispatch date!', }
                                                         ]}
-                                                        style={{ width: 140}}
                                                         tooltip="Departure time from this point"
 
                                                     >

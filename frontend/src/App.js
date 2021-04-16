@@ -40,8 +40,8 @@ class App extends React.Component {
               render={() => <Login upTitle={this.upTitle} />}
             />
             <Route exact path="/registration" component={Registration} />
+            <Route exact path="/journeyEdit" component={JourneyEdit} />
             <Route exact path="/profile/:id">
-            <Route exact path="/journeyEdit" component={JourneyEdit} />  
               <>
                 <ProfileTabs></ProfileTabs>
               </>

@@ -233,7 +233,7 @@ class Home extends React.Component {
                                  <InputNumber />
                              </Form.Item>
                              <Form.Item
-                                 name="orderCount"
+                                 name="maxOrderCount"
                                  label="The number of orders"
                                  tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
                                  rules={[

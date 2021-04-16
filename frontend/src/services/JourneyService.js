@@ -19,7 +19,7 @@ class JourneyService {
     }
 
     createJourney(dto) {
-        return axios.post(JOURNEY_REST_API_URL + '/create', dto)
+        return this.httpClient.post("/create", dto);
     }
 }
 
