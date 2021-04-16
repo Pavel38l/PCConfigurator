@@ -3,21 +3,23 @@ import axios from 'axios'
 const USERS_REST_API_URL = "http://localhost:8080/api/v1/user";
 
 class UserService {
-
+    httpClient = axios.create({
+        baseURL: "http://localhost:8080/api/v1/user"
+    })
     getUsers() {
-        return axios.get(USERS_REST_API_URL);
+        return this.httpClient.get();
     }
 
     getUserById(id) {
-        return axios.get(USERS_REST_API_URL + "/" + id);
+        return this.getUserById.get("/" + id);
     }
   
     getUserJourneys(id){
-        return axios.get(USERS_REST_API_URL + "/" + id + "/journeys")
+        return this.httpClient.get("/" + id + "/journeys")
     }
   
     getUserOrders(id){
-        return axios.get(USERS_REST_API_URL + "/" + id + "/orders")
+        return this.httpClient.get("/" + id + "/orders")
     }
     
 }

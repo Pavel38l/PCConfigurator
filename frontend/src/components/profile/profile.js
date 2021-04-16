@@ -65,6 +65,16 @@ const Profile = () => {
     <>
       {!edit ? (
         <Container>
+          
+          <Descriptions labelStyle={{fontWeight:600}} >
+            <Descriptions.Item label="Name">
+              {user.firstName} {user.lastName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Gender">{user.sex}</Descriptions.Item>
+            <Descriptions.Item label="Date of birthday">
+              {user.dateOfBirth.format("DD-MM-yyyy")}
+            </Descriptions.Item>
+          </Descriptions>
           <Space align="baseline">
             
             {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
@@ -79,15 +89,6 @@ const Profile = () => {
               </Tooltip>
             ) : null}
           </Space>
-          <Descriptions labelStyle={{fontWeight:600}} layout="vertical">
-            <Descriptions.Item label="Name">
-              {user.firstName} {user.lastName}
-            </Descriptions.Item>
-            <Descriptions.Item label="Gender">{user.sex}</Descriptions.Item>
-            <Descriptions.Item label="Date of birthday">
-              {user.dateOfBirth.format("DD-MM-yyyy")}
-            </Descriptions.Item>
-          </Descriptions>
         </Container>
       ) : (
         <Container>
