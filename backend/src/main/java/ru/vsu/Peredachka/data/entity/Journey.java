@@ -20,17 +20,17 @@ public class Journey extends AbstractEntity {
     private Long id;
     private Integer maxOrderCount;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "ownerId")
     private User owner;
 
     @OneToMany(mappedBy = "journey")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "journey")
+    @OneToMany(mappedBy = "journey", cascade = {CascadeType.PERSIST})
     private List<JourneyCost> journeyCosts;
 
-    @OneToMany(mappedBy = "journey")
+    @OneToMany(mappedBy = "journey", cascade = {CascadeType.PERSIST})
     @OrderBy("pointIndex asc")
     private List<TravelPoint> travelPoints;
 }

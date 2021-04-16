@@ -13,10 +13,14 @@ class JourneyService {
     filterJourneys(dto) {
         return this.httpClient.post("/filter", dto);
     }
+
     deleteJourney(id){
         return this.httpClient.delete(`/${id}`)
-    } 
-    
+    }
+
+    createJourney(dto) {
+        return axios.post(JOURNEY_REST_API_URL + '/create', dto)
+    }
 }
 
 export default new JourneyService();

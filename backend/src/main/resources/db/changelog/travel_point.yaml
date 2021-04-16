@@ -40,16 +40,21 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: dispatch_date
-                  type: date
+                  type: timestamp
                   constraints:
                     nullable: true
               - column:
                   name: arrival_date
-                  type: date
+                  type: timestamp
                   constraints:
                     nullable: true
               - column:
                   name: address
+                  type: varchar(500)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: point_name
                   type: varchar(500)
                   constraints:
                     nullable: true
