@@ -10,6 +10,14 @@ class JourneyService {
         return this.httpClient.get();
     }
 
+    getJourneysFull() {
+        return this.httpClient.get("/full");
+    }
+
+    getJourney(id){
+        return this.httpClient.get(`/${id}`)
+    }
+
     filterJourneys(dto) {
         return this.httpClient.post("/filter", dto);
     }
