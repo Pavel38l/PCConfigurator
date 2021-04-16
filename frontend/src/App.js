@@ -8,7 +8,6 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import jwtdecoder from "jwt-decode";
 import Registration from "./components/Registration";
-import ProfileWrapper from "./components/Profile";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfileTabs from "./components/profile/profileTabs";
 import PageContainer from "./components/Container";
