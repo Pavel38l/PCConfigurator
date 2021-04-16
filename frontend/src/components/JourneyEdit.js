@@ -1,4 +1,4 @@
-import { YMaps, Map, SearchControl, Placemark, Polyline } from 'react-yandex-maps';
+import { YMaps } from 'react-yandex-maps';
 import React, { useState, useEffect } from "react";
 import 'antd/dist/antd.css';
 import '../App.css';
@@ -12,15 +12,14 @@ import {
     Row,
     Col,
     Space,
-    Slider,
     message
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import SearchComplete from "./SearchComplete";
 import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
+import jwtdecoder from "jwt-decode";
 const { Title } = Typography;
 
 
@@ -82,7 +81,7 @@ function JourneyEdit() {
                 {orderSize: {id: 2}, cost: values.avgCost},
                 {orderSize: {id: 3}, cost: values.largeCost},
             ],
-            owner: {id: 1}
+            owner: {id: jwtdecoder(localStorage.getItem("token")).jti}
         }
         if (values.points.length > 1) {
             JourneyService.createJourney(dto).then(
