@@ -105,3 +105,40 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: journey
             validate: true
+  - changeSet:
+      id: 21
+      author: Demchenko Danill
+      changes:
+        - dropForeignKeyConstraint:
+           baseTableName: order
+           constraintName: fk_order_journey
+        - dropForeignKeyConstraint:
+            baseTableName: order
+            constraintName: fk_order_travel_dispatch_point
+        - dropForeignKeyConstraint:
+            baseTableName: order
+            constraintName: fk_order_travel_arrival_point
+        - addForeignKeyConstraint:
+           constraintName: fk_order_journey
+           baseColumnNames: journey_id
+           baseTableName: order
+           referencedColumnNames: id
+           referencedTableName: journey
+           onDelete:  CASCADE
+           validate: true
+        - addForeignKeyConstraint:
+            constraintName: fk_order_travel_dispatch_point
+            baseColumnNames: dispatch_point_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            onDelete:  CASCADE
+            validate: true
+        - addForeignKeyConstraint:
+            constraintName: fk_order_travel_arrival_point
+            baseColumnNames: arrival_point_id
+            baseTableName: order
+            referencedColumnNames: id
+            referencedTableName: travel_point
+            onDelete:  CASCADE
+            validate: true

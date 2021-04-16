@@ -11,15 +11,15 @@ class UserComponent extends React.Component {
 
     componentDidMount() {
         UserService.getUsers().then((response) => {
-            this.setState({users: response.data})
+            this.setState({ users: response.data })
         })
     }
 
     render() {
         return (
             <div>
-                <h1 className = "text-center">Users List</h1>
-                <table className = "table table-striped">
+                <h1 className="text-center">Users List</h1>
+                <table className="table table-striped">
                     <thead>
                         <tr>
                             <td> User id </td>
@@ -36,7 +36,7 @@ class UserComponent extends React.Component {
                         {
                             this.state.users.map(
                                 user =>
-                                    <tr key = {user.id}>
+                                    <tr key={user.id}>
                                         <td>{user.id}</td>
                                         <td>{user.firstName}</td>
                                         <td>{user.lastName}</td>

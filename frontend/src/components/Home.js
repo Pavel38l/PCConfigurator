@@ -45,14 +45,14 @@ class Home extends React.Component {
     submitHandler = data => {
         const fromPromise = this.state.ymaps.geocode(data.from)
             .then(result => {
-                    return result.geoObjects.get(0).geometry.getCoordinates();
-                }
+                return result.geoObjects.get(0).geometry.getCoordinates();
+            }
             )
-        ;
+            ;
         const toPromise = this.state.ymaps.geocode(data.to)
             .then(result => {
-                    return result.geoObjects.get(0).geometry.getCoordinates();
-                }
+                return result.geoObjects.get(0).geometry.getCoordinates();
+            }
             );
         Promise.all([fromPromise, toPromise]).then(points => {
             console.log(points[0])
@@ -124,7 +124,6 @@ class Home extends React.Component {
                                         <Text>Rating: <RatingComponent value={journey.owner.rating} /></Text>
                                     </Space>
                                 </Space>
-
                             </Col>
                             <Col>
                                 <Text>Max parcel count: {journey.maxOrderCount}</Text>
@@ -138,7 +137,9 @@ class Home extends React.Component {
                     </Card>
                 )
             }
+
         )
+
 
         const onFinishFailed = (errorInfo) => {
             console.log('Failed:', errorInfo);

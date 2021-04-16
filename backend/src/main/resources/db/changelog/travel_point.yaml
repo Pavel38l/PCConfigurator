@@ -66,3 +66,18 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: journey
             validate: true
+  - changeSet:
+      id: 17
+      author: Demchenko Daniil
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: travel_point
+            constraintName: fk_journey_id
+        - addForeignKeyConstraint:
+            constraintName: fk_journey_id
+            baseColumnNames: journey_id
+            baseTableName: travel_point
+            referencedColumnNames: id
+            referencedTableName: journey
+            onDelete:  CASCADE
+            validate: true

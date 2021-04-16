@@ -44,3 +44,18 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: order_size
             validate: true
+  - changeSet:
+      id: 20
+      author: Demchenko Daniil
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: journey_cost
+            constraintName: fk_journey_cost_journey
+        - addForeignKeyConstraint:
+            constraintName: fk_journey_cost_journey
+            baseColumnNames: journey_id
+            baseTableName: journey_cost
+            referencedColumnNames: id
+            referencedTableName: journey
+            onDelete:  CASCADE
+            validate: true

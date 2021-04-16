@@ -15,14 +15,12 @@ class Login extends Component {
     }
 
 
-        handleChange = event => {
-            this.setState({ [event.target.name]: event.target.value });
-        }
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
 
     handleSubmit = event => {
         event.preventDefault();
-
-
 
         const user = {
             email: this.state.email,
@@ -35,14 +33,13 @@ class Login extends Component {
                 console.log(res.data);
                 localStorage.setItem('token', res.data.token);
                 console.log(localStorage.getItem("token"));
-                if(res.data.token) {
+                if (res.data.token) {
                     this.props.upTitle(res.data.token);
-                    this.setState({redirect: true});
+                    this.setState({ redirect: true });
                 }
                 else
-                    alert("Неверный логин или пароль");
+                    alert("wrong login or password");
 
-                 //react router
             })
 
 
@@ -51,50 +48,50 @@ class Login extends Component {
     }
 
     render() {
-        const {email, password, redirect} = this.state
-        if(redirect){
+        const { email, password, redirect } = this.state
+        if (redirect) {
             //this.props.upTitle(localStorage.getItem("token"));
-            return < Redirect to = "/" / >;
-    }
+            return < Redirect to="/" />;
+        }
         else return (
             <div>
-            <form onSubmit={this.handleSubmit} >
-        <Form.Group as={Row} md="6"  controlId="email">
-            <Form.Label   >Email: </Form.Label>
-        <Col sm="0">
-        <Form.Control
-        type="email"
-        placeholder="Enter email"
-        required
-        name="email"
-        value={email}
-        onChange={this.handleChange}
-        />
-            </Col>
-        </Form.Group >
+                <form onSubmit={this.handleSubmit} >
+                    <Form.Group as={Row} md="6" controlId="email">
+                        <Form.Label column sm={2}  >Email: </Form.Label>
+                        
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                required
+                                name="email"
+                                value={email}
+                                onChange={this.handleChange}
+                            />
+                        
+                    </Form.Group >
 
 
-        <Form.Group as={Row} md="6" controlId="password">
-            <Form.Label column sm={2}>Password: </Form.Label>
-        <Form.Control
-        type="password"
-        placeholder="Enter password"
-        required
-        name="password"
-        value={password}
-        onChange={this.handleChange}
-        />
-        </Form.Group >
+                    <Form.Group as={Row} md="6" controlId="password">
+                        <Form.Label column sm={2}>Password: </Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Enter password"
+                            required
+                            name="password"
+                            value={password}
+                            onChange={this.handleChange}
+                        />
+                    </Form.Group >
 
-        <Form.Row>
-        <Col sm={{ span: 2}}>
-         <button type="submit" className="mr-2" >submit</button>
-            </Col>
-        </Form.Row>
+                    <Form.Row>
+                        <Col sm={{ span: 2 }}>
+                            <Button type="submit" className="mr-2" >submit</Button>
+                        </Col>
+                    </Form.Row>
 
-            </form>
+                </form>
             </div>
-    );
+        );
     }
 }
 

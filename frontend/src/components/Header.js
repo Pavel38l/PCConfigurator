@@ -40,7 +40,7 @@ class Header extends React.Component {
             return (
                 <Nav>
                     <NavDropdown title={this.props.title} id="collasible-nav-dropdown" className="mr-5">
-                        <NavDropdown.Item href="/user/">Profile</NavDropdown.Item>
+                        <NavDropdown.Item href={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`}>Profile</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/" onClick={this.signOut}>Sign out</NavDropdown.Item>
                     </NavDropdown>
