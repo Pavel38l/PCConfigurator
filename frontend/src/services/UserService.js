@@ -11,15 +11,15 @@ class UserService {
     }
 
     getUserById(id) {
-        return this.getUserById.get("/" + id);
+        return this.httpClient.get(`/${id}`);
     }
   
     getUserJourneys(id){
-        return this.httpClient.get("/" + id + "/journeys")
+        return this.httpClient.get(`/${id}/journeys`);
     }
   
     getUserOrders(id){
-        return this.httpClient.get("/" + id + "/orders")
+        return this.httpClient.get(`/${id}/orders`);
     }
     
 }
