@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Comment,
   Avatar,
   Button,
   Card,
@@ -12,6 +13,7 @@ import {
 import RatingComponent from "../home/RatingComponent";
 import moment from "moment";
 import JourneyService from "../../services/JourneyService";
+import { UserOutlined } from "@ant-design/icons";
 const { Text, Link } = Typography;
 
 const JourneyCard = ({ journey }) => {
@@ -31,9 +33,9 @@ const JourneyCard = ({ journey }) => {
   }, [journey.id]);
 
   const dateFormat = (date) => {
-    console.log(date, moment(date).format('LLL'));
-    return moment(date).format('LLL');
-  }
+    console.log(date, moment(date).format("LLL"));
+    return moment(date).format("LLL");
+  };
 
   const resolvePointLabel = (index, point, pointsSize) => {
     if (index === 0) {
@@ -55,7 +57,42 @@ const JourneyCard = ({ journey }) => {
         </>
       );
     }
-  }
+  };
+
+  const getUserName = () => {
+    const firstName = journey.owner.firstName
+      ? `${journey.owner.firstName} `
+      : "";
+    const lastName = journey.owner.lastName ? journey.owner.lastName : "";
+    const name = `${firstName}${lastName}`;
+    return name ? name : journey.owner.email;
+  };
+
+  const userName = getUserName();
+
+  const avatar = journey.owner.firstName ? (
+    <Avatar
+      size="large"
+      style={{
+        backgroundColor: "#00a2ae",
+        verticalAlign: "middle",
+      }}
+    >
+      {journey.owner.firstName.length < 8
+        ? journey.owner.firstName
+        : journey.owner.firstName.substr(0, 8)}
+    </Avatar>
+  ) : (
+    <Avatar
+      size="large"
+      style={{
+        backgroundColor: "#00a2ae",
+        verticalAlign: "middle",
+      }}
+      icon={<UserOutlined />}
+    />
+  );
+
   return (
     <Card
       key={journey.id}
@@ -73,9 +110,23 @@ const JourneyCard = ({ journey }) => {
               {journeyFull.travelPoints.map((point, index) => {
                 return (
                   <Timeline.Item
-                    label={resolvePointLabel(index, point, journeyFull.travelPoints.length)}
+                    label={resolvePointLabel(
+                      index,
+                      point,
+                      journeyFull.travelPoints.length
+                    )}
                   >
                     {point.address}
+                    <Comment
+                      author={<a>{userName}</a>}
+                      avatar={
+                        <Avatar
+                          style={{ backgroundColor: "#7265e6" }}
+                          icon={<UserOutlined />}
+                        />
+                      }
+                      content={<p>{point.comment}</p>}
+                    />
                   </Timeline.Item>
                 );
               })}
@@ -83,16 +134,12 @@ const JourneyCard = ({ journey }) => {
           ) : (
             <Timeline mode={"left"}>
               <Timeline.Item
-                label={
-                  dateFormat(journey.startTravelPoint.dispatchDate)
-                }
+                label={dateFormat(journey.startTravelPoint.dispatchDate)}
               >
                 {journey.startTravelPoint.address}
               </Timeline.Item>
               <Timeline.Item
-                label={
-                  dateFormat(journey.endTravelPoint.arrivalDate)
-                }
+                label={dateFormat(journey.endTravelPoint.arrivalDate)}
               >
                 {journey.endTravelPoint.address}
               </Timeline.Item>
@@ -101,9 +148,7 @@ const JourneyCard = ({ journey }) => {
         </Col>
         <Col>
           <Space>
-            <a href={"/profile/" + journey.owner.id}>
-              <Avatar size="large">{journey.owner.firstName}</Avatar>
-            </a>
+            <a href={"/profile/" + journey.owner.id}>{avatar}</a>
             <Space direction="vertical">
               <Text strong>{journey.owner.email}</Text>
               <Text>
