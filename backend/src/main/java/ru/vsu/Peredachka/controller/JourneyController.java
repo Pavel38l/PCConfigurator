@@ -46,9 +46,16 @@ public class JourneyController {
     }
 
     @RequestMapping(method = GET, path = "")
-    public List<JourneyInfoDto> getJourneys() {
+    public List<JourneyInfoDto> getJourneysInfo() {
         return journeyService.getAllJourneys().stream().map(
                 journeyMapper::toDto
+        ).collect(Collectors.toList());
+    }
+
+    @RequestMapping(method = GET, path = "/full")
+    public List<JourneyWithDependenciesDto> getJourneys() {
+        return journeyService.getAllJourneys().stream().map(
+                journey -> mapper.map(journey, JourneyWithDependenciesDto.class)
         ).collect(Collectors.toList());
     }
 
