@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfileTabs from "./components/profile/profileTabs";
 import PageContainer from "./components/Container";
 import JourneyEdit from "./components/JourneyEdit";
+import OrderAdd from "./components/OrderAdd";
+import "antd/dist/antd.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -45,6 +47,9 @@ class App extends React.Component {
               <>
                 <ProfileTabs></ProfileTabs>
               </>
+            </Route>
+            <Route exact path="/orderAdd/:journeyId">
+              <OrderAdd />
             </Route>
           </Switch>
         </PageContainer>

@@ -9,7 +9,11 @@ class OrderService {
    
     deleteOrder(id){
         return this.httpClient.delete(`/${id}`)
-    } 
+    }
+
+    getOrdersSize() {
+        return this.httpClient.get("/orderSizes")
+    }
     
 }
 

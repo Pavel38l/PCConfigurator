@@ -4,7 +4,6 @@ import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
-import "antd/dist/antd.css";
 import { UserOutlined } from "@ant-design/icons";
 import {
   Form,

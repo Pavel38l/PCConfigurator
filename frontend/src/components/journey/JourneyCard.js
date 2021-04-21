@@ -70,7 +70,7 @@ const JourneyCard = ({ journey }) => {
 
   const userName = getUserName();
 
-  const avatar = journey.owner.firstName ? (
+  const avatar = (
     <Avatar
       size="large"
       style={{
@@ -78,19 +78,12 @@ const JourneyCard = ({ journey }) => {
         verticalAlign: "middle",
       }}
     >
-      {journey.owner.firstName.length < 8
-        ? journey.owner.firstName
-        : journey.owner.firstName.substr(0, 1)}
+      {journey.owner.firstName
+        ? journey.owner.firstName.length < 8
+          ? journey.owner.firstName
+          : journey.owner.firstName.substr(0, 1)
+        : journey.owner.email.substr(0, 1)}
     </Avatar>
-  ) : (
-    <Avatar
-      size="large"
-      style={{
-        backgroundColor: "#7265e6",
-        verticalAlign: "middle",
-      }}
-      icon={<UserOutlined />}
-    />
   );
 
   return (
@@ -118,7 +111,7 @@ const JourneyCard = ({ journey }) => {
                   >
                     {point.address}
                     <Comment
-                      author={<a>{userName}</a>}
+                      author={<a href={`/profile/${journey.owner.id}`}>{userName}</a>}
                       avatar={
                         <Avatar
                           style={{ backgroundColor: "#7265e6" }}
@@ -148,7 +141,7 @@ const JourneyCard = ({ journey }) => {
         </Col>
         <Col>
           <Space>
-            <a href={"/profile/" + journey.owner.id}>{avatar}</a>
+            <a href={`/profile/${journey.owner.id}`}>{avatar}</a>
             <Space direction="vertical">
               <Text strong>{journey.owner.email}</Text>
               <Text>
