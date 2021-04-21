@@ -74,19 +74,19 @@ const JourneyCard = ({ journey }) => {
     <Avatar
       size="large"
       style={{
-        backgroundColor: "#00a2ae",
+        backgroundColor: "#7265e6",
         verticalAlign: "middle",
       }}
     >
       {journey.owner.firstName.length < 8
         ? journey.owner.firstName
-        : journey.owner.firstName.substr(0, 8)}
+        : journey.owner.firstName.substr(0, 1)}
     </Avatar>
   ) : (
     <Avatar
       size="large"
       style={{
-        backgroundColor: "#00a2ae",
+        backgroundColor: "#7265e6",
         verticalAlign: "middle",
       }}
       icon={<UserOutlined />}

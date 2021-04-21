@@ -84,7 +84,6 @@ class Registration extends Component {
                         <Form.Control
                             type="text"
                             placeholder="Enter first name"
-                            required
                             name="firstName"
                             value={firstName}
                             onChange={this.handleChange}
@@ -97,7 +96,6 @@ class Registration extends Component {
                         <Form.Control
                             type="text"
                             placeholder="Enter last name"
-                            required
                             name="lastName"
                             value={lastName}
                             onChange={this.handleChange}
@@ -125,7 +123,7 @@ class Registration extends Component {
 
                         <Form.Control
                             required
-                            type="datetime-local"
+                            type="date"
                             name="dateOfBirth"
                             value={dateOfBirth}
                             onChange={this.handleChange}
