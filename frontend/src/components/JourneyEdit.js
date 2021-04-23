@@ -176,7 +176,6 @@ function JourneyEdit() {
                           >
                             <SearchComplete
                               onSelect={(value) => {
-                                console.log(value);
                                 onAddressSelect(field.name, value);
                               }}
                               ymaps={ymaps}

@@ -81,7 +81,12 @@ const JourneyCard = ({ journey }) => {
         " - " +
         journey.endTravelPoint.pointName
       }
-      extra={<Button onClick={onDetailClick}>Details</Button>}
+      extra={
+        <Space>
+          <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
+          <Button onClick={onDetailClick}>Details</Button>
+        </Space>
+      }
     >
       <Row justify="space-between">
         <Col span={10}>
