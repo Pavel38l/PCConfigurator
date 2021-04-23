@@ -49,7 +49,7 @@ const OrderAdd = () => {
     return journey
       ? journey.travelPoints.filter(
           (point, index) =>
-            index != journey.travelPoints.length - 1 &&
+            index !== journey.travelPoints.length - 1 &&
             (!endPointIndex || index < endPointIndex)
         )
       : [];
@@ -59,20 +59,50 @@ const OrderAdd = () => {
     return journey
       ? journey.travelPoints.filter(
           (point, index) =>
-            index != 0 &&
-            (!startPointIndex || index > startPointIndex)
+            index !== 0 && (!startPointIndex || index > startPointIndex)
         )
       : [];
   };
 
   const onStartPointSelect = (index) => {
-    console.log('start', index);
+    console.log("start", index);
     setStartPointIndex(index);
   };
 
   const onEndPointSelect = (index) => {
-    console.log('end', index);
+    console.log("end", index);
     setEndPointIndex(index);
+  };
+
+  const getTimelineItemForPoint = (point, index) => {
+    return index === startPointIndex || index === endPointIndex ? (
+      <Timeline.Item
+        id={point.id}
+        color="green"
+        label={UserJourneyUtils.resolvePointLabel(
+          index,
+          point,
+          journey.travelPoints.length
+        )}
+        dot={<FlagOutlined />}
+      >
+        {point.address}
+      </Timeline.Item>
+    ) : (
+      <Timeline.Item
+        id={point.id}
+        color={
+          index < endPointIndex && index > startPointIndex ? "green" : "blue"
+        }
+        label={UserJourneyUtils.resolvePointLabel(
+          index,
+          point,
+          journey.travelPoints.length
+        )}
+      >
+        {point.address}
+      </Timeline.Item>
+    );
   };
 
   useEffect(() => {
@@ -121,19 +151,7 @@ const OrderAdd = () => {
           {journey ? (
             <Timeline mode={"left"}>
               {journey.travelPoints.map((point, index) => {
-                return (
-                  <Timeline.Item
-                    id={point.id}
-                    label={UserJourneyUtils.resolvePointLabel(
-                      index,
-                      point,
-                      journey.travelPoints.length
-                    )}
-                    dot={<FlagOutlined />}
-                  >
-                    {point.address}
-                  </Timeline.Item>
-                );
+                return getTimelineItemForPoint(point, index);
               })}
             </Timeline>
           ) : null}
