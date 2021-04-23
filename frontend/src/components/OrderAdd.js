@@ -1,111 +1,206 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
 import {
-  Typography,
-  Form,
-  Select,
-  Input,
-  Button,
-  Space,
-  Steps,
-  Timeline,
-  Checkbox,
+    Typography,
+    Form,
+    Select,
+    Input,
+    Button,
+    Space,
+    Steps,
+    Timeline,
+    Checkbox,
+    Comment,
+    Avatar,
+    Row, Col,
 } from "antd";
 import OrderService from "../services/OrderService";
 import "antd/dist/antd.css";
+import {useParams} from "react-router";
+import JourneyService from "../services/JourneyService";
+import {UserOutlined} from "@ant-design/icons";
+import UserJourneyUtils from "./utils/UserJourneyUtils";
 
-const { Title, Text } = Typography;
-const { Option } = Select;
-const { Step } = Steps;
+const {Title, Text} = Typography;
+const {Option} = Select;
+const {Step} = Steps;
 
 const OrderAdd = () => {
-  const [orderSizes, setOrdersSizes] = useState([]);
-  const [form] = Form.useForm();
-  const layout = {
-    labelCol: { span: 3 },
-    wrapperCol: { span: 10 },
-  };
-
-  const tailLayout = {
-    wrapperCol: {
-      offset: 3,
-      span: 10,
-    },
-  };
-
-  useEffect(() => {
-    const load = async () => {
-      const response = await OrderService.getOrdersSize();
-      setOrdersSizes(response.data);
+    const [orderSizes, setOrdersSizes] = useState([]);
+    const [journey, setJourney] = useState(null);
+    const [startPointId, setStartPointId] = useState(null);
+    const [endPointId, setEndPointId] = useState(null);
+    const [form] = Form.useForm();
+    const {journeyId} = useParams();
+    const layout = {
+        labelCol: {span: 3},
+        wrapperCol: {span: 8},
     };
-    load();
-  });
 
-  return (
-    <>
-      <Title className="App">Order create</Title>
-      <Steps size="small" progressDot>
-        <Step title="Finished" status="finish" />
-        <Step title="In Progress" status="finish" />
-        <Step title="Waiting" status="finish" />
-      </Steps>
-      <Form
-        {...layout}
-        form={form}
-        name="order"
-        colon={false}
-        style={{ marginTop: 50 }}
-      >
-        <Form.Item >
-          <Timeline mode={"left"}>
-            <Timeline.Item label={<Checkbox></Checkbox>}>
-              Solve initial network problems 2015-09-01
-            </Timeline.Item>
-            <Timeline.Item>
-              Solve initial network problems 2015-09-01
-            </Timeline.Item>
-            <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-            <Timeline.Item>
-              Network problems being solved 2015-09-01
-            </Timeline.Item>
-          </Timeline>
-        </Form.Item>
-        <Form.Item
-          name="orderSize"
-          label="Order size"
-          tooltip=""
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+    const tailLayout = {
+        wrapperCol: {
+            offset: 3,
+            span: 10,
+        },
+    };
+
+    const getStartPoints = () => {
+      return journey
+        ? journey.travelPoints.filter(
+            (point, index) =>
+              point.id != endPointId && index != journey.travelPoints.length - 1
+          )
+        : [];
+    };
+
+    const getEndPoints = () => {
+        return journey
+            ? journey.travelPoints.filter(
+                (point, index) =>
+                    point.id != startPointId && index != 0
+            )
+            : [];
+    };
+
+    useEffect(() => {
+        const load = async () => {
+            OrderService.getOrdersSize().then((response) => {
+                setOrdersSizes(response.data);
+            });
+            JourneyService.getJourney(journeyId).then((response) => {
+                setJourney(response.data);
+            });
+        };
+        load();
+    }, [journeyId]);
+
+    return (
+      <>
+        <Title className="App">Order create</Title>
+        {journey ? (
+          <Steps progressDot style={{ marginTop: 100 }}>
+            <Step title={journey.travelPoints[0].pointName} status="finish" />
+            <Step
+              title={
+                journey.travelPoints[journey.travelPoints.length - 1].pointName
+              }
+              status="finish"
+            />
+          </Steps>
+        ) : null}
+        <Form
+          {...layout}
+          form={form}
+          name="order"
+          colon={false}
+          style={{ marginTop: 50 }}
         >
-          <Select placeholder="Select order size">
-            {orderSizes.map((size) => (
-              <Option key={size.id} value={size.id}>
-                <Space>
-                  <Text>{size.name}</Text>
-                  <Text type={"secondary"}>{size.description}</Text>
-                </Space>
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="description"
-          label="Description"
-          tooltip="Describe the features of your package and possible problems"
-        >
-          <Input.TextArea rows={1} />
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Offer order
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
-  );
+          <Form.Item>
+            {journey ? (
+              <Timeline mode={"left"}>
+                {journey.travelPoints.map((point, index) => {
+                  return (
+                    <Timeline.Item
+                      id={point.id}
+                      label={UserJourneyUtils.resolvePointLabel(
+                        index,
+                        point,
+                        journey.travelPoints.length
+                      )}
+                    >
+                      {point.address}
+                    </Timeline.Item>
+                  );
+                })}
+              </Timeline>
+            ) : null}
+          </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                labelAlign="right"
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}
+                name="startPoint"
+                label="Start point"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Select name="startPoint" placeholder="Select start point">
+                  {getStartPoints().map((point) => (
+                    <Option key={point.id} value={point.id}>
+                      <Space>
+                        <Text id={point.id}>{point.address}</Text>
+                      </Space>
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 16 }}
+                name="endPoint"
+                label="Finish point"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Select name="endPoint" placeholder="Select finish point">
+                  {getEndPoints().map((point) => (
+                    <Option key={point.id} value={point.id}>
+                      <Space>
+                        <Text id={point.id}>{point.address}</Text>
+                      </Space>
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item
+            name="orderSize"
+            label="Order size"
+            tooltip=""
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select placeholder="Select order size">
+              {orderSizes.map((size) => (
+                <Option key={size.id} value={size.id}>
+                  <Space>
+                    <Text>{size.name}</Text>
+                    <Text type={"secondary"}>{size.description}</Text>
+                  </Space>
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{ span: 20 }}
+            name="description"
+            label="Description"
+            tooltip="Describe the features of your package and possible problems"
+          >
+            <Input.TextArea rows={1} />
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Offer order
+            </Button>
+          </Form.Item>
+        </Form>
+      </>
+    );
 };
 
 export default OrderAdd;
