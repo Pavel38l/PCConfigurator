@@ -18,6 +18,7 @@ import React, { useState, useEffect } from "react";
 import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import OrderService from "../../services/OrderService";
+import OrderCard from ".././order/OrderCard";
 
 const layout = {
   labelCol: { span: 8 },
@@ -32,48 +33,38 @@ const ProfileOrders = () => {
   const { id } = useParams();
   const [form] = useForm();
   const [edit, setEdit] = useState(false);
+  const load = async () => {
+    const response = await UserService.getUserOrders(id);
+    setOrders(response.data);
+    console.log(response.data);
+  };
   const deleteOrder = async (id) => {
     try {
       await OrderService.deleteOrder(id);
-      
+      await load();
     }
     catch (error){
         console.error("delete order: ", error);
     } 
   };  
-  const ordersTable = orders.map((orders) => {
+  const ordersTable = orders.map((order) => {
+    console.log(order);
     return (
-      <tr key={orders.id}>
-        <td>{orders.arrivalPoint.address}</td>
-        <td>{orders.dispatchPoint.address}</td>
-        <td>{orders.orderValue}</td>
-        <td>{orders.orderStatus.name}</td>
-        <td>
-          <div style={{ display: "flex" }}>
-            <Button
-              variant="outline-success"
-              className="float-right"
-              style={{ marginRight: 10 }}
-            >
-              Details
-            </Button>
-
-            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
-              <Button variant="outline-success" className="float-right" danger onClick={() => deleteOrder(orders.id) }>
-                Delete
-              </Button>
-            ) : null}
-          </div>
-        </td>
-      </tr>
+      <OrderCard orderProfile={order}  button={localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+        <Button
+          variant="outline-success"
+          className="float-right"
+          danger
+          onClick={() => deleteOrder(order.id)}
+        >
+          Delete
+        </Button>
+      ) : null}/>
     );
   });
 
   useEffect(() => {
-    const load = async () => {
-      const response = await UserService.getUserOrders(id);
-      setOrders(response.data);
-    };
+    
     load();
   }, [id]);
 
@@ -84,14 +75,6 @@ const ProfileOrders = () => {
       <Container className="mt-5">
         <div>
           <table className="table table-striped">
-            <thead>
-              <tr>
-                <td> From </td>
-                <td> To </td>
-                <td> Order Value </td>
-                <td> Order Status </td>
-              </tr>
-            </thead>
             <tbody>{ordersTable}</tbody>
           </table>
         </div>
