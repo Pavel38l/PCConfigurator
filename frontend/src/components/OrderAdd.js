@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+// TODO кнопку clear form, cancel и на страницу создания поездки, order size default value
+// TODO для 2-х точек задание значений
+// TODO поправить id элементов (на название + id)
 import {
   Typography,
   Form,
@@ -9,9 +11,6 @@ import {
   Space,
   Steps,
   Timeline,
-  Checkbox,
-  Comment,
-  Avatar,
   Row,
   Col,
 } from "antd";
@@ -19,12 +18,11 @@ import OrderService from "../services/OrderService";
 import "antd/dist/antd.css";
 import { useParams } from "react-router";
 import JourneyService from "../services/JourneyService";
-import { FlagOutlined, UserOutlined } from "@ant-design/icons";
+import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "./utils/UserJourneyUtils";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
-const { Step } = Steps;
 
 const OrderAdd = () => {
   const [orderSizes, setOrdersSizes] = useState([]);
@@ -77,7 +75,7 @@ const OrderAdd = () => {
   const getTimelineItemForPoint = (point, index) => {
     return index === startPointIndex || index === endPointIndex ? (
       <Timeline.Item
-        id={point.id}
+        id={`${point.id}_timeline`}
         color="green"
         label={UserJourneyUtils.resolvePointLabel(
           index,
@@ -90,7 +88,7 @@ const OrderAdd = () => {
       </Timeline.Item>
     ) : (
       <Timeline.Item
-        id={point.id}
+        id={`${point.id}_timeline`}
         color={
           index < endPointIndex && index > startPointIndex ? "green" : "blue"
         }
@@ -119,27 +117,17 @@ const OrderAdd = () => {
 
   return (
     <>
-      <Title className="App">Order create</Title>
-      {journey ? (
-        <Steps progressDot style={{ marginTop: 100 }}>
-          <Step
-            title={journey.travelPoints[0].pointName}
-            status="finish"
-            subTitle={UserJourneyUtils.dateFormat(
-              journey.travelPoints[0].dispatchDate
-            )}
-          />
-          <Step
-            title={
-              journey.travelPoints[journey.travelPoints.length - 1].pointName
-            }
-            subTitle={UserJourneyUtils.dateFormat(
-              journey.travelPoints[journey.travelPoints.length - 1].arrivalDate
-            )}
-            status="finish"
-          />
-        </Steps>
-      ) : null}
+      <Title className="Centered">Order create</Title>
+      <div>
+        <Title level={3} className="Centered">Travel points</Title>
+        {journey ? (
+          <Timeline mode={"left"} style={{padding: '10px 20% 0 20%'}}>
+            {journey.travelPoints.map((point, index) => {
+              return getTimelineItemForPoint(point, index);
+            })}
+          </Timeline>
+        ) : null}
+      </div>
       <Form
         {...layout}
         form={form}
@@ -147,15 +135,6 @@ const OrderAdd = () => {
         colon={false}
         style={{ marginTop: 50 }}
       >
-        <Form.Item>
-          {journey ? (
-            <Timeline mode={"left"}>
-              {journey.travelPoints.map((point, index) => {
-                return getTimelineItemForPoint(point, index);
-              })}
-            </Timeline>
-          ) : null}
-        </Form.Item>
         <Row>
           <Col span={12}>
             <Form.Item
