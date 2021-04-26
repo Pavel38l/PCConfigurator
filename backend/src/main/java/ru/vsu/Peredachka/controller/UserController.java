@@ -4,7 +4,6 @@ import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
-import ru.vsu.Peredachka.data.dto.journey.JourneyWithDependenciesDto;
 import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
 import ru.vsu.Peredachka.data.dto.user.UserWithDependenciesDto;
 import ru.vsu.Peredachka.data.entity.User;
@@ -57,7 +56,8 @@ public class UserController {
         User user = userService.findById(id);
         return user.getJourneys().stream().map(
                 journeyMapper::toDto
-        ).collect(Collectors.toList());
+        ).sorted(JourneyInfoDto.COMPARE_BY_STARTDATE)
+         .collect(Collectors.toList());
     }
     @RequestMapping(method = POST, path = "/update")
     public void update(@RequestBody User dto) {

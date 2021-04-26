@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const USERS_REST_API_URL = "http://localhost:8080/api/v1/user";
+
 
 class UserService {
     httpClient = axios.create({
@@ -20,6 +20,9 @@ class UserService {
   
     getUserOrders(id){
         return this.httpClient.get(`/${id}/orders`);
+    }
+    userUpdate(user){
+        return this.httpClient.post(`/update`,user)
     }
     
 }

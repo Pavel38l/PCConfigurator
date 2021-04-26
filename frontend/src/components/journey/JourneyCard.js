@@ -14,7 +14,7 @@ import moment from "moment";
 import JourneyService from "../../services/JourneyService";
 const { Text, Link } = Typography;
 
-const JourneyCard = ({ journey }) => {
+const JourneyCard = ({ journey, button }) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -64,7 +64,7 @@ const JourneyCard = ({ journey }) => {
         " - " +
         journey.endTravelPoint.pointName
       }
-      extra={<Button onClick={onDetailClick}>Details</Button>}
+      extra={<><Button style={{marginRight: 5}} onClick={onDetailClick}>Details</Button> {button} </> }
     >
       <Row justify="space-between">
         <Col span={10}>
