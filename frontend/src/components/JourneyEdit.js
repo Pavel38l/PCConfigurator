@@ -128,6 +128,7 @@ function JourneyEdit() {
 
   const onReset = () => {
     pointsForm.resetFields();
+    onPointsListChange();
   };
 
   return (

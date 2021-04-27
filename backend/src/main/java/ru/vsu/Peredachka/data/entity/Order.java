@@ -19,7 +19,7 @@ public class Order {
     private Integer orderValue;
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "sizeId")
     private OrderSize orderSize;
 
@@ -27,20 +27,22 @@ public class Order {
     @JoinColumn(name = "statusId")
     private OrderStatus orderStatus;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "ownerId")
     private User owner;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "journeyId")
     private Journey journey;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "dispatchPointId")
     private TravelPoint dispatchPoint;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "arrivalPointId")
     private TravelPoint arrivalPoint;
+
+    private Long receiverPhoneNumber;
 
 }

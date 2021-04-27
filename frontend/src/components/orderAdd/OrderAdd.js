@@ -20,6 +20,7 @@ import JourneyService from "../../services/JourneyService";
 import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import {Link} from "react-router-dom";
+import jwtdecoder from "jwt-decode";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -134,6 +135,18 @@ const OrderAdd = () => {
     setEndPointIndex(null);
   };
 
+  const onFinish = (values) => {
+    const dto = {
+      dispatchPoint: journey.travelPoints[values.startPoint],
+      arrivalPoint: journey.travelPoints[values.endPoint],
+      orderSize: {id: values.orderSize.toString()},
+      owner: {id: jwtdecoder(localStorage.getItem("token")).jti},
+      journey: {id: journeyId}
+    }
+    console.log(dto)
+    OrderService.createOrder(dto).then();
+  }
+
   return (
     <>
       <Title className="Centered">Order create</Title>
@@ -154,6 +167,7 @@ const OrderAdd = () => {
           {...layout}
           form={form}
           initialValues={initialValue}
+          onFinish={onFinish}
           name="order"
           colon={false}
           style={{ marginTop: 50 }}

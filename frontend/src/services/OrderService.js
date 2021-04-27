@@ -11,6 +11,10 @@ class OrderService {
         return this.httpClient.delete(`/${id}`)
     }
 
+    createOrder(dto) {
+        return this.httpClient.post("", dto)
+    }
+
     getOrdersSize() {
         return this.httpClient.get("/orderSizes")
     }

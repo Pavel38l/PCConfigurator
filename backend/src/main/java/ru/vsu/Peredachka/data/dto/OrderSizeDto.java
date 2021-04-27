@@ -7,7 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class OrderSizeDto {
+public class
+OrderSizeDto {
     private Long id;
     private String name;
     private String description;
