@@ -218,20 +218,22 @@ const OrderAdd = () => {
             },
           ]}
         >
-          <Select
-            placeholder="Select order size"
-            defaultValue={orderSizes.length > 1 ? orderSizes[1].id : null}
-            value={orderSizes.length > 0 ? orderSizes[1].id : null}
-          >
-            {orderSizes.map((size) => (
-              <Option key={size.id} value={size.id}>
-                <Space>
-                  <Text>{size.name}</Text>
-                  <Text type={"secondary"}>{size.description}</Text>
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          {orderSizes.length > 1 ? (
+              <Select
+                  placeholder="Select order size"
+                  defaultValue={orderSizes[1].id}
+                  value={orderSizes.length > 0 ? orderSizes[1].id : null}
+              >
+                {orderSizes.map((size) => (
+                    <Option key={size.id} value={size.id}>
+                      <Space>
+                        <Text>{size.name}</Text>
+                        <Text type={"secondary"}>{size.description}</Text>
+                      </Space>
+                    </Option>
+                ))}
+              </Select>
+          ) : null}
         </Form.Item>
         <Form.Item
           wrapperCol={{ span: 20 }}
