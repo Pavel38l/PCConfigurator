@@ -103,25 +103,39 @@ const OrderAdd = () => {
     );
   };
 
+  const configJourney = (loadedJourney) => {
+    setJourney(loadedJourney);
+    if (loadedJourney.travelPoints.length === 2) {
+      setStartPointIndex(0);
+      setEndPointIndex(1);
+    }
+  };
+
   useEffect(() => {
     const load = async () => {
       OrderService.getOrdersSize().then((response) => {
         setOrdersSizes(response.data);
       });
       JourneyService.getJourney(journeyId).then((response) => {
-        setJourney(response.data);
+        configJourney(response.data);
       });
     };
     load();
   }, [journeyId]);
 
+  const onReset = () => {
+    form.resetFields();
+  };
+
   return (
     <>
       <Title className="Centered">Order create</Title>
       <div>
-        <Title level={3} className="Centered">Travel points</Title>
+        <Title level={3} className="Centered">
+          Travel points
+        </Title>
         {journey ? (
-          <Timeline mode={"left"} style={{padding: '10px 20% 0 20%'}}>
+          <Timeline mode={"left"} style={{ padding: "10px 20% 0 20%" }}>
             {journey.travelPoints.map((point, index) => {
               return getTimelineItemForPoint(point, index);
             })}
@@ -150,6 +164,7 @@ const OrderAdd = () => {
               ]}
             >
               <Select
+                defaultValue={startPointIndex ? startPointIndex : null}
                 name="startPoint"
                 placeholder="Select start point"
                 onSelect={(value) => onStartPointSelect(value)}
@@ -177,6 +192,7 @@ const OrderAdd = () => {
               ]}
             >
               <Select
+                defaultValue={endPointIndex ? endPointIndex : null}
                 name="endPoint"
                 placeholder="Select finish point"
                 onSelect={(value) => onEndPointSelect(value)}
@@ -202,7 +218,11 @@ const OrderAdd = () => {
             },
           ]}
         >
-          <Select placeholder="Select order size">
+          <Select
+            placeholder="Select order size"
+            defaultValue={orderSizes.length > 1 ? orderSizes[1].id : null}
+            value={orderSizes.length > 0 ? orderSizes[1].id : null}
+          >
             {orderSizes.map((size) => (
               <Option key={size.id} value={size.id}>
                 <Space>
@@ -222,9 +242,12 @@ const OrderAdd = () => {
           <Input.TextArea rows={1} />
         </Form.Item>
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Offer order
-          </Button>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Offer order
+            </Button>
+            <Button onClick={onReset}>Clear</Button>
+          </Space>
         </Form.Item>
       </Form>
     </>
