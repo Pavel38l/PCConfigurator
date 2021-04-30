@@ -22,24 +22,29 @@ const ProfileOrders = () => {
     try {
       await OrderService.deleteOrder(id);
       await load();
+    } catch (error) {
+      console.error("delete order: ", error);
     }
-    catch (error){
-        console.error("delete order: ", error);
-    } 
-  };  
+  };
   const ordersTable = orders.map((order) => {
     console.log(order);
     return (
-      <OrderCard orderProfile={order}  button={localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
-        <Button
-          variant="outline-success"
-          className="float-right"
-          danger
-          onClick={() => deleteOrder(order.id)}
-        >
-          Delete
-        </Button>
-      ) : null}/>
+      <OrderCard
+        orderProfile={order}
+        button={
+          localStorage.getItem("token") &&
+          id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            <Button
+              variant="outline-success"
+              className="float-right"
+              danger
+              onClick={() => deleteOrder(order.id)}
+            >
+              Delete
+            </Button>
+          ) : null
+        }
+      />
     );
   });
 

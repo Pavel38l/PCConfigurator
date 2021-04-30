@@ -9,15 +9,10 @@ import {
   Typography,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
-import moment from "moment";
+import UserJourneyUtils from "../utils/UserJourneyUtils";
 const { Text } = Typography;
 
 const OrderCard = ({ orderProfile, button }) => {
-
-  const dateFormat = (date) => {
-    console.log(date, moment(date).format('LLL'));
-    return moment(date).format('LLL');
-  }
 
   return (
     <Card
@@ -34,14 +29,14 @@ const OrderCard = ({ orderProfile, button }) => {
             <Timeline mode={"left"}>
               <Timeline.Item
                 label={
-                  dateFormat(orderProfile.arrivalPoint.arrivalDate)
+                  UserJourneyUtils.dateFormat(orderProfile.arrivalPoint.arrivalDate)
                 }
               >
                 {orderProfile.arrivalPoint.address}
               </Timeline.Item>
               <Timeline.Item
                 label={
-                  dateFormat(orderProfile.dispatchPoint.dispatchDate)
+                  UserJourneyUtils.dateFormat(orderProfile.dispatchPoint.dispatchDate)
                 }
               >
                 {orderProfile.dispatchPoint.address}

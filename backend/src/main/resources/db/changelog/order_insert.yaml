@@ -52,10 +52,10 @@ databaseChangeLog:
                   value: 500
               - column:
                   name: dispatch_point_id
-                  value: 3
+                  value: 4
               - column:
                   name: arrival_point_id
-                  value: 4
+                  value: 5
               - column:
                   name: receiver_phone_number
                   value: 89023499978
