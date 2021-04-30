@@ -29,7 +29,7 @@ const ProfileTabs = () => {
     <>
       <h3>Profile</h3>
       <Tabs>
-        <TabPane tab="Profile" key="1">
+        <TabPane tab="User info" key="1">
           <Profile></Profile>
         </TabPane>
         <TabPane tab="Journeys" key="2">

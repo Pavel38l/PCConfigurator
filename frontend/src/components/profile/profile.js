@@ -1,5 +1,5 @@
 import { useForm } from "antd/lib/form/Form";
-
+import {Row, Col} from "antd"
 import {
   Tabs,
   Button,
@@ -13,7 +13,7 @@ import {
   Descriptions,
 } from "antd";
 import axios from "axios";
-import { EditOutlined, SaveOutlined } from "@ant-design/icons";
+import { EditOutlined, SaveOutlined, RollbackOutlined } from "@ant-design/icons";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -49,22 +49,32 @@ const Profile = () => {
 
   const handleSubmit = async (data) => {
     const updateUser = { ...user, ...data };
-    console.log("update user ", updateUser);
-    const res = await axios.post(
-      `http://localhost:8080/api/v1/user/update`, //поменять
-      updateUser
-    );
+    const res = await UserService.userUpdate(updateUser);
     console.log("update res ", res);
     setUser(updateUser);
     setEdit(!edit);
   };
+  const cancelSubmit = () =>{
+    setEdit(!edit);
+  }
   if (!user) {
     return <p>loading...</p>;
   }
+  
   return (
     <>
       {!edit ? (
         <Container>
+          
+          <Descriptions labelStyle={{fontWeight:600}} >
+            <Descriptions.Item label="Name">
+              {user.firstName} {user.lastName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Gender">{user.sex}</Descriptions.Item>
+            <Descriptions.Item label="Date of birthday">
+              {user.dateOfBirth.format("DD-MM-yyyy")}
+            </Descriptions.Item>
+          </Descriptions>
           <Space align="baseline">
             
             {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
@@ -79,15 +89,6 @@ const Profile = () => {
               </Tooltip>
             ) : null}
           </Space>
-          <Descriptions labelStyle={{fontWeight:600}} layout="vertical">
-            <Descriptions.Item label="Name">
-              {user.firstName} {user.lastName}
-            </Descriptions.Item>
-            <Descriptions.Item label="Gender">{user.sex}</Descriptions.Item>
-            <Descriptions.Item label="Date of birthday">
-              {user.dateOfBirth.format("DD-MM-yyyy")}
-            </Descriptions.Item>
-          </Descriptions>
         </Container>
       ) : (
         <Container>
@@ -98,7 +99,7 @@ const Profile = () => {
             onFinish={handleSubmit}
             initialValues={user}
           >
-            <h3>Profile</h3>
+            
 
             <Form.Item name="firstName" label="First name">
               <Input />
@@ -130,12 +131,21 @@ const Profile = () => {
             <Form.Item name="dateOfBirth" label="Date of brithday">
               <DatePicker />
             </Form.Item>
-
+            <Row >
+              <Col offset={8}>
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
                 Save
               </Button>
             </Form.Item>
+            </Col>
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" onClick ={() => cancelSubmit()}icon={<RollbackOutlined />}>
+                Cancel
+              </Button>
+            </Form.Item>
+            
+            </Row>
           </Form>
         </Container>
       )}

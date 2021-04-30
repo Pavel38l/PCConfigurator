@@ -18,6 +18,7 @@ import JourneyService from "../../services/JourneyService";
 import React, { useState, useEffect } from "react";
 import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
+import JourneyCard from ".././journey/JourneyCard";
 
 const layout = {
   labelCol: { span: 8 },
@@ -46,68 +47,38 @@ const ProfileJourneys = () => {
   };
   const journeyTable = journeys.map((journey) => {
     return (
-      <tr key={journey.id}>
-        <td>{journey.startTravelPoint.address}</td>
-
-        <td>{journey.endTravelPoint.address}</td>
-
-        <td>{journey.startTravelPoint.dispatchDate}</td>
-        <td>{journey.startTravelPoint.dispatchDate}</td>
-        <td>{journey.maxOrderCount}</td>
-        {journey.journeyCosts.map((cost) => (
-          <td key={cost.id}>{cost.cost}</td>
-        ))}
-
-        <td>
-          <div style={{ display: "flex" }}>
-            <Button
-              variant="outline-success"
-              className="float-right"
-              style={{ marginRight: 10 }}
-            >
-              Details
-            </Button>
-
-            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
-              <Button
-                variant="outline-success"
-                className="float-right"
-                danger
-                onClick={() => deleteJourney(journey.id)}
-              >
-                Delete
-              </Button>
-            ) : null}
-          </div>
-        </td>
-      </tr>
+      
+      <JourneyCard journey={journey }  button= {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+        <Button
+          variant="outline-success"
+          className="float-right"
+          danger
+          onClick={() => deleteJourney(journey.id)}
+        >
+          Delete
+        </Button>
+      ) : null}/>
     );
   });
 
   useEffect(() => {
     load();
   }, [id]);
-  //поменять
+  
   return (
     <>
-      
-
+    {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+      <Button
+          type="primary"
+          variant="outline-success"
+          className="float-left"
+        >
+          Create journey
+        </Button>
+    ):null}
       <Container className="mt-5">
         <div>
           <table className="table table-striped">
-            <thead>
-              <tr>
-                <td> From </td>
-                <td> To </td>
-                <td> First point dispatch date </td>
-                <td> Last point arrival Date </td>
-                <td> Max order count</td>
-                <td> Small order cost </td>
-                <td> Avg order cost </td>
-                <td> Max order cost </td>
-                <td> Actions </td>
-              </tr>
-            </thead>
             <tbody>{journeyTable}</tbody>
           </table>
         </div>
