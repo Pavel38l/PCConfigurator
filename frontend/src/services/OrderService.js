@@ -7,7 +7,7 @@ class OrderService {
         baseURL: "http://localhost:8080/api/v1/orders"
     })
    
-    deleteOrder(id){
+    deleteOrder(id) {
         return this.httpClient.delete(`/${id}`)
     }
 

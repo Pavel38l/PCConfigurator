@@ -77,7 +77,7 @@ const OrderAdd = () => {
   const getTimelineItemForPoint = (point, index) => {
     return index === startPointIndex || index === endPointIndex ? (
       <Timeline.Item
-        id={`${point.id}_timeline`}
+        key={`${point.id}_timeline`}
         color="green"
         label={UserJourneyUtils.resolvePointLabel(
           index,
@@ -90,7 +90,7 @@ const OrderAdd = () => {
       </Timeline.Item>
     ) : (
       <Timeline.Item
-        id={`${point.id}_timeline`}
+        key={`${point.id}_timeline`}
         color={
           index < endPointIndex && index > startPointIndex ? "green" : "blue"
         }
