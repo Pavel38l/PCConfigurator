@@ -59,6 +59,7 @@ const ProfileJourneys = () => {
           type="primary"
           variant="outline-success"
           className="float-left"
+          href="/journey-create"
         >
           Create journey
         </Button>

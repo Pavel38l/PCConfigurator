@@ -20,7 +20,6 @@ import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
 import jwtdecoder from "jwt-decode";
-import {Link} from "react-router-dom";
 const { Title } = Typography;
 
 function JourneyEdit() {
@@ -294,7 +293,7 @@ function JourneyEdit() {
                 Create journey
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Link to={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`}>Cancel</Link>
+              <Button href={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`}>Cancel</Button>
             </Space>
           </Form.Item>
         </Form>

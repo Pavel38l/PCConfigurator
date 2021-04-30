@@ -18,7 +18,6 @@ import { useParams } from "react-router";
 import JourneyService from "../../services/JourneyService";
 import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
-import {Link} from "react-router-dom";
 import jwtdecoder from "jwt-decode";
 
 const { Title, Text } = Typography;
@@ -263,7 +262,7 @@ const OrderAdd = () => {
                 Offer order
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Link to="/">Cancel</Link>
+              <Button href="/">Cancel</Button>
             </Space>
           </Form.Item>
         </Form>
