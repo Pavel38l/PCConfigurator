@@ -47,17 +47,23 @@ const ProfileJourneys = () => {
   };
   const journeyTable = journeys.map((journey) => {
     return (
-      
-      <JourneyCard journey={journey }  button= {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
-        <Button
-          variant="outline-success"
-          className="float-right"
-          danger
-          onClick={() => deleteJourney(journey.id)}
-        >
-          Delete
-        </Button>
-      ) : null}/>
+      <JourneyCard
+        journey={journey}
+        createButton={false}
+        deleteButton={
+          localStorage.getItem("token") &&
+          id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            <Button
+              variant="outline-success"
+              className="float-right"
+              danger
+              onClick={() => deleteJourney(journey.id)}
+            >
+              Delete
+            </Button>
+          ) : null
+        }
+      />
     );
   });
 
