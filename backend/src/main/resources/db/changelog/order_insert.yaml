@@ -27,7 +27,7 @@ databaseChangeLog:
                   name: arrival_point_id
                   value: 2
               - column:
-                  name: reciever_phone_number
+                  name: receiver_phone_number
                   value: 89023498790
               - column:
                   name: journey_id
@@ -57,7 +57,7 @@ databaseChangeLog:
                   name: arrival_point_id
                   value: 4
               - column:
-                  name: reciever_phone_number
+                  name: receiver_phone_number
                   value: 89023499978
               - column:
                   name: journey_id
