@@ -19,4 +19,5 @@ public class TravelPointDto {
     private String pointName;
     private Date dispatchDate;
     private Date arrivalDate;
+    private Integer pointIndex;
 }

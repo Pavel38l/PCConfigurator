@@ -20,6 +20,7 @@ import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
 import jwtdecoder from "jwt-decode";
+import {Link} from "react-router-dom";
 const { Title } = Typography;
 
 function JourneyEdit() {
@@ -125,6 +126,11 @@ function JourneyEdit() {
     pointsForm.setFieldsValue({ points: pointsList });
   };
 
+  const onReset = () => {
+    pointsForm.resetFields();
+    onPointsListChange();
+  };
+
   return (
     <div>
       <YMaps
@@ -176,7 +182,6 @@ function JourneyEdit() {
                           >
                             <SearchComplete
                               onSelect={(value) => {
-                                console.log(value);
                                 onAddressSelect(field.name, value);
                               }}
                               ymaps={ymaps}
@@ -284,9 +289,13 @@ function JourneyEdit() {
           <CustomSlider name="avgCost" label="Average order cost" max={10000} />
           <CustomSlider name="largeCost" label="Large order cost" max={20000} />
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Create journey
-            </Button>
+            <Space>
+              <Button type="primary" htmlType="submit">
+                Create journey
+              </Button>
+              <Button onClick={onReset}>Reset</Button>
+              <Link to={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`}>Cancel</Link>
+            </Space>
           </Form.Item>
         </Form>
       </YMaps>
