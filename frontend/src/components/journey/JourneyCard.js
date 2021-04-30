@@ -11,11 +11,10 @@ import {
   Typography,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
-import moment from "moment";
 import JourneyService from "../../services/JourneyService";
 import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const JourneyCard = ({ journey, deleteButton, createButton }) => {
   const [isDetails, setIsDetails] = useState(false);

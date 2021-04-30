@@ -1,27 +1,22 @@
 import { useForm } from "antd/lib/form/Form";
 import {Row, Col} from "antd"
 import {
-  Tabs,
   Button,
   Tooltip,
   Form,
   Input,
-  Checkbox,
   Select,
   DatePicker,
   Space,
   Descriptions,
 } from "antd";
-import axios from "axios";
 import { EditOutlined, SaveOutlined, RollbackOutlined } from "@ant-design/icons";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
-import Image from "react-bootstrap/Image";
 import jwtdecoder from "jwt-decode";
 import moment from "moment";
 import { useParams } from "react-router";
-import FormItem from "antd/lib/form/FormItem";
 
 const layout = {
   labelCol: { span: 8 },
@@ -140,7 +135,7 @@ const Profile = () => {
             </Form.Item>
             </Col>
             <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" onClick ={() => cancelSubmit()}icon={<RollbackOutlined />}>
+              <Button type="primary" htmlType="submit" onClick ={() => cancelSubmit()} icon={<RollbackOutlined />}>
                 Cancel
               </Button>
             </Form.Item>

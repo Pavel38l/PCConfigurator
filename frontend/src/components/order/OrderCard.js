@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Avatar,
-  Button,
   Card,
   Col,
   Row,
@@ -11,8 +10,7 @@ import {
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import moment from "moment";
-import JourneyService from "../../services/JourneyService";
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const OrderCard = ({ orderProfile, button }) => {
 

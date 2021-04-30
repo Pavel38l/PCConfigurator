@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserComponent from "./components/UserComponent";
@@ -8,7 +7,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import jwtdecoder from "jwt-decode";
 import Registration from "./components/Registration";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProfileTabs from "./components/profile/profileTabs";
 import PageContainer from "./components/Container";
 import JourneyEdit from "./components/JourneyEdit";

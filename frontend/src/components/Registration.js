@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Row } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import { Link, Redirect } from 'react-router-dom';
+import { Form, Button, Col, Row } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 class Registration extends Component {
     constructor(props) {
         super(props);

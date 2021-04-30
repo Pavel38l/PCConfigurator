@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { AutoComplete, Select } from 'antd';
+import { Select } from 'antd';
 
 const { Option } = Select;
 const _ = require('lodash');

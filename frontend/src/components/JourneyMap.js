@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import {Map, Placemark, Polyline, SearchControl} from "react-yandex-maps";
+import React from "react";
+import {Map, Placemark, Polyline} from "react-yandex-maps";
 
 function JourneyMap(props) {
-    const [points, setPoints] = useState([]);
     const width = 600;
     const height = 500;
     const defmapState = {
