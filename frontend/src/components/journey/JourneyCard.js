@@ -97,7 +97,7 @@ const JourneyCard = ({ journey, deleteButton, createButton }) => {
               {journeyFull.travelPoints.map((point, index) => {
                 return (
                   <Timeline.Item
-                    id={point.id}
+                    key={point.id}
                     label={resolvePointLabel(
                       index,
                       point,

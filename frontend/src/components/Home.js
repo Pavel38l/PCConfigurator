@@ -89,7 +89,7 @@ class Home extends React.Component {
     const journeys = this.state.journeys;
     const journeyCards = journeys.map((journey) => {
       return (
-        <JourneyCard journey={journey} createButton={true}/>
+        <JourneyCard key={journey.id} journey={journey} createButton={true}/>
       );
     });
 

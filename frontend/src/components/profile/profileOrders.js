@@ -30,6 +30,7 @@ const ProfileOrders = () => {
     console.log(order);
     return (
       <OrderCard
+        key={order.id}
         orderProfile={order}
         button={
           localStorage.getItem("token") &&

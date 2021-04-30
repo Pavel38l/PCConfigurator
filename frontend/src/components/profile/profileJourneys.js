@@ -61,7 +61,7 @@ const ProfileJourneys = () => {
           className="float-left"
           href="/journey-create"
         >
-          Create journey
+          + Create journey
         </Button>
     ):null}
       <Container className="mt-5">
