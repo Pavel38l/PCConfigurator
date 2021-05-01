@@ -9,6 +9,7 @@ import {
   Checkbox,
   Select,
   DatePicker,
+  Tag,
 } from "antd";
 import axios from "axios";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
@@ -57,24 +58,31 @@ const ProfileJourneys = () => {
         >
           Delete
         </Button>
-      ) : null}/>
+      ) : null}
+        status
+      />
     );
   });
 
   useEffect(() => {
     load();
   }, [id]);
-  
+  //кнопку выровнять по карточкам
+  //если нет данных, выводить (компонент empty)
   return (
     <>
     {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+      <Container className="mt-5">
       <Button
           type="primary"
           variant="outline-success"
           className="float-left"
+          href="/journeyEdit"
+          style={{marginBottom: 10}}
         >
           Create journey
         </Button>
+        </Container>
     ):null}
       <Container className="mt-5">
         <div>

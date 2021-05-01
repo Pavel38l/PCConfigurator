@@ -14,8 +14,15 @@ class UserService {
         return this.httpClient.get(`/${id}`);
     }
   
-    getUserJourneys(id){
+    async getUserJourneys(id){
         return this.httpClient.get(`/${id}/journeys`);
+     /*   const {data} = await this.httpClient.get(`/${id}/journeys`);
+        return data.map((journey) => {
+            journey.endTravelPoint.dispatchDate = new Date(journey.endTravelPoint.dispatchDate);
+            journey.startTravelPoint.arrivalDate = new Date(journey.startTravelPoint.arrivalDate);
+            return journey;
+        })*/
+         
     }
   
     getUserOrders(id){

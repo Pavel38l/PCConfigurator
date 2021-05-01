@@ -8,13 +8,13 @@ import {
   Space,
   Timeline,
   Typography,
+  Tag,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import moment from "moment";
 import JourneyService from "../../services/JourneyService";
 const { Text, Link } = Typography;
-
-const JourneyCard = ({ journey, button }) => {
+const JourneyCard = ({ journey, button, status }) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -31,9 +31,9 @@ const JourneyCard = ({ journey, button }) => {
   }, [journey.id]);
 
   const dateFormat = (date) => {
-    console.log(date, moment(date).format('LLL'));
-    return moment(date).format('LLL');
-  }
+    console.log(date, moment(date).format("LLL"));
+    return moment(date).format("LLL");
+  };
 
   const resolvePointLabel = (index, point, pointsSize) => {
     if (index === 0) {
@@ -55,16 +55,42 @@ const JourneyCard = ({ journey, button }) => {
         </>
       );
     }
-  }
+  };
+
   return (
     <Card
       key={journey.id}
       title={
-        journey.startTravelPoint.pointName +
-        " - " +
-        journey.endTravelPoint.pointName
+        <>
+          {journey.startTravelPoint.pointName +
+            " - " +
+            journey.endTravelPoint.pointName +
+            " "}
+          {status &&
+            (moment(journey.endTravelPoint.arrivalDate).isBefore(Date.now()) ? (
+              <Tag color="success" style={{ marginRight: 10 }}>
+                completed 
+              </Tag>
+            ) : moment(journey.startTravelPoint.dispatchDate).isBefore(Date.now()) ? (
+              <Tag color="processing" style={{ marginRight: 10 }}>
+                in progress
+              </Tag>
+            ) : (
+              <Tag color="warning" style={{ marginRight: 10 }}>
+                planned
+              </Tag>
+            ))}
+        </>
       }
-      extra={<><Button style={{marginRight: 5}} onClick={onDetailClick}>Details</Button> {button} </> }
+      extra={
+        <>
+          {" "}
+          <Button style={{ marginRight: 5 }} onClick={onDetailClick}>
+            Details
+          </Button>{" "}
+          {button}{" "}
+        </>
+      }
     >
       <Row justify="space-between">
         <Col span={10}>
@@ -73,7 +99,11 @@ const JourneyCard = ({ journey, button }) => {
               {journeyFull.travelPoints.map((point, index) => {
                 return (
                   <Timeline.Item
-                    label={resolvePointLabel(index, point, journeyFull.travelPoints.length)}
+                    label={resolvePointLabel(
+                      index,
+                      point,
+                      journeyFull.travelPoints.length
+                    )}
                   >
                     {point.address}
                   </Timeline.Item>
@@ -83,16 +113,12 @@ const JourneyCard = ({ journey, button }) => {
           ) : (
             <Timeline mode={"left"}>
               <Timeline.Item
-                label={
-                  dateFormat(journey.startTravelPoint.dispatchDate)
-                }
+                label={dateFormat(journey.startTravelPoint.dispatchDate)}
               >
                 {journey.startTravelPoint.address}
               </Timeline.Item>
               <Timeline.Item
-                label={
-                  dateFormat(journey.endTravelPoint.arrivalDate)
-                }
+                label={dateFormat(journey.endTravelPoint.arrivalDate)}
               >
                 {journey.endTravelPoint.address}
               </Timeline.Item>

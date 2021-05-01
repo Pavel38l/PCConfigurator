@@ -10,6 +10,7 @@ import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.mapper.JourneyInfoCostMapper;
 import ru.vsu.Peredachka.service.UserService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,10 +55,11 @@ public class UserController {
     @RequestMapping(method = GET, path = "/{id}/journeys")
     public List<JourneyInfoDto> getJourneys(@PathVariable Long id) throws NotFoundException {
         User user = userService.findById(id);
-        return user.getJourneys().stream().map(
+        List<JourneyInfoDto> infosDto = user.getJourneys().stream().map(
                 journeyMapper::toDto
-        ).sorted(JourneyInfoDto.COMPARE_BY_STARTDATE)
-         .collect(Collectors.toList());
+        ).collect(Collectors.toList());
+        Collections.sort(infosDto, JourneyInfoDto.COMPARE_BY_STARTDATE);
+        return infosDto;
     }
     @RequestMapping(method = POST, path = "/update")
     public void update(@RequestBody User dto) {

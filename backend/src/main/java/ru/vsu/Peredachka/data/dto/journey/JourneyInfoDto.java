@@ -24,9 +24,8 @@ public class JourneyInfoDto extends AbstractDto {
     public static final Comparator<JourneyInfoDto> COMPARE_BY_STARTDATE = new Comparator<JourneyInfoDto>() {
         @Override
         public int compare(JourneyInfoDto o1, JourneyInfoDto o2) {
-            if (o1.getStartTravelPoint().getArrivalDate() == null || o2.getStartTravelPoint().getArrivalDate() == null)
-                return 0;
-            return o1.getStartTravelPoint().getArrivalDate().compareTo(o2.getStartTravelPoint().getArrivalDate());
+
+            return o2.getStartTravelPoint().getDispatchDate().compareTo(o1.getStartTravelPoint().getDispatchDate());
         }
     };
 }
