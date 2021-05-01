@@ -13,8 +13,6 @@ import {
 } from "antd";
 import JourneyCard from "./journey/JourneyCard";
 
-// TODO убрать + create journey
-// TODO сделать имя обязательным
 // TODO сделать имя обязательным
 // TODO исправить поле gender в редактировании профиля
 // TODO валидациия полей дат при создании поездки
@@ -246,9 +244,7 @@ class Home extends React.Component {
             </Form>
           </Container>
           <Container className="mt-5">
-            <div>
-              <Space direction="vertical">{journeyCards}</Space>
-            </div>
+              {journeyCards}
           </Container>
         </div>
       </YMaps>

@@ -80,6 +80,7 @@ const JourneyCard = ({ journey, deleteButton, createButton }) => {
         " - " +
         journey.endTravelPoint.pointName
       }
+      style={{marginTop: 10}}
       extra={
         <Space>
           {createButton ? (

@@ -10,7 +10,7 @@ import {
   Timeline,
   Row,
   Col,
-  Spin,
+  Spin, InputNumber,
 } from "antd";
 import OrderService from "../../services/OrderService";
 import "antd/dist/antd.css";
@@ -139,7 +139,9 @@ const OrderAdd = () => {
       arrivalPoint: journey.travelPoints[values.endPoint],
       orderSize: {id: values.orderSize.toString()},
       owner: {id: jwtdecoder(localStorage.getItem("token")).jti},
-      journey: {id: journeyId}
+      journey: {id: journeyId},
+      description: values.description,
+      orderValue: values.orderValue,
     }
     console.log(dto)
     OrderService.createOrder(dto).then();
@@ -249,6 +251,21 @@ const OrderAdd = () => {
             </Select>
           </Form.Item>
           <Form.Item
+              wrapperCol={{ span: 20 }}
+              name="orderValue"
+              label="Parcel value"
+              tooltip="Indicate the value of the parcel so that the carrier knows the possible risks"
+              rules={[
+                {
+                  required: false,
+                  type: "number",
+                  min: 0,
+                },
+              ]}
+          >
+            <InputNumber />
+          </Form.Item>
+          <Form.Item
             wrapperCol={{ span: 20 }}
             name="description"
             label="Description"
@@ -259,7 +276,7 @@ const OrderAdd = () => {
           <Form.Item {...tailLayout}>
             <Space>
               <Button type="primary" htmlType="submit">
-                Offer order
+                Create
               </Button>
               <Button onClick={onReset}>Reset</Button>
               <Button href="/">Cancel</Button>
