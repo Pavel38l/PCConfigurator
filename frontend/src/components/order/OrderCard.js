@@ -23,6 +23,7 @@ const OrderCard = ({ orderProfile, button }) => {
         orderProfile.dispatchPoint.pointName
       }
       extra={ button}
+      style={{marginTop: 10}}
     >
       <Row justify="space-between">
         <Col span={10}>

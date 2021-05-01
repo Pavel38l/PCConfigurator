@@ -1,6 +1,6 @@
 
 import {
-  Button,
+  Button, Space,
 } from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
@@ -56,14 +56,8 @@ const ProfileOrders = () => {
 
   return (
     <>
-      
-
       <Container className="mt-5">
-        <div>
-          <table className="table table-striped">
-            <tbody>{ordersTable}</tbody>
-          </table>
-        </div>
+        {ordersTable}
       </Container>
     </>
   );

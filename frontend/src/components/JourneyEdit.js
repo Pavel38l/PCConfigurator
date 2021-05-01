@@ -149,6 +149,11 @@ function JourneyEdit() {
           layout="vertical"
           name="dynamic_form_nest_item"
           autoComplete="off"
+          initialValues={{
+            smallCost: 0,
+            avgCost: 0,
+            largeCost: 0
+          }}
         >
           <Row justify="space-between">
             <Col>
@@ -284,9 +289,45 @@ function JourneyEdit() {
           >
             <InputNumber />
           </Form.Item>
-          <CustomSlider name="smallCost" label="Small order cost" max={5000} />
-          <CustomSlider name="avgCost" label="Average order cost" max={10000} />
-          <CustomSlider name="largeCost" label="Large order cost" max={20000} />
+          <Form.Item
+              name="smallCost"
+              label="Small order cost"
+              rules={[
+                {
+                  required: true,
+                  type: 'number',
+                  min: 1,
+                },
+              ]}
+          >
+            <CustomSlider max={20} />
+          </Form.Item>
+          <Form.Item
+              name="avgCost"
+              label="Average order cost"
+              rules={[
+                {
+                  required: true,
+                  type: 'number',
+                  min: 1,
+                },
+              ]}
+          >
+            <CustomSlider value={0} max={50} />
+          </Form.Item>
+          <Form.Item
+              name="largeCost"
+              label="Large order cost"
+              rules={[
+                {
+                  required: true,
+                  type: 'number',
+                  min: 1,
+                },
+              ]}
+          >
+            <CustomSlider value={0} max={100} />
+          </Form.Item>
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit">

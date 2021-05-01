@@ -1,7 +1,4 @@
-
-import {
-  Button,
-} from "antd";
+import {Button, Space} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import JourneyService from "../../services/JourneyService";
@@ -9,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import JourneyCard from ".././journey/JourneyCard";
-
 
 const ProfileJourneys = () => {
   const [journeys, setJourneys] = useState([]);
@@ -44,6 +40,7 @@ const ProfileJourneys = () => {
             </Button>
           ) : null
         }
+        style={{marginTop: "10"}}
       />
     );
   });
@@ -51,25 +48,20 @@ const ProfileJourneys = () => {
   useEffect(() => {
     load();
   }, [id]);
-  
+
   return (
     <>
-    {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
-      <Button
-          type="primary"
-          variant="outline-success"
-          className="float-left"
-          href="/journey-create"
-        >
-          + Create journey
-        </Button>
-    ):null}
       <Container className="mt-5">
-        <div>
-          <table className="table table-striped">
-            <tbody>{journeyTable}</tbody>
-          </table>
-        </div>
+        {localStorage.getItem("token") &&
+        id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            <Button
+                type="primary"
+                href="/journey-create"
+            >
+              Create journey
+            </Button>
+        ) : null}
+        {journeyTable}
       </Container>
     </>
   );
