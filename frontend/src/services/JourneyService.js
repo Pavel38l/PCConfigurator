@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios from '../axiosDefault'
 
 
 
 class JourneyService {
     httpClient = axios.create({
-        baseURL: "http://localhost:8080/api/v1/journey"
+        baseURL: "http://localhost:8080/api/v1/journey",
     })
     getJourneys() {
         return this.httpClient.get();

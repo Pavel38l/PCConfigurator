@@ -18,9 +18,7 @@ class Header extends React.Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/journeys">Search trips</Nav.Link>
-                        <Nav.Link href="/orders">Search for orders</Nav.Link>
-
+                        <Nav.Link href="/">Search trips</Nav.Link>
                     </Nav>
                     { this.renderUserState(false)}
                 </Navbar.Collapse>
