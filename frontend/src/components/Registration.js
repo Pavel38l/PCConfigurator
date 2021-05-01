@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Row } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import { Link, Redirect } from 'react-router-dom';
+import { Form, Button, Col, Row } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 class Registration extends Component {
     constructor(props) {
         super(props);
@@ -84,7 +83,6 @@ class Registration extends Component {
                         <Form.Control
                             type="text"
                             placeholder="Enter first name"
-                            required
                             name="firstName"
                             value={firstName}
                             onChange={this.handleChange}
@@ -97,7 +95,6 @@ class Registration extends Component {
                         <Form.Control
                             type="text"
                             placeholder="Enter last name"
-                            required
                             name="lastName"
                             value={lastName}
                             onChange={this.handleChange}
@@ -125,7 +122,7 @@ class Registration extends Component {
 
                         <Form.Control
                             required
-                            type="datetime-local"
+                            type="date"
                             name="dateOfBirth"
                             value={dateOfBirth}
                             onChange={this.handleChange}

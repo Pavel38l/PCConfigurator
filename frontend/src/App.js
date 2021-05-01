@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserComponent from "./components/UserComponent";
@@ -8,10 +7,12 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import jwtdecoder from "jwt-decode";
 import Registration from "./components/Registration";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProfileTabs from "./components/profile/profileTabs";
 import PageContainer from "./components/Container";
 import JourneyEdit from "./components/JourneyEdit";
+import OrderAdd from "./components/orderAdd/OrderAdd";
+import "antd/dist/antd.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -40,11 +41,14 @@ class App extends React.Component {
               render={() => <Login upTitle={this.upTitle} />}
             />
             <Route exact path="/registration" component={Registration} />
-            <Route exact path="/journeyEdit" component={JourneyEdit} />
+            <Route exact path="/journey-create" component={JourneyEdit} />
             <Route exact path="/profile/:id">
               <>
                 <ProfileTabs></ProfileTabs>
               </>
+            </Route>
+            <Route exact path="/orderAdd/:journeyId">
+              <OrderAdd />
             </Route>
           </Switch>
         </PageContainer>

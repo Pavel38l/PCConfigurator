@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import axios from 'axios';
-import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Route, Row } from "react-bootstrap";
-import Home from "./Home"
-import { Link, Redirect } from 'react-router-dom';
+import { Form, Button, Col, Row } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
@@ -85,7 +84,7 @@ class Login extends Component {
 
                     <Form.Row>
                         <Col sm={{ span: 2 }}>
-                            <Button type="submit" className="mr-2" >submit</Button>
+                            <Button type="submit" className="mr-2" >Submit</Button>
                         </Col>
                     </Form.Row>
 

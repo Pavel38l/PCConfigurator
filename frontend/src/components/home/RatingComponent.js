@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import { Typography, Space } from 'antd';
-const { Text, Link } = Typography;
+import React from "react";
+import { Typography } from 'antd';
+const { Text } = Typography;
 
 function RatingComponent(props) {
     let status = 'secondary';

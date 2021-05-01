@@ -3,7 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
-import jwtdecoder from 'jwt-decode';
+import jwtdecoder from "jwt-decode";
 
 class Header extends React.Component {
     constructor(props) {
@@ -18,9 +18,7 @@ class Header extends React.Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/journeys">Search trips</Nav.Link>
-                        <Nav.Link href="/orders">Search for orders</Nav.Link>
-
+                        <Nav.Link href="/">Search trips</Nav.Link>
                     </Nav>
                     { this.renderUserState(false)}
                 </Navbar.Collapse>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Comment,
   Avatar,
   Button,
   Card,
@@ -11,10 +12,13 @@ import {
   Tag,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
-import moment from "moment";
 import JourneyService from "../../services/JourneyService";
+import { UserOutlined } from "@ant-design/icons";
+import UserJourneyUtils from "../utils/UserJourneyUtils";
 const { Text, Link } = Typography;
-const JourneyCard = ({ journey, button, status }) => {
+
+const JourneyCard = ({ journey, deleteButton, createButton, status }) => {
+
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -30,16 +34,11 @@ const JourneyCard = ({ journey, button, status }) => {
     load();
   }, [journey.id]);
 
-  const dateFormat = (date) => {
-    console.log(date, moment(date).format("LLL"));
-    return moment(date).format("LLL");
-  };
-
   const resolvePointLabel = (index, point, pointsSize) => {
     if (index === 0) {
-      return dateFormat(point.dispatchDate);
+      return UserJourneyUtils.dateFormat(point.dispatchDate);
     } else if (index === pointsSize - 1) {
-      return dateFormat(point.arrivalDate);
+      return UserJourneyUtils.dateFormat(point.arrivalDate);
     } else {
       return (
         <>
@@ -49,13 +48,31 @@ const JourneyCard = ({ journey, button, status }) => {
               marginTop: "-10px",
             }}
           >
-            {dateFormat(point.dispatchDate)}
+            {UserJourneyUtils.dateFormat(point.dispatchDate)}
           </p>
-          <p>{dateFormat(point.arrivalDate)}</p>
+          <p>{UserJourneyUtils.dateFormat(point.arrivalDate)}</p>
         </>
       );
     }
   };
+
+  const userName = UserJourneyUtils.getUserName(journey.owner);
+
+  const avatar = (
+    <Avatar
+      size="large"
+      style={{
+        backgroundColor: "#7265e6",
+        verticalAlign: "middle",
+      }}
+    >
+      {journey.owner.firstName
+        ? journey.owner.firstName.length < 8
+          ? journey.owner.firstName
+          : journey.owner.firstName.substr(0, 1)
+        : journey.owner.email.substr(0, 1)}
+    </Avatar>
+  );
 
   return (
     <Card
@@ -69,7 +86,7 @@ const JourneyCard = ({ journey, button, status }) => {
           {status &&
             (moment(journey.endTravelPoint.arrivalDate).isBefore(Date.now()) ? (
               <Tag color="success" style={{ marginRight: 10 }}>
-                completed 
+                completed
               </Tag>
             ) : moment(journey.startTravelPoint.dispatchDate).isBefore(Date.now()) ? (
               <Tag color="processing" style={{ marginRight: 10 }}>
@@ -82,15 +99,17 @@ const JourneyCard = ({ journey, button, status }) => {
             ))}
         </>
       }
+      style={{marginTop: 10}}
       extra={
-        <>
-          {" "}
-          <Button style={{ marginRight: 5 }} onClick={onDetailClick}>
-            Details
-          </Button>{" "}
-          {button}{" "}
-        </>
+        <Space>
+          {createButton ? (
+              <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
+          ) : null}
+          <Button onClick={onDetailClick}>Details</Button>
+          {deleteButton}
+        </Space>
       }
+
     >
       <Row justify="space-between">
         <Col span={10}>
@@ -99,13 +118,31 @@ const JourneyCard = ({ journey, button, status }) => {
               {journeyFull.travelPoints.map((point, index) => {
                 return (
                   <Timeline.Item
+                    key={point.id}
                     label={resolvePointLabel(
                       index,
                       point,
                       journeyFull.travelPoints.length
                     )}
                   >
-                    {point.address}
+                    <p>{point.address}</p>
+                    <Text type="secondary" style={{ fontStyle: "italic" }}>
+                      Comment:
+                    </Text>
+                    <Comment
+                      id={point.id}
+                      author={
+                        <a href={`/profile/${journey.owner.id}`}>{userName}</a>
+                      }
+                      avatar={
+                        <Avatar
+                          id={point.id}
+                          style={{ backgroundColor: "#7265e6" }}
+                          icon={<UserOutlined />}
+                        />
+                      }
+                      content={<p>{point.comment}</p>}
+                    />
                   </Timeline.Item>
                 );
               })}
@@ -113,12 +150,16 @@ const JourneyCard = ({ journey, button, status }) => {
           ) : (
             <Timeline mode={"left"}>
               <Timeline.Item
-                label={dateFormat(journey.startTravelPoint.dispatchDate)}
+                label={UserJourneyUtils.dateFormat(
+                  journey.startTravelPoint.dispatchDate
+                )}
               >
                 {journey.startTravelPoint.address}
               </Timeline.Item>
               <Timeline.Item
-                label={dateFormat(journey.endTravelPoint.arrivalDate)}
+                label={UserJourneyUtils.dateFormat(
+                  journey.endTravelPoint.arrivalDate
+                )}
               >
                 {journey.endTravelPoint.address}
               </Timeline.Item>
@@ -127,9 +168,7 @@ const JourneyCard = ({ journey, button, status }) => {
         </Col>
         <Col>
           <Space>
-            <a href={"/profile/" + journey.owner.id}>
-              <Avatar size="large">{journey.owner.firstName}</Avatar>
-            </a>
+            <a href={`/profile/${journey.owner.id}`}>{avatar}</a>
             <Space direction="vertical">
               <Text strong>{journey.owner.email}</Text>
               <Text>

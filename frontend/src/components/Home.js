@@ -4,25 +4,18 @@ import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
-import "antd/dist/antd.css";
-import { UserOutlined } from "@ant-design/icons";
 import {
   Form,
   Button,
   DatePicker,
   InputNumber,
-  Row,
-  Col,
-  Card,
-  Timeline,
-  Avatar,
-  Typography,
   Space,
 } from "antd";
-import RatingComponent from "./home/RatingComponent";
 import JourneyCard from "./journey/JourneyCard";
 
-const { Text, Link } = Typography;
+// TODO сделать имя обязательным
+// TODO исправить поле gender в редактировании профиля
+// TODO валидациия полей дат при создании поездки
 
 class Home extends React.Component {
   formRef = React.createRef();
@@ -99,7 +92,7 @@ class Home extends React.Component {
     const journeys = this.state.journeys;
     const journeyCards = journeys.map((journey) => {
       return (
-        <JourneyCard journey={journey} />
+        <JourneyCard key={journey.id} journey={journey} createButton={true}/>
       );
     });
 
@@ -251,9 +244,7 @@ class Home extends React.Component {
             </Form>
           </Container>
           <Container className="mt-5">
-            <div>
-              <Space direction="vertical">{journeyCards}</Space>
-            </div>
+              {journeyCards}
           </Container>
         </div>
       </YMaps>

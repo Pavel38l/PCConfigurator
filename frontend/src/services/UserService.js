@@ -1,10 +1,9 @@
-import axios from 'axios'
-
+import axios from '../axiosDefault'
 
 
 class UserService {
     httpClient = axios.create({
-        baseURL: "http://localhost:8080/api/v1/user"
+        baseURL: "http://localhost:8080/api/v1/user",
     })
     getUsers() {
         return this.httpClient.get();

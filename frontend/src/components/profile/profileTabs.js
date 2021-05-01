@@ -1,31 +1,14 @@
 import {
   Tabs,
-  Button,
-  Tooltip,
-  Form,
-  Input,
-  Checkbox,
-  Select,
-  DatePicker,
 } from "antd";
-import axios from "axios";
-import { EditOutlined, SaveOutlined } from "@ant-design/icons";
-import Container from "react-bootstrap/Container";
-import UserService from "../../services/UserService";
-import React, { useState, useEffect } from "react";
-import Image from "react-bootstrap/Image";
-import jwtdecoder from "jwt-decode";
-import moment from "moment";
-import { useParams } from "react-router";
+import React from "react";
 import Profile from "./profile";
 import ProfileJourneys from "./profileJourneys";
 import ProfileOrders from "./profileOrders";
-import PageContainer from "../Container";
 import ProfileOtherOrders from "./profileOtherOrders";
 
 const ProfileTabs = () => {
   const { TabPane } = Tabs;
-  const { id } = useParams();
   return (
     <>
       <h3>Profile</h3>

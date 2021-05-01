@@ -20,6 +20,4 @@ public class OrderSize {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "orderSize")
-    private List<Order> orders;
 }
