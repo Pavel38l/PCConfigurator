@@ -49,7 +49,6 @@ public class OrderController {
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setId(2L);
         order.setOrderStatus(orderStatus);
-        order.setReceiverPhoneNumber(1L);
         Order createdOrder = orderService.createOrUpdateOrder(
                 order
         );

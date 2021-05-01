@@ -21,4 +21,6 @@ public class CreateOrUpdateOrderDto {
     private TravelPointDto dispatchPoint;
 
     private TravelPointDto arrivalPoint;
+
+    private Long receiverPhoneNumber;
 }

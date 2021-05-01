@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// TODO поправить id элементов (на название + id)
 import {
   Typography,
   Form,
@@ -10,7 +9,7 @@ import {
   Timeline,
   Row,
   Col,
-  Spin, InputNumber,
+  Spin, InputNumber, message,
 } from "antd";
 import OrderService from "../../services/OrderService";
 import "antd/dist/antd.css";
@@ -110,7 +109,8 @@ const OrderAdd = () => {
       initialValue.startPoint = 0;
       initialValue.endPoint = 1;
     }
-    initialValue.orderSize = loadedOrderSize[1].id
+    initialValue.orderSize = loadedOrderSize[1].id;
+    initialValue.prefix = "7";
     setJourney(loadedJourney);
     console.log(initialValue)
   };
@@ -134,18 +134,33 @@ const OrderAdd = () => {
   };
 
   const onFinish = (values) => {
+    console.log(values);
     const dto = {
       dispatchPoint: journey.travelPoints[values.startPoint],
       arrivalPoint: journey.travelPoints[values.endPoint],
-      orderSize: {id: values.orderSize.toString()},
-      owner: {id: jwtdecoder(localStorage.getItem("token")).jti},
-      journey: {id: journeyId},
+      orderSize: { id: values.orderSize.toString() },
+      owner: { id: jwtdecoder(localStorage.getItem("token")).jti },
+      journey: { id: journeyId },
       description: values.description,
       orderValue: values.orderValue,
-    }
-    console.log(dto)
-    OrderService.createOrder(dto).then();
-  }
+      receiverPhoneNumber: parseInt(values.receiverPhoneNumber),
+    };
+    console.log(dto);
+    OrderService.createOrder(dto)
+      .then(message.success("Order created!"));
+  };
+
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select
+        style={{
+          width: 70,
+        }}
+      >
+        <Option value="7">+7</Option>
+      </Select>
+    </Form.Item>
+  );
 
   return (
     <>
@@ -251,17 +266,17 @@ const OrderAdd = () => {
             </Select>
           </Form.Item>
           <Form.Item
-              wrapperCol={{ span: 20 }}
-              name="orderValue"
-              label="Parcel value"
-              tooltip="Indicate the value of the parcel so that the carrier knows the possible risks"
-              rules={[
-                {
-                  required: false,
-                  type: "number",
-                  min: 0,
-                },
-              ]}
+            wrapperCol={{ span: 20 }}
+            name="orderValue"
+            label="Parcel value"
+            tooltip="Indicate the value of the parcel so that the carrier knows the possible risks"
+            rules={[
+              {
+                required: false,
+                type: "number",
+                min: 0,
+              },
+            ]}
           >
             <InputNumber />
           </Form.Item>
@@ -272,6 +287,32 @@ const OrderAdd = () => {
             tooltip="Describe the features of your package and possible problems"
           >
             <Input.TextArea rows={1} />
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{ span: 8 }}
+            name="receiverPhoneNumber"
+            label="Recipient's phone"
+            tooltip="Indicate the recipient's number so that he can receive an SMS with the parcel code and the carrier can contact the recipient"
+            rules={[
+              {
+                required: true,
+              },
+              () => ({
+                validator(_, value) {
+                  console.log(value);
+                  if (!value || UserJourneyUtils.isRuPhoneNumber(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "Invalid phone number!"
+                    )
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input addonBefore={prefixSelector} />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>
@@ -284,7 +325,7 @@ const OrderAdd = () => {
           </Form.Item>
         </Form>
       ) : (
-        <Spin className="Centered"/>
+        <Spin className="Centered" />
       )}
     </>
   );
