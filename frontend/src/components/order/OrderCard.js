@@ -10,7 +10,8 @@ import {
   Space,
   Tag,
   Timeline,
-  Typography, Button,
+  Typography,
+  Button,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
@@ -19,7 +20,7 @@ import { UserOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 const { Step } = Steps;
 
-const OrderCard = ({ order, button, issueButton = false }) => {
+const OrderCard = ({ order, button, issueButton }) => {
   const color =
     order.orderStatus.name === "offered"
       ? "orange"
@@ -54,11 +55,8 @@ const OrderCard = ({ order, button, issueButton = false }) => {
       extra={
         <Space direction="vertical">
           {button}
-          {issueButton ? (
-              <Button type="primary">Issue</Button>
-          ) : null}
+          {issueButton}
         </Space>
-
       }
       style={{ marginTop: 10 }}
     >
