@@ -38,6 +38,13 @@ public class OrderController {
         ).collect(Collectors.toList());
     }
 
+    @RequestMapping(method = GET, path = "/journey/{journeyId}")
+    public List<OrderWithDependenciesDto> getAllJourneyOrders(@PathVariable Long journeyId) {
+        return orderService.getAllJourneyOrders(journeyId).stream().map(
+                o -> mapper.map(o, OrderWithDependenciesDto.class)
+        ).collect(Collectors.toList());
+    }
+
     @RequestMapping(method = GET, path = "/orderSizes")
     public List<OrderSize> getOrderSize() {
         return orderService.getAllOrderSize();

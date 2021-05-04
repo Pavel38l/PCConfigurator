@@ -1,6 +1,6 @@
 
 import {
-  Button, Space,
+  Button, Empty, Space,
 } from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
@@ -26,28 +26,30 @@ const ProfileOrders = () => {
       console.error("delete order: ", error);
     }
   };
-  const ordersTable = orders.map((order) => {
-    console.log(order);
-    return (
-      <OrderCard
-        key={order.id}
-        order={order}
-        button={
-          localStorage.getItem("token") &&
-          id === jwtdecoder(localStorage.getItem("token")).jti ? (
-            <Button
-              variant="outline-success"
-              className="float-right"
-              danger
-              onClick={() => deleteOrder(order.id)}
-            >
-              Delete
-            </Button>
-          ) : null
-        }
-      />
-    );
-  });
+  const ordersTable = orders.length ? (
+      orders.map((order) => {
+        console.log(order);
+        return (
+            <OrderCard
+                key={order.id}
+                order={order}
+                button={
+                  localStorage.getItem("token") &&
+                  id === jwtdecoder(localStorage.getItem("token")).jti ? (
+                      <Button
+                          variant="outline-success"
+                          className="float-right"
+                          danger
+                          onClick={() => deleteOrder(order.id)}
+                      >
+                        Delete
+                      </Button>
+                  ) : null
+                }
+            />
+        );
+      })
+  ) : (<Empty />)
 
   useEffect(() => {
     

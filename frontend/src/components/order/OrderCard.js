@@ -10,7 +10,7 @@ import {
   Space,
   Tag,
   Timeline,
-  Typography,
+  Typography, Button,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
@@ -19,7 +19,7 @@ import { UserOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 const { Step } = Steps;
 
-const OrderCard = ({ order, button }) => {
+const OrderCard = ({ order, button, issueButton = false }) => {
   const color =
     order.orderStatus.name === "offered"
       ? "orange"
@@ -51,7 +51,15 @@ const OrderCard = ({ order, button }) => {
       title={
         order.arrivalPoint.pointName + " - " + order.dispatchPoint.pointName
       }
-      extra={button}
+      extra={
+        <Space direction="vertical">
+          {button}
+          {issueButton ? (
+              <Button type="primary">Issue</Button>
+          ) : null}
+        </Space>
+
+      }
       style={{ marginTop: 10 }}
     >
       <Row justify="space-between">
