@@ -7,12 +7,6 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
-                  value: posted
-            tableName: order_status
-        - insert:
-            columns:
-              - column:
-                  name: name
                   value: offered
             tableName: order_status
         - insert:

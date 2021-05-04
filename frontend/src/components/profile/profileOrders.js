@@ -31,7 +31,7 @@ const ProfileOrders = () => {
     return (
       <OrderCard
         key={order.id}
-        orderProfile={order}
+        order={order}
         button={
           localStorage.getItem("token") &&
           id === jwtdecoder(localStorage.getItem("token")).jti ? (

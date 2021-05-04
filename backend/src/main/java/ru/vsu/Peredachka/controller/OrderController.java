@@ -47,7 +47,7 @@ public class OrderController {
     public OrderDto createOrder(@RequestBody CreateOrUpdateOrderDto dto) {
         Order order = mapper.map(dto, Order.class);
         OrderStatus orderStatus = new OrderStatus();
-        orderStatus.setId(2L);
+        orderStatus.setId(1L);
         order.setOrderStatus(orderStatus);
         Order createdOrder = orderService.createOrUpdateOrder(
                 order

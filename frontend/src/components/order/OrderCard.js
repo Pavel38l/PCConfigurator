@@ -1,81 +1,132 @@
 import React from "react";
 import {
+  Steps,
   Avatar,
   Card,
   Col,
+  Comment,
+  Divider,
   Row,
   Space,
+  Tag,
   Timeline,
   Typography,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
-const { Text } = Typography;
+import { UserOutlined } from "@ant-design/icons";
 
-const OrderCard = ({ orderProfile, button }) => {
+const { Text } = Typography;
+const { Step } = Steps;
+
+const OrderCard = ({ order, button }) => {
+  const color =
+    order.orderStatus.name === "offered"
+      ? "orange"
+      : order.orderStatus.name === "defined"
+      ? "blue"
+      : "success";
+
+  const userName = UserJourneyUtils.getUserName(order.owner);
+
+  const avatar = (
+    <Avatar
+      size="large"
+      style={{
+        backgroundColor: "#7265e6",
+        verticalAlign: "middle",
+      }}
+    >
+      {order.owner.firstName
+        ? order.owner.firstName.length < 8
+          ? order.owner.firstName
+          : order.owner.firstName.substr(0, 1)
+        : order.owner.email.substr(0, 1)}
+    </Avatar>
+  );
 
   return (
     <Card
-      key={orderProfile.id}
+      key={order.id}
       title={
-        orderProfile.arrivalPoint.pointName +
-        " - " +
-        orderProfile.dispatchPoint.pointName
+        order.arrivalPoint.pointName + " - " + order.dispatchPoint.pointName
       }
-      extra={ button}
-      style={{marginTop: 10}}
+      extra={button}
+      style={{ marginTop: 10 }}
     >
       <Row justify="space-between">
         <Col span={10}>
-            <Timeline mode={"left"}>
-              <Timeline.Item
-                label={
-                  UserJourneyUtils.dateFormat(orderProfile.arrivalPoint.arrivalDate)
-                }
-              >
-                {orderProfile.arrivalPoint.address}
-              </Timeline.Item>
-              <Timeline.Item
-                label={
-                  UserJourneyUtils.dateFormat(orderProfile.dispatchPoint.dispatchDate)
-                }
-              >
-                {orderProfile.dispatchPoint.address}
-              </Timeline.Item>
-            </Timeline>        
+          <Timeline mode={"left"}>
+            <Timeline.Item
+              label={UserJourneyUtils.dateFormat(
+                order.arrivalPoint.arrivalDate
+              )}
+            >
+              {order.arrivalPoint.address}
+            </Timeline.Item>
+            <Timeline.Item
+              label={UserJourneyUtils.dateFormat(
+                order.dispatchPoint.dispatchDate
+              )}
+            >
+              {order.dispatchPoint.address}
+            </Timeline.Item>
+          </Timeline>
         </Col>
         <Col>
           <Space>
-            <a href={"/profile/" + orderProfile.owner.id}>
-              <Avatar size="large">{orderProfile.owner.firstName}</Avatar>
-            </a>
+            <a href={"/profile/" + order.owner.id}>{avatar}</a>
             <Space direction="vertical">
-              <Text strong>{orderProfile.owner.email}</Text>
+              <Text strong>{order.owner.email}</Text>
               <Text>
-                {(orderProfile.owner.firstName ? orderProfile.owner.firstName : "") +
+                {(order.owner.firstName ? order.owner.firstName : "") +
                   " " +
-                  (orderProfile.owner.lastName ? orderProfile.owner.lastName : "")}
+                  (order.owner.lastName ? order.owner.lastName : "")}
               </Text>
               <Text>
-                Rating: <RatingComponent value={orderProfile.owner.rating} />
+                Rating: <RatingComponent value={order.owner.rating} />
               </Text>
             </Space>
           </Space>
         </Col>
         <Col>
-        <p>
-            Order status:{" "}
-            <Text strong>{orderProfile.orderStatus.name}</Text>
+          <p align="center">
+            Order status: <Tag color={color}>{order.orderStatus.name}</Tag>
           </p>
-          
         </Col>
         <Col>
           <p>
-            Order size:{" "}
-            <Text strong>{orderProfile.orderSize.name}</Text>
+            Order size: <Text strong>{order.orderSize.name}</Text>
+          </p>
+
+          <p>
+            Order value: <Text strong>{`${order.orderValue} $`}</Text>
           </p>
         </Col>
       </Row>
+      {order.description ? (
+        <Row justify="left">
+          <Col span={2}>
+            <Text type="secondary" style={{ fontStyle: "italic" }}>
+              Comment:
+            </Text>
+          </Col>
+          <Col span={22}>
+            <Comment
+              id={order.id}
+              author={<a href={`/profile/${order.owner.id}`}>{userName}</a>}
+              avatar={
+                <Avatar
+                  id={order.id}
+                  style={{ backgroundColor: "#7265e6" }}
+                  icon={<UserOutlined />}
+                />
+              }
+              content={<p>{order.description}</p>}
+            />
+          </Col>
+        </Row>
+      ) : null}
     </Card>
   );
 };
