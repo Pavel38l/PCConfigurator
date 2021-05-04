@@ -14,6 +14,10 @@ class OrderService {
         return this.httpClient.post("", dto)
     }
 
+    getAllJourneyOrders(journeyId) {
+        return this.httpClient.get(`/journey/${journeyId}`);
+    }
+
     getOrdersSize() {
         return this.httpClient.get("/orderSizes")
     }

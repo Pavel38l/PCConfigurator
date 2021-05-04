@@ -16,7 +16,7 @@ import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 const { Text } = Typography;
 
-const JourneyCard = ({ journey, deleteButton, createButton }) => {
+const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false }) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -85,6 +85,9 @@ const JourneyCard = ({ journey, deleteButton, createButton }) => {
         <Space>
           {createButton ? (
               <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
+          ) : null}
+          {ordersButton ? (
+              <Button href={`/orders/${journey.id}`} type="primary">Orders</Button>
           ) : null}
           <Button onClick={onDetailClick}>Details</Button>
           {deleteButton}

@@ -13,6 +13,7 @@ import PageContainer from "./components/Container";
 import JourneyEdit from "./components/JourneyEdit";
 import OrderAdd from "./components/orderAdd/OrderAdd";
 import "antd/dist/antd.css";
+import JourneyOrders from "./components/order/JourneyOrders";
 
 class App extends React.Component {
   constructor(props) {
@@ -49,6 +50,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/orderAdd/:journeyId">
               <OrderAdd />
+            </Route>
+            <Route exact path="/orders/:journeyId">
+              <JourneyOrders />
             </Route>
           </Switch>
         </PageContainer>

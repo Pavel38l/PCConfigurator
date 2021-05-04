@@ -31,6 +31,12 @@ public class OrderService {
         return result;
     }
 
+    public List<Order> getAllJourneyOrders(Long journeyId) {
+        var result = new ArrayList<Order>();
+        orderRepository.findAllByJourneyIdAndOrderStatusNameNot(journeyId, "offered").forEach(result::add);
+        return result;
+    }
+
     public List<Order> getAllOrdersWithoutJourney() {
         return orderRepository.findAllByJourneyIsNull();
     }
