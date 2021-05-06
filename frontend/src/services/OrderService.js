@@ -17,7 +17,12 @@ class OrderService {
     getOrdersSize() {
         return this.httpClient.get("/orderSizes")
     }
-    
+    acceptOrder(id){
+        return this.httpClient.post(`/${id}/accept`)
+    }
+    cancelOrder(id){
+        return this.httpClient.post(`/${id}/cancel`)
+    }
 }
 
 export default new OrderService();

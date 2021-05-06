@@ -7,12 +7,13 @@ import {
   Space,
   Timeline,
   Typography,
+  
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 const { Text } = Typography;
 
-const OrderCard = ({ orderProfile, button }) => {
+const OrderCard = ({ orderProfile, acceptbutton, button }) => {
 
   return (
     <Card
@@ -22,7 +23,7 @@ const OrderCard = ({ orderProfile, button }) => {
         " - " +
         orderProfile.dispatchPoint.pointName
       }
-      extra={ button}
+      extra={<Space>{acceptbutton}{button}</Space>}
       style={{marginTop: 10}}
     >
       <Row justify="space-between">
