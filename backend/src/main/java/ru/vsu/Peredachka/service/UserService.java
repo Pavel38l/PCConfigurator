@@ -35,8 +35,6 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (passwordEncoder.matches(password, user.getPassword())) {
-                logger.info("Just a log message.");
-                //logger.debug("Message for debug level.");
                 return Optional.of(user);
             }
         }

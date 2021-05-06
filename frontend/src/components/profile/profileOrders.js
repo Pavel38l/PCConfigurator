@@ -1,7 +1,4 @@
-
-import {
-  Button, Space,
-} from "antd";
+import { Button, Space, Select } from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -9,10 +6,12 @@ import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import OrderService from "../../services/OrderService";
 import OrderCard from ".././order/OrderCard";
-
+import isCurentUser from "../utils/isCurentUser";
+const { Option } = Select;
 const ProfileOrders = () => {
   const [orders, setOrders] = useState([]);
   const { id } = useParams();
+  const [status, setStatus] = useState([]);
   const load = async () => {
     const response = await UserService.getUserOrders(id);
     setOrders(response.data);
@@ -26,37 +25,59 @@ const ProfileOrders = () => {
       console.error("delete order: ", error);
     }
   };
+  const handleSelect = (value) => {
+    setStatus(value);
+  };
+
   const ordersTable = orders.map((order) => {
-    console.log(order);
     return (
-      <OrderCard
-        key={order.id}
-        orderProfile={order}
-        button={
-          localStorage.getItem("token") &&
-          id === jwtdecoder(localStorage.getItem("token")).jti ? (
-            <Button
-              variant="outline-success"
-              className="float-right"
-              danger
-              onClick={() => deleteOrder(order.id)}
-            >
-              Delete
-            </Button>
-          ) : null
-        }
-      />
+      <>
+        {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
+          <OrderCard
+            key={order.id}
+            orderProfile={order}
+            button={
+              isCurentUser(id) ? (
+                <Button
+                  variant="outline-success"
+                  className="float-right"
+                  danger
+                  onClick={() => deleteOrder(order.id)}
+                >
+                  Delete
+                </Button>
+              ) : null
+            }
+          />
+        ) : null}
+      </>
     );
   });
 
   useEffect(() => {
-    
     load();
   }, [id]);
 
   return (
     <>
       <Container className="mt-5">
+        <Select
+          mode="multiple"
+          style={{ width: "30%" }}
+          placeholder="Select status order"
+          onChange={handleSelect}
+          optionLabelProp="label"
+        >
+          <Option value="offered" label="Offered">
+            Offered
+          </Option>
+          <Option value="defined" label="Defined">
+            Defined
+          </Option>
+          <Option value="completed" label="Completed">
+            Completed
+          </Option>
+        </Select>
         {ordersTable}
       </Container>
     </>

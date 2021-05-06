@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import ru.vsu.Peredachka.data.dto.journey.JourneyInfoDto;
 import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
 import ru.vsu.Peredachka.data.dto.user.UserWithDependenciesDto;
+import ru.vsu.Peredachka.data.entity.Journey;
+import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.User;
 import ru.vsu.Peredachka.data.mapper.JourneyInfoCostMapper;
+import ru.vsu.Peredachka.service.OrderService;
 import ru.vsu.Peredachka.service.UserService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,11 +30,13 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper mapper;
     private final JourneyInfoCostMapper journeyMapper;
+    private final OrderService orderService;
 
-    public UserController(UserService userService, ModelMapper mapper, JourneyInfoCostMapper journeyMapper) {
+    public UserController(UserService userService, ModelMapper mapper, JourneyInfoCostMapper journeyMapper, OrderService orderService) {
         this.userService = userService;
         this.mapper = mapper;
         this.journeyMapper = journeyMapper;
+        this.orderService = orderService;
     }
     @RequestMapping(method = GET, path = "/{id}")
     public UserWithDependenciesDto getUser(@PathVariable Long id) throws NotFoundException {
@@ -65,5 +72,22 @@ public class UserController {
     public void update(@RequestBody User dto) {
          userService.update(dto);
 
+    }
+    //поменять ссыль
+    @RequestMapping(method = GET, path = "/{id}/request-orders")
+    public List<OrderWithDependenciesDto> getOtherOrders(@PathVariable Long id) throws NotFoundException {
+        User user = userService.findById(id);
+        List<Long> idJourneys = user.getJourneys().stream().map(
+                Journey::getId
+        ).collect(Collectors.toList());
+
+        List<Order> otherOrders = idJourneys.stream().map(
+                orderService::findByJourneyId
+        ).flatMap(Collection::stream)
+         .collect(Collectors.toList());
+
+        return otherOrders.stream().map(
+                o -> mapper.map(o, OrderWithDependenciesDto.class)
+        ).collect(Collectors.toList());
     }
 }

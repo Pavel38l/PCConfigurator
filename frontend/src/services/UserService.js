@@ -30,6 +30,9 @@ class UserService {
     userUpdate(user){
         return this.httpClient.post(`/update`,user)
     }
+    getUserOtherOrders(id){
+        return this.httpClient.get(`/${id}/request-orders`)
+    }
     
 }
 

@@ -22,7 +22,7 @@ const ProfileTabs = () => {
         <TabPane tab="Orders" key="3">
           <ProfileOrders></ProfileOrders>
         </TabPane>
-        <TabPane tab="Other Orders" key="4">
+        <TabPane tab="Orders request" key="4">
           <ProfileOtherOrders></ProfileOtherOrders>
         </TabPane>
       </Tabs>

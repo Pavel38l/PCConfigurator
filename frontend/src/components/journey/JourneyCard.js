@@ -15,6 +15,7 @@ import RatingComponent from "../home/RatingComponent";
 import JourneyService from "../../services/JourneyService";
 import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
+import moment from "moment";
 const { Text, Link } = Typography;
 
 const JourneyCard = ({ journey, deleteButton, createButton, status }) => {
