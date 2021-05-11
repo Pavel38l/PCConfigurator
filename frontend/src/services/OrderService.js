@@ -1,9 +1,10 @@
 import axios from '../axiosDefault'
+import {BACKEND_URL} from "../constants";
 
 
 class OrderService {
     httpClient = axios.create({
-        baseURL: "http://localhost:8080/api/v1/orders",
+        baseURL: `${BACKEND_URL}/api/v1/orders`,
     })
    
     deleteOrder(id) {
@@ -20,6 +21,14 @@ class OrderService {
 
     getOrdersSize() {
         return this.httpClient.get("/orderSizes")
+    }
+
+    prepareDelivery(prepareDeliveryDto) {
+        return this.httpClient.post("/prepare-delivery", prepareDeliveryDto)
+    }
+
+    deliver(deliverDto) {
+        return this.httpClient.post("/deliver", deliverDto)
     }
     
 }

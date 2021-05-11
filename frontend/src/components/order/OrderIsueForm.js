@@ -24,7 +24,6 @@ const OrderIssueForm = ({ visible, onCancel }) => {
 
     const onOk = () => {
         form.submit();
-        console.log("Ok");
     };
 
     return (

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-    Typography,
-    Empty,
-    Form,
-    Select,
-    Input,
-    Button,
-    Space,
-    Timeline,
-    Spin,
-    message,
+  Typography,
+  Empty,
+  Form,
+  Select,
+  Input,
+  Button,
+  Space,
+  Timeline,
+  Spin,
+  message,
 } from "antd";
 import OrderService from "../../services/OrderService";
 import "antd/dist/antd.css";
@@ -20,6 +20,9 @@ import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 
+// TODO вынести jwtdecoder
+// TODO кастомные хуки
+
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -27,6 +30,7 @@ const JourneyOrders = () => {
   const [journey, setJourney] = useState(null);
   const [orders, setOrders] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currOrderId, setCurrOrderId] = useState(null);
   const { journeyId } = useParams();
 
   const getTimelineItemForPoint = (point, index) => {
@@ -56,20 +60,37 @@ const JourneyOrders = () => {
     load();
   }, [journeyId]);
 
-  const showModal = () => {
+  const prepareDelivery = (order) => {
+    const dto = {
+      receiverPhoneNumber: order.receiverPhoneNumber,
+      orderId: order.id,
+    };
+    OrderService.prepareDelivery(dto).then();
     setIsModalVisible(true);
+    setCurrOrderId(order.id);
   };
 
-  const handleOk = (values) => {
+  const handleOk = async (values) => {
     setIsModalVisible(false);
-    //message.success("Success!");
+    const dto = {
+      code: values.password,
+      orderId: currOrderId,
+    };
+    const response = await OrderService.deliver(dto);
+    if (response.data.status === "OK") {
+      message.success("Success!");
+      const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
+      setOrders(ordersResponse.data);
+      setCurrOrderId(null);
+    } else {
       message.error("Invalid password!");
       setIsModalVisible(true);
-
+    }
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setCurrOrderId(null);
   };
 
   const ordersTable = orders.length ? (
@@ -79,8 +100,8 @@ const JourneyOrders = () => {
           key={order.id}
           order={order}
           issueButton={
-            <Button type="primary" onClick={showModal}>
-              Issue
+            <Button type="primary" onClick={() => prepareDelivery(order)}>
+              Confirm Delivery
             </Button>
           }
         />
@@ -110,8 +131,15 @@ const JourneyOrders = () => {
       <Title level={3} className="Centered">
         Orders
       </Title>
-      <Container className="mt-5">{ordersTable}</Container>
-      <Form.Provider onFormFinish={(name, { values, forms }) => handleOk(values)}>
+      <Container className="mt-5">
+        {ordersTable}
+        <Button href="/" style={{ marginTop: 10 }}>
+          Back
+        </Button>
+      </Container>
+      <Form.Provider
+        onFormFinish={(name, { values, forms }) => handleOk(values)}
+      >
         <OrderIssueForm visible={isModalVisible} onCancel={handleCancel} />
       </Form.Provider>
     </>
