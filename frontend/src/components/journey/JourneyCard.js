@@ -18,8 +18,7 @@ import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
 const { Text, Link } = Typography;
 
-const JourneyCard = ({ journey, deleteButton, createButton, status }) => {
-
+const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false }) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -105,6 +104,9 @@ const JourneyCard = ({ journey, deleteButton, createButton, status }) => {
         <Space>
           {createButton ? (
               <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
+          ) : null}
+          {ordersButton ? (
+              <Button href={`/journey/${journey.id}/orders`} type="primary">Orders</Button>
           ) : null}
           <Button onClick={onDetailClick}>Details</Button>
           {deleteButton}

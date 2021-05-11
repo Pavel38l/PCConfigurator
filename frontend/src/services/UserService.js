@@ -1,9 +1,10 @@
 import axios from '../axiosDefault'
+import {BACKEND_URL} from "../constants";
 
 
 class UserService {
     httpClient = axios.create({
-        baseURL: "http://localhost:8080/api/v1/user",
+        baseURL: `${BACKEND_URL}/api/v1/user`,
     })
     getUsers() {
         return this.httpClient.get();

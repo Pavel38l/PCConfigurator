@@ -1,5 +1,5 @@
 import { useForm } from "antd/lib/form/Form";
-import {Row, Col} from "antd"
+import { Row, Col } from "antd";
 import {
   Button,
   Tooltip,
@@ -10,7 +10,11 @@ import {
   Space,
   Descriptions,
 } from "antd";
-import { EditOutlined, SaveOutlined, RollbackOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  SaveOutlined,
+  RollbackOutlined,
+} from "@ant-design/icons";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -49,19 +53,18 @@ const Profile = () => {
     setUser(updateUser);
     setEdit(!edit);
   };
-  const cancelSubmit = () =>{
+  const cancelSubmit = () => {
     setEdit(!edit);
-  }
+  };
   if (!user) {
     return <p>loading...</p>;
   }
-  
+
   return (
     <>
       {!edit ? (
         <Container>
-          
-          <Descriptions labelStyle={{fontWeight:600}} >
+          <Descriptions labelStyle={{ fontWeight: 600 }}>
             <Descriptions.Item label="Name">
               {user.firstName} {user.lastName}
             </Descriptions.Item>
@@ -71,13 +74,12 @@ const Profile = () => {
             </Descriptions.Item>
           </Descriptions>
           <Space align="baseline">
-            
-            {localStorage.getItem("token") && id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            {localStorage.getItem("token") &&
+            id === jwtdecoder(localStorage.getItem("token")).jti ? (
               <Tooltip title="Edit">
                 <Button
                   type="primary"
                   onClick={() => setEdit(!edit)}
-                  icon={<EditOutlined />}
                 >
                   Edit
                 </Button>
@@ -86,63 +88,66 @@ const Profile = () => {
           </Space>
         </Container>
       ) : (
-        <Container>
           <Form
             form={form}
             {...layout}
             name="control-ref"
             onFinish={handleSubmit}
             initialValues={user}
+            colon={false}
           >
-            
-
             <Form.Item name="firstName" label="First name">
               <Input />
             </Form.Item>
             <Form.Item name="lastName" label="Last name">
               <Input />
             </Form.Item>
-            <Form.Item name="sex" label="Gender">
+            <Form.Item
+              name="sex"
+              label="Sex"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
               <Select>
                 <Option value="male">male</Option>
                 <Option value="female">female</Option>
-                <Option value="other">other</Option>
               </Select>
             </Form.Item>
             <Form.Item
-              noStyle
-              shouldUpdate={(prevValues, currentValues) =>
-                prevValues.gender !== currentValues.gender
-              }
+              name="dateOfBirth"
+              label="Date of birthday"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             >
-              {({ getFieldValue }) =>
-                getFieldValue("gender") === "other" ? (
-                  <Form.Item name="customizeGender" label="Customize Gender">
-                    <Input />
-                  </Form.Item>
-                ) : null
-              }
-            </Form.Item>
-            <Form.Item name="dateOfBirth" label="Date of brithday">
               <DatePicker />
             </Form.Item>
-            <Row >
+            <Row>
               <Col offset={8}>
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                Save
-              </Button>
-            </Form.Item>
-            </Col>
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" onClick ={() => cancelSubmit()} icon={<RollbackOutlined />}>
-                Cancel
-              </Button>
-            </Form.Item>
-            
+                <Form.Item {...tailLayout}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                  >
+                    Save
+                  </Button>
+                </Form.Item>
+              </Col>
+              <Form.Item {...tailLayout}>
+                <Button
+                  htmlType="submit"
+                  onClick={() => cancelSubmit()}
+                >
+                  Cancel
+                </Button>
+              </Form.Item>
             </Row>
           </Form>
-        </Container>
       )}
     </>
   );

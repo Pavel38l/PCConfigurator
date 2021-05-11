@@ -1,4 +1,7 @@
-import { Button, Space, Select } from "antd";
+
+import {
+  Button, Empty, Space, Select
+} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -25,34 +28,39 @@ const ProfileOrders = () => {
       console.error("delete order: ", error);
     }
   };
+  
   const handleSelect = (value) => {
     setStatus(value);
-  };
 
-  const ordersTable = orders.map((order) => {
-    return (
-      <>
-        {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
-          <OrderCard
-            key={order.id}
-            orderProfile={order}
-            button={
-              isCurentUser(id) ? (
-                <Button
-                  variant="outline-success"
-                  className="float-right"
-                  danger
-                  onClick={() => deleteOrder(order.id)}
-                >
-                  Delete
-                </Button>
-              ) : null
-            }
-          />
-        ) : null}
-      </>
-    );
-  });
+    
+  
+  const ordersTable = orders.length ? (
+      orders.map((order) => {
+        console.log(order);
+        return (
+            <>
+              {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
+                <OrderCard
+                  key={order.id}
+                  order={order}
+                  button={
+                    isCurentUser(id) ? (
+                      <Button
+                        variant="outline-success"
+                        className="float-right"
+                        danger
+                        onClick={() => deleteOrder(order.id)}
+                      >
+                        Delete
+                      </Button>
+                    ) : null
+                  }
+                />
+              ) : null}
+          </>
+        );
+      })
+  ) : (<Empty />)
 
   useEffect(() => {
     load();

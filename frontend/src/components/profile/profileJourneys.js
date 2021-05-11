@@ -1,4 +1,4 @@
-import {Button, Space} from "antd";
+import {Empty, Button, Space} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import JourneyService from "../../services/JourneyService";
@@ -23,29 +23,33 @@ const ProfileJourneys = () => {
       console.error("delete journey: ", error);
     }
   };
-  const journeyTable = journeys.map((journey) => {
-    return (
-      <JourneyCard
-        key={journey.id}
-        journey={journey}
-        createButton={false}
-        deleteButton={
-          isCurentUser(id) ? (
-            <Button
-              variant="outline-success"
-              className="float-right"
-              danger
-              onClick={() => deleteJourney(journey.id)}
-            >
-              Delete
-            </Button>
-          ) : null
-        }
-        style={{marginTop: "10"}}
-        status
-      />
-    );
-  });
+
+  const journeyTable = journeys.length
+    ? journeys.map((journey) => {
+        return (
+          <JourneyCard
+            key={journey.id}
+            journey={journey}
+            createButton={false}
+            ordersButton={true}
+            deleteButton={
+              isCurentUser(id) ? (
+                <Button
+                  variant="outline-success"
+                  className="float-right"
+                  danger
+                  onClick={() => deleteJourney(journey.id)}
+                >
+                  Delete
+                </Button>
+              ) : null
+            }
+            style={{ marginTop: "10" }}
+            status
+          />
+        );
+      })
+    : (<Empty />);
 
   useEffect(() => {
     load();

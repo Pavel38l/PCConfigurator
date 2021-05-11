@@ -1,5 +1,4 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import UserComponent from "./components/UserComponent";
 import React from "react";
 import Header from "./components/Header";
@@ -13,6 +12,7 @@ import PageContainer from "./components/Container";
 import JourneyEdit from "./components/JourneyEdit";
 import OrderAdd from "./components/orderAdd/OrderAdd";
 import "antd/dist/antd.css";
+import JourneyOrders from "./components/order/JourneyOrders";
 
 class App extends React.Component {
   constructor(props) {
@@ -50,6 +50,10 @@ class App extends React.Component {
             <Route exact path="/orderAdd/:journeyId">
               <OrderAdd />
             </Route>
+            <Route exact path="/journey/:journeyId/orders">
+              <JourneyOrders />
+            </Route>
+
           </Switch>
         </PageContainer>
       </Router>
