@@ -1,10 +1,11 @@
 import axios from '../axiosDefault'
+import {BACKEND_URL} from "../constants";
 
 
 
 class JourneyService {
     httpClient = axios.create({
-        baseURL: "http://localhost:8080/api/v1/journey",
+        baseURL: `${BACKEND_URL}/api/v1/journey`,
     })
     getJourneys() {
         return this.httpClient.get();

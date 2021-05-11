@@ -1,5 +1,4 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import UserComponent from "./components/UserComponent";
 import React from "react";
 import Header from "./components/Header";
@@ -51,9 +50,10 @@ class App extends React.Component {
             <Route exact path="/orderAdd/:journeyId">
               <OrderAdd />
             </Route>
-            <Route exact path="/orders/:journeyId">
+            <Route exact path="/journey/:journeyId/orders">
               <JourneyOrders />
             </Route>
+
           </Switch>
         </PageContainer>
       </Router>

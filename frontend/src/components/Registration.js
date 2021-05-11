@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
+import {BACKEND_URL} from "../constants";
 class Registration extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,7 @@ class Registration extends Component {
             redirect: false
         };
 
-        axios.post(`http://localhost:8080/api/v1/security/register`, user)
+        axios.post(`${BACKEND_URL}/api/v1/security/register`, user)
             .then(res => {
                 console.log(res);
                 console.log(res.data);

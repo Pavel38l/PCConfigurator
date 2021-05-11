@@ -87,7 +87,7 @@ const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false
               <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
           ) : null}
           {ordersButton ? (
-              <Button href={`/orders/${journey.id}`} type="primary">Orders</Button>
+              <Button href={`/journey/${journey.id}/orders`} type="primary">Orders</Button>
           ) : null}
           <Button onClick={onDetailClick}>Details</Button>
           {deleteButton}

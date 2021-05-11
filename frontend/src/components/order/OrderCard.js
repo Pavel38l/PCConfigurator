@@ -55,7 +55,7 @@ const OrderCard = ({ order, button, issueButton }) => {
       extra={
         <Space direction="vertical">
           {button}
-          {issueButton}
+          {order.orderStatus.name !== "completed" ? (issueButton) : null}
         </Space>
       }
       style={{ marginTop: 10 }}

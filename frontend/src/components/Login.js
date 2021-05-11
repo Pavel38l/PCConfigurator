@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
+import {BACKEND_URL} from "../constants";
 
 class Login extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class Login extends Component {
             password: this.state.password
         };
 
-        axios.post(`http://localhost:8080/api/v1/security/login`, user)
+        axios.post(`${BACKEND_URL}/api/v1/security/login`, user)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
