@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import JourneyCard from ".././journey/JourneyCard";
+import isCurentUser from "../utils/isCurentUser";
 
 const ProfileJourneys = () => {
   const [journeys, setJourneys] = useState([]);
@@ -22,16 +23,17 @@ const ProfileJourneys = () => {
       console.error("delete journey: ", error);
     }
   };
+
   const journeyTable = journeys.length
     ? journeys.map((journey) => {
         return (
           <JourneyCard
+            key={journey.id}
             journey={journey}
             createButton={false}
             ordersButton={true}
             deleteButton={
-              localStorage.getItem("token") &&
-              id === jwtdecoder(localStorage.getItem("token")).jti ? (
+              isCurentUser(id) ? (
                 <Button
                   variant="outline-success"
                   className="float-right"
@@ -43,21 +45,20 @@ const ProfileJourneys = () => {
               ) : null
             }
             style={{ marginTop: "10" }}
+            status
           />
         );
       })
     : (<Empty />);
-      
 
   useEffect(() => {
     load();
   }, [id]);
-
+  
   return (
     <>
       <Container className="mt-5">
-        {localStorage.getItem("token") &&
-        id === jwtdecoder(localStorage.getItem("token")).jti ? (
+        {isCurentUser(id) ? (
             <Button
                 type="primary"
                 href="/journey-create"

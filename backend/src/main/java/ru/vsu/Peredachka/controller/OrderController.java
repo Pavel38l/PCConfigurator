@@ -71,7 +71,14 @@ public class OrderController {
     public OrderWithDependenciesDto getOrder(@PathVariable Long id) throws NotFoundException {
         return mapper.map(orderService.findById(id), OrderWithDependenciesDto.class);
     }
-
+    @RequestMapping(method = POST, path = "/{id}/accept")
+    public void acceptOrder(@PathVariable Long id) throws NotFoundException {
+        orderService.updateStatus(id, 3L);
+    }
+    @RequestMapping(method = POST, path = "/{id}/cancel")
+    public void cancelOrder(@PathVariable Long id) throws NotFoundException {
+        orderService.updateStatus(id, 1L);
+    }
     @RequestMapping(method = DELETE, path = "/{id}")
     public void deleteOrder(@PathVariable Long id) throws NotFoundException {
         orderService.deleteOrderById(id);

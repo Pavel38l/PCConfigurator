@@ -20,7 +20,7 @@ import { UserOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 const { Step } = Steps;
 
-const OrderCard = ({ order, button, issueButton }) => {
+const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
   const color =
     order.orderStatus.name === "offered"
       ? "orange"
@@ -53,12 +53,13 @@ const OrderCard = ({ order, button, issueButton }) => {
         order.arrivalPoint.pointName + " - " + order.dispatchPoint.pointName
       }
       extra={
-        <Space direction="vertical">
+        <Space>
+          {acceptbutton}
           {button}
           {order.orderStatus.name !== "completed" ? (issueButton) : null}
         </Space>
       }
-      style={{ marginTop: 10 }}
+      style={{marginTop: 10}}
     >
       <Row justify="space-between">
         <Col span={10}>

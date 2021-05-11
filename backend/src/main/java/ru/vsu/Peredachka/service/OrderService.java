@@ -1,6 +1,13 @@
 package ru.vsu.Peredachka.service;
 
 import javassist.NotFoundException;
+import org.aspectj.weaver.ast.Or;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.vsu.Peredachka.data.entity.*;
+import ru.vsu.Peredachka.data.repository.OrderRepository;
+import ru.vsu.Peredachka.data.repository.OrderSizeRepository;
+import ru.vsu.Peredachka.data.repository.OrderStatusRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +28,7 @@ import ru.vsu.Peredachka.service.sms.SmsSender;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -63,6 +71,9 @@ public class OrderService {
     public Order findById(Long id) throws NotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Order not found!"));
     }
+    public List<Order> findByJourneyId(Long id){
+        return orderRepository.findAllByJourney_Id(id);
+    }
 
     @Transactional // This annotation execute all request in one transaction
     public Order AddOrderToJourney(Long orderId, Long journeyId) throws NotFoundException {
@@ -74,6 +85,16 @@ public class OrderService {
 
     public Order createOrUpdateOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    public OrderStatus findStatusById(Long id) throws NotFoundException {
+        return orderStatusRepository.findById(id).orElseThrow(() -> new NotFoundException("Order status not found!"));
+    }
+    public void updateStatus(Long id, Long idStatus) throws NotFoundException {
+       Order order = findById(id);
+       OrderStatus orderStatus = findStatusById(idStatus);
+       order.setOrderStatus(orderStatus);
+       createOrUpdateOrder(order);
     }
 
     public void deleteOrderById(Long id) throws NotFoundException {

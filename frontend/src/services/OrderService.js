@@ -23,6 +23,14 @@ class OrderService {
         return this.httpClient.get("/orderSizes")
     }
 
+    acceptOrder(id) {
+        return this.httpClient.post(`/${id}/accept`)
+    }
+
+    cancelOrder(id) {
+        return this.httpClient.post(`/${id}/cancel`)
+    }
+
     prepareDelivery(prepareDeliveryDto) {
         return this.httpClient.post("/prepare-delivery", prepareDeliveryDto)
     }
@@ -30,7 +38,7 @@ class OrderService {
     deliver(deliverDto) {
         return this.httpClient.post("/deliver", deliverDto)
     }
-    
+
 }
 
 export default new OrderService();

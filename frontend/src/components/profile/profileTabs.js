@@ -5,6 +5,7 @@ import React from "react";
 import Profile from "./profile";
 import ProfileJourneys from "./profileJourneys";
 import ProfileOrders from "./profileOrders";
+import ProfileOtherOrders from "./profileOtherOrders";
 
 const ProfileTabs = () => {
   const { TabPane } = Tabs;
@@ -20,6 +21,9 @@ const ProfileTabs = () => {
         </TabPane>
         <TabPane tab="Orders" key="3">
           <ProfileOrders></ProfileOrders>
+        </TabPane>
+        <TabPane tab="Orders request" key="4">
+          <ProfileOtherOrders></ProfileOtherOrders>
         </TabPane>
       </Tabs>
     </>

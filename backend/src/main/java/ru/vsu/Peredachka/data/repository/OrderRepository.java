@@ -11,6 +11,9 @@ import java.util.List;
 @Component
 public interface OrderRepository extends CrudRepository<Order, Long> {
     List<Order> findAllByJourneyIsNull();
+  
+    List<Order> findAllByJourney_Id(Long id);
 
     List<Order> findAllByJourneyIdAndOrderStatusNameNot(Long journeyId, String orderStatusName);
+  
 }

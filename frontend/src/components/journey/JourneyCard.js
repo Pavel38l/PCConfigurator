@@ -9,12 +9,14 @@ import {
   Space,
   Timeline,
   Typography,
+  Tag,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import JourneyService from "../../services/JourneyService";
 import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
-const { Text } = Typography;
+import moment from "moment";
+const { Text, Link } = Typography;
 
 const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false }) => {
   const [isDetails, setIsDetails] = useState(false);
@@ -76,9 +78,26 @@ const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false
     <Card
       key={journey.id}
       title={
-        journey.startTravelPoint.pointName +
-        " - " +
-        journey.endTravelPoint.pointName
+        <>
+          {journey.startTravelPoint.pointName +
+            " - " +
+            journey.endTravelPoint.pointName +
+            " "}
+          {status &&
+            (moment(journey.endTravelPoint.arrivalDate).isBefore(Date.now()) ? (
+              <Tag color="success" style={{ marginRight: 10 }}>
+                completed
+              </Tag>
+            ) : moment(journey.startTravelPoint.dispatchDate).isBefore(Date.now()) ? (
+              <Tag color="processing" style={{ marginRight: 10 }}>
+                in progress
+              </Tag>
+            ) : (
+              <Tag color="warning" style={{ marginRight: 10 }}>
+                planned
+              </Tag>
+            ))}
+        </>
       }
       style={{marginTop: 10}}
       extra={
@@ -93,6 +112,7 @@ const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false
           {deleteButton}
         </Space>
       }
+
     >
       <Row justify="space-between">
         <Col span={10}>
