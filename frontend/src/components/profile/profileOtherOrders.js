@@ -49,7 +49,7 @@ const ProfileOtherOrders = () => {
         {order.orderStatus.name === "offered" ? (
           <OrderCard
             key={order.id}
-            orderProfile={order}
+            order={order}
             acceptbutton={
               isCurentUser(id) ? (
                 <Button

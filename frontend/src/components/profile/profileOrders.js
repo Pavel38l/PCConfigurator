@@ -31,9 +31,8 @@ const ProfileOrders = () => {
   
   const handleSelect = (value) => {
     setStatus(value);
+  }
 
-    
-  
   const ordersTable = orders.length ? (
       orders.map((order) => {
         console.log(order);
@@ -60,7 +59,7 @@ const ProfileOrders = () => {
           </>
         );
       })
-  ) : (<Empty />)
+  ) : (<Empty />);
 
   useEffect(() => {
     load();

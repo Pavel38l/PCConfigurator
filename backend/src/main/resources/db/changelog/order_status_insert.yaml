@@ -21,3 +21,9 @@ databaseChangeLog:
                   name: name
                   value: completed
             tableName: order_status
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: canceled
+            tableName: order_status

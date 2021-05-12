@@ -10,4 +10,5 @@ const isCurentUser = (id) => {
     return false;
   }
 };
+
 export default isCurentUser;

@@ -19,6 +19,7 @@ import UserJourneyUtils from "../utils/UserJourneyUtils";
 import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
+import jwtdecoder from "jwt-decode";
 
 // TODO вынести jwtdecoder
 // TODO кастомные хуки
@@ -133,7 +134,7 @@ const JourneyOrders = () => {
       </Title>
       <Container className="mt-5">
         {ordersTable}
-        <Button href="/" style={{ marginTop: 10 }}>
+        <Button href={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`} style={{ marginTop: 10 }}>
           Back
         </Button>
       </Container>

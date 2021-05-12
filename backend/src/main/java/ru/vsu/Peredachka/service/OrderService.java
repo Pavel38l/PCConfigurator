@@ -97,6 +97,13 @@ public class OrderService {
        createOrUpdateOrder(order);
     }
 
+    public void updateStatus(Long id, String statusName) throws NotFoundException {
+        Order order = findById(id);
+        OrderStatus orderStatus = orderStatusRepository.findByName(statusName).orElseThrow();
+        order.setOrderStatus(orderStatus);
+        createOrUpdateOrder(order);
+    }
+
     public void deleteOrderById(Long id) throws NotFoundException {
         Order order = findById(id);
         orderRepository.delete(order);

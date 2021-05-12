@@ -73,11 +73,11 @@ public class OrderController {
     }
     @RequestMapping(method = POST, path = "/{id}/accept")
     public void acceptOrder(@PathVariable Long id) throws NotFoundException {
-        orderService.updateStatus(id, 3L);
+        orderService.updateStatus(id, "defined");
     }
     @RequestMapping(method = POST, path = "/{id}/cancel")
     public void cancelOrder(@PathVariable Long id) throws NotFoundException {
-        orderService.updateStatus(id, 1L);
+        orderService.updateStatus(id, "canceled");
     }
     @RequestMapping(method = DELETE, path = "/{id}")
     public void deleteOrder(@PathVariable Long id) throws NotFoundException {
