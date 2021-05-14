@@ -11,7 +11,7 @@ import OrderService from "../../services/OrderService";
 import OrderCard from ".././order/OrderCard";
 import isCurentUser from "../utils/isCurentUser";
 const { Option } = Select;
-const ProfileOrders = () => {
+const ProfileOrders = ({activeKey}) => {
   const [orders, setOrders] = useState([]);
   const { id } = useParams();
   const [status, setStatus] = useState([]);
@@ -64,7 +64,7 @@ const ProfileOrders = () => {
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [id, activeKey]);
 
   return (
     <>

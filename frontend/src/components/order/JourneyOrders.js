@@ -21,6 +21,7 @@ import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 import jwtdecoder from "jwt-decode";
 import {PROFILE_URL} from "../../constants";
+import {useHistory} from "react-router-dom";
 
 // TODO вынести jwtdecoder
 // TODO кастомные хуки
@@ -34,6 +35,7 @@ const JourneyOrders = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
   const { journeyId } = useParams();
+  const history = useHistory();
 
   const getTimelineItemForPoint = (point, index) => {
     return (
@@ -117,7 +119,15 @@ const JourneyOrders = () => {
     <>
       <Title className="Centered">Journey orders</Title>
       <Container className="mt-5">
-        <Button href={PROFILE_URL}>
+        <Button onClick={() => {
+          const searchParams = new URLSearchParams({
+            activeTab: 2
+          });
+          history.push({
+            pathname: PROFILE_URL,
+            search: searchParams.toString()
+          });
+        }}>
           Back to journeys
         </Button>
       </Container>

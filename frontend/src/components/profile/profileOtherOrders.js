@@ -20,7 +20,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 const { Option } = Select;
-const ProfileOtherOrders = () => {
+const ProfileOtherOrders = ({activeKey}) => {
   const [orders, setOrders] = useState([]);
   const { id } = useParams();
   const load = async () => {
@@ -83,7 +83,7 @@ const ProfileOtherOrders = () => {
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [id, activeKey]);
 
   return (
     <>

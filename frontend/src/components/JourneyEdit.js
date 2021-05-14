@@ -342,7 +342,15 @@ function JourneyEdit() {
                 Create journey
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Button href={PROFILE_URL}>Cancel</Button>
+              <Button onClick={() => {
+                const searchParams = new URLSearchParams({
+                  activeTab: 2
+                });
+                history.push({
+                  pathname: PROFILE_URL,
+                  search: searchParams.toString()
+                });
+              }}>Cancel</Button>
             </Space>
           </Form.Item>
         </Form>
