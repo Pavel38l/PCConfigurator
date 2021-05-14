@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useHistory} from "react-router-dom"
 import {
   Typography,
   Form,
@@ -18,6 +19,7 @@ import JourneyService from "../../services/JourneyService";
 import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import jwtdecoder from "jwt-decode";
+import CurrentUserUtils from "../utils/CurrentUserUtils";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -27,6 +29,7 @@ const OrderAdd = () => {
   const [journey, setJourney] = useState(null);
   const [startPointIndex, setStartPointIndex] = useState(null);
   const [endPointIndex, setEndPointIndex] = useState(null);
+  const history = useHistory();
   const [initialValue, setInitialValue] = useState({})
   const [form] = Form.useForm();
   const { journeyId } = useParams();
@@ -133,21 +136,20 @@ const OrderAdd = () => {
     setEndPointIndex(null);
   };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
     const dto = {
       dispatchPoint: journey.travelPoints[values.startPoint],
       arrivalPoint: journey.travelPoints[values.endPoint],
       orderSize: { id: values.orderSize.toString() },
-      owner: { id: jwtdecoder(localStorage.getItem("token")).jti },
+      owner: { id: CurrentUserUtils.getCurrentUserId() },
       journey: { id: journeyId },
       description: values.description,
       orderValue: values.orderValue,
       receiverPhoneNumber: parseInt(values.receiverPhoneNumber),
     };
-    console.log(dto);
-    OrderService.createOrder(dto)
-      .then(message.success("Order created!"));
+    await OrderService.createOrder(dto);
+    message.success("Order created!");
+    history.push("/");
   };
 
   const prefixSelector = (

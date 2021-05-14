@@ -21,6 +21,7 @@ import React, { useState, useEffect } from "react";
 import jwtdecoder from "jwt-decode";
 import moment from "moment";
 import { useParams } from "react-router";
+import isCurentUser from "../utils/isCurentUser";
 
 const layout = {
   labelCol: { span: 8 },
@@ -74,8 +75,7 @@ const Profile = () => {
             </Descriptions.Item>
           </Descriptions>
           <Space align="baseline">
-            {localStorage.getItem("token") &&
-            id === jwtdecoder(localStorage.getItem("token")).jti ? (
+            {isCurentUser(jwtdecoder(localStorage.getItem("token")).jti) ? (
               <Tooltip title="Edit">
                 <Button
                   type="primary"
