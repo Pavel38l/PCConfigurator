@@ -20,11 +20,14 @@ import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
 import jwtdecoder from "jwt-decode";
+import {useHistory} from "react-router-dom";
+import {PROFILE_URL} from "../constants";
 const { Title } = Typography;
 
 function JourneyEdit() {
   const [ymaps, setYmaps] = useState(null);
   const [points, setPoints] = useState([]);
+  const history = useHistory();
 
   const onMapClick = (event) => {
     let position = event.get("coords");
@@ -59,7 +62,7 @@ function JourneyEdit() {
     });
   };
 
-  const onJourneyFinish = (values) => {
+  const onJourneyFinish = async (values) => {
     console.log("Success:", values);
     const dto = {
       maxOrderCount: values.maxOrderCount,
@@ -83,10 +86,15 @@ function JourneyEdit() {
       owner: { id: jwtdecoder(localStorage.getItem("token")).jti },
     };
     if (values.points.length > 1) {
-      JourneyService.createJourney(dto).then(
-        message.success("Journey created!")
-      );
-
+      await JourneyService.createJourney(dto);
+      message.success("Journey created!");
+      const searchParams = new URLSearchParams({
+        activeTab: 2
+      });
+      history.push({
+        pathname: PROFILE_URL,
+        search: searchParams.toString()
+      });
       //console.log(dto);
     } else {
       alert("You must create more then 1 travel point!");
@@ -334,7 +342,7 @@ function JourneyEdit() {
                 Create journey
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Button href={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`}>Cancel</Button>
+              <Button href={PROFILE_URL}>Cancel</Button>
             </Space>
           </Form.Item>
         </Form>

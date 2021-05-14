@@ -18,7 +18,7 @@ import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
 const { Text, Link } = Typography;
 
-const JourneyCard = ({ journey, deleteButton, createButton, ordersButton = false, status }) => {
+const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton = false }) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 

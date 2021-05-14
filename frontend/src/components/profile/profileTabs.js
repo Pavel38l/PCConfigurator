@@ -6,11 +6,17 @@ import Profile from "./profile";
 import ProfileJourneys from "./profileJourneys";
 import ProfileOrders from "./profileOrders";
 import ProfileOtherOrders from "./profileOtherOrders";
+import { useLocation } from "react-router-dom";
 
 
 const ProfileTabs = () => {
   const { TabPane } = Tabs;
   const [activeKey, setActiveKey] = useState("1");
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  console.log(searchParams);
+  // activeKey={searchParams.get("activeTab")}
+  //TODO добавить activeKey в остальные табы
 
   return (
     <>

@@ -20,6 +20,7 @@ import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 import jwtdecoder from "jwt-decode";
+import {PROFILE_URL} from "../../constants";
 
 // TODO вынести jwtdecoder
 // TODO кастомные хуки
@@ -59,7 +60,7 @@ const JourneyOrders = () => {
       });
     };
     load();
-  }, [journeyId]);
+  }, [journeyId, currOrderId]);
 
   const prepareDelivery = (order) => {
     const dto = {
@@ -80,8 +81,8 @@ const JourneyOrders = () => {
     const response = await OrderService.deliver(dto);
     if (response.data.status === "OK") {
       message.success("Success!");
-      const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
-      setOrders(ordersResponse.data);
+      //const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
+      //setOrders(ordersResponse.data);
       setCurrOrderId(null);
     } else {
       message.error("Invalid password!");
@@ -115,6 +116,11 @@ const JourneyOrders = () => {
   return (
     <>
       <Title className="Centered">Journey orders</Title>
+      <Container className="mt-5">
+        <Button href={PROFILE_URL}>
+          Back to journeys
+        </Button>
+      </Container>
       <div>
         <Title level={3} className="Centered">
           Travel points
@@ -134,9 +140,6 @@ const JourneyOrders = () => {
       </Title>
       <Container className="mt-5">
         {ordersTable}
-        <Button href={`/profile/${jwtdecoder(localStorage.getItem("token")).jti}`} style={{ marginTop: 10 }}>
-          Back
-        </Button>
       </Container>
       <Form.Provider
         onFormFinish={(name, { values, forms }) => handleOk(values)}
