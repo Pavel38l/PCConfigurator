@@ -31,7 +31,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 const { Option } = Select;
-
+//TODO отзывы в каждом заказе свой, высчитывать на бэке для пользователя только при оценке
 const Profile = () => {
   const { id } = useParams();
   const [form] = useForm();

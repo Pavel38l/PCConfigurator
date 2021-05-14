@@ -32,7 +32,8 @@ const ProfileOrders = () => {
   const handleSelect = (value) => {
     setStatus(value);
   }
-
+  //TODO создание заказа самому себе исправить
+  //TODO если нет отфильтр. тоже empty
   const ordersTable = orders.length ? (
       orders.map((order) => {
         console.log(order);
@@ -67,6 +68,7 @@ const ProfileOrders = () => {
 
   return (
     <>
+    {orders.length ? (
       <Container className="mt-5">
         <Select
           mode="multiple"
@@ -87,6 +89,8 @@ const ProfileOrders = () => {
         </Select>
         {ordersTable}
       </Container>
+    ): (<Empty />)
+    } 
     </>
   );
 };
