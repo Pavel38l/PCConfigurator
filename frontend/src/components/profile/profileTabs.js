@@ -11,7 +11,7 @@ import ProfileOtherOrders from "./profileOtherOrders";
 const ProfileTabs = () => {
   const { TabPane } = Tabs;
   const [activeKey, setActiveKey] = useState("1");
-  //TODO добавить activeKey в остальные табы
+
   return (
     <>
       <h3>Profile</h3>

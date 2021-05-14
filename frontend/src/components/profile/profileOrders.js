@@ -56,7 +56,7 @@ const ProfileOrders = () => {
                     ) : null
                   }
                 />
-              ) : null}
+              ) : (<Empty />)}
           </>
         );
       })
