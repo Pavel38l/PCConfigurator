@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 import JourneyCard from ".././journey/JourneyCard";
 import isCurentUser from "../utils/isCurentUser";
 
-const ProfileJourneys = () => {
+const ProfileJourneys = ({activeKey}) => {
   const [journeys, setJourneys] = useState([]);
   const { id } = useParams();
   const load = async () => {
@@ -53,7 +53,7 @@ const ProfileJourneys = () => {
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [id, activeKey]);
   
   return (
     <>

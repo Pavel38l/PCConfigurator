@@ -1,6 +1,6 @@
 import { useForm } from "antd/lib/form/Form";
 
-import { Button, Select } from "antd";
+import { Button, Select, Empty} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -43,7 +43,8 @@ const ProfileOtherOrders = () => {
       console.error("update status order: ", error);
     }
   };
-  const ordersTable = orders.map((order) => {
+  
+  const ordersTable = orders.length ? ( orders.map((order) => {
     return (
       <>
         {order.orderStatus.name === "offered" ? (
@@ -78,7 +79,7 @@ const ProfileOtherOrders = () => {
         ) : null}
       </>
     );
-  });
+  })) : (<Empty />);
 
   useEffect(() => {
     load();

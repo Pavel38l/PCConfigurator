@@ -84,6 +84,7 @@ public class UserController {
         List<Order> otherOrders = idJourneys.stream().map(
                 orderService::findByJourneyId
         ).flatMap(Collection::stream)
+         .filter(o -> o.getOrderStatus().getId() == 1)
          .collect(Collectors.toList());
 
         return otherOrders.stream().map(
