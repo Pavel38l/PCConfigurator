@@ -16,6 +16,7 @@ import {
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import { UserOutlined } from "@ant-design/icons";
+import { PROFILE_URL } from "../../constants";
 
 const { Text } = Typography;
 const { Step } = Steps;
@@ -56,10 +57,10 @@ const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
         <Space>
           {acceptbutton}
           {button}
-          {order.orderStatus.name !== "completed" ? (issueButton) : null}
+          {order.orderStatus.name !== "completed" ? issueButton : null}
         </Space>
       }
-      style={{marginTop: 10}}
+      style={{ marginTop: 10 }}
     >
       <Row justify="space-between">
         <Col span={10}>
@@ -82,7 +83,7 @@ const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
         </Col>
         <Col>
           <Space>
-            <a href={"/profile/" + order.owner.id}>{avatar}</a>
+            <a href={`${PROFILE_URL}/${order.owner.id}`}>{avatar}</a>
             <Space direction="vertical">
               <Text strong>{order.owner.email}</Text>
               <Text>
@@ -121,7 +122,9 @@ const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
           <Col span={22}>
             <Comment
               id={order.id}
-              author={<a href={`/profile/${order.owner.id}`}>{userName}</a>}
+              author={
+                <a href={`${PROFILE_URL}/${order.owner.id}`}>{userName}</a>
+              }
               avatar={
                 <Avatar
                   id={order.id}
