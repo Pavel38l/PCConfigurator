@@ -13,7 +13,6 @@ const ProfileTabs = () => {
   const [activeKey, setActiveKey] = useState(
     searchParams.get("activeTab") ? searchParams.get("activeTab") : "1"
   );
-  //TODO добавить activeKey в остальные табы
 
   return (
     <>

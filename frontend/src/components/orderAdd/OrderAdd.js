@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import {
   Typography,
   Form,
@@ -10,7 +10,9 @@ import {
   Timeline,
   Row,
   Col,
-  Spin, InputNumber, message,
+  Spin,
+  InputNumber,
+  message,
 } from "antd";
 import OrderService from "../../services/OrderService";
 import "antd/dist/antd.css";
@@ -19,7 +21,7 @@ import JourneyService from "../../services/JourneyService";
 import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import jwtdecoder from "jwt-decode";
-import CurrentUserUtils from "../utils/CurrentUserUtils";
+import useCurrentUser from "../utils/useCurrentUser";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -30,7 +32,7 @@ const OrderAdd = () => {
   const [startPointIndex, setStartPointIndex] = useState(null);
   const [endPointIndex, setEndPointIndex] = useState(null);
   const history = useHistory();
-  const [initialValue, setInitialValue] = useState({})
+  const [initialValue, setInitialValue] = useState({});
   const [form] = Form.useForm();
   const { journeyId } = useParams();
   const layout = {
@@ -44,6 +46,8 @@ const OrderAdd = () => {
       span: 10,
     },
   };
+
+  const currentUserId = useCurrentUser();
 
   const getStartPoints = () => {
     return journey
@@ -92,7 +96,11 @@ const OrderAdd = () => {
       <Timeline.Item
         key={`${point.id}_timeline`}
         color={
-          index < endPointIndex && index > startPointIndex && startPointIndex !== null ? "green" : "blue"
+          index < endPointIndex &&
+          index > startPointIndex &&
+          startPointIndex !== null
+            ? "green"
+            : "blue"
         }
         label={UserJourneyUtils.resolvePointLabel(
           index,
@@ -115,17 +123,17 @@ const OrderAdd = () => {
     initialValue.orderSize = loadedOrderSize[1].id;
     initialValue.prefix = "7";
     setJourney(loadedJourney);
-    console.log(initialValue)
+    console.log(initialValue);
   };
 
   useEffect(() => {
     const load = async () => {
       const orderSizesPromise = OrderService.getOrdersSize();
       const journeyPromise = JourneyService.getJourney(journeyId);
-      Promise.all([orderSizesPromise, journeyPromise]).then(res => {
+      Promise.all([orderSizesPromise, journeyPromise]).then((res) => {
         setOrdersSizes(res[0].data);
         configForm(res[1].data, res[0].data);
-      })
+      });
     };
     load();
   }, [journeyId]);
@@ -141,7 +149,7 @@ const OrderAdd = () => {
       dispatchPoint: journey.travelPoints[values.startPoint],
       arrivalPoint: journey.travelPoints[values.endPoint],
       orderSize: { id: values.orderSize.toString() },
-      owner: { id: CurrentUserUtils.getCurrentUserId() },
+      owner: { id: currentUserId },
       journey: { id: journeyId },
       description: values.description,
       orderValue: values.orderValue,
@@ -305,11 +313,7 @@ const OrderAdd = () => {
                   if (!value || UserJourneyUtils.isRuPhoneNumber(value)) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    new Error(
-                      "Invalid phone number!"
-                    )
-                  );
+                  return Promise.reject(new Error("Invalid phone number!"));
                 },
               }),
             ]}

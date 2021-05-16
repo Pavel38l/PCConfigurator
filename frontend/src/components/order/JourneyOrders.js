@@ -20,8 +20,9 @@ import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 import jwtdecoder from "jwt-decode";
-import {PROFILE_URL} from "../../constants";
-import {useHistory} from "react-router-dom";
+import { PROFILE_URL } from "../../constants";
+import { useHistory } from "react-router-dom";
+import useCurrentUserProfileUrl from "../utils/useCurrentUserProfileUrl";
 
 // TODO вынести jwtdecoder
 // TODO кастомные хуки
@@ -36,6 +37,7 @@ const JourneyOrders = () => {
   const [currOrderId, setCurrOrderId] = useState(null);
   const { journeyId } = useParams();
   const history = useHistory();
+  const currentUserProfileUrl = useCurrentUserProfileUrl();
 
   const getTimelineItemForPoint = (point, index) => {
     return (
@@ -119,15 +121,17 @@ const JourneyOrders = () => {
     <>
       <Title className="Centered">Journey orders</Title>
       <Container className="mt-5">
-        <Button onClick={() => {
-          const searchParams = new URLSearchParams({
-            activeTab: 2
-          });
-          history.push({
-            pathname: PROFILE_URL,
-            search: searchParams.toString()
-          });
-        }}>
+        <Button
+          onClick={() => {
+            const searchParams = new URLSearchParams({
+              activeTab: 2,
+            });
+            history.push({
+              pathname: currentUserProfileUrl,
+              search: searchParams.toString(),
+            });
+          }}
+        >
           Back to journeys
         </Button>
       </Container>
@@ -148,9 +152,7 @@ const JourneyOrders = () => {
       <Title level={3} className="Centered">
         Orders
       </Title>
-      <Container className="mt-5">
-        {ordersTable}
-      </Container>
+      <Container className="mt-5">{ordersTable}</Container>
       <Form.Provider
         onFormFinish={(name, { values, forms }) => handleOk(values)}
       >
