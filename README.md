@@ -4,7 +4,7 @@
 
 ## Links:
 
- - Демо  - https://trello.com/b/vUGPSvoO
+ - Демо  - https://peredachka-frontend.herokuapp.com/
 
 ---
 
