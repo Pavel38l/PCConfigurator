@@ -4,7 +4,7 @@
 
 ## Links:
 
- - Демо (https://trello.com/b/vUGPSvoO "Heroku.com")
+ - Демо  - https://trello.com/b/vUGPSvoO
 
 ---
 
