@@ -17,6 +17,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+      - name: Clean maven
+        working-directory: ./backend
+        run: mvn clean
       - name: Build with Maven test
         working-directory: ./backend
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn package -Dmaven.test.skip=true
