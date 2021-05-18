@@ -2,9 +2,9 @@ name: Build backend
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop, master ]
 
 jobs:
   build:
@@ -20,6 +20,6 @@ jobs:
       - name: Clean maven
         working-directory: ./backend
         run: mvn clean
-      - name: Build with Maven test
+      - name: Build with Maven
         working-directory: ./backend
         run: mvn package -Dmaven.test.skip=true

@@ -1,8 +1,8 @@
-name: Push Container to Heroku
+name: Build and push frontend container to Heroku
 
 on:
   push:
-    branches: [ ci-tests ]
+    branches: [ master ]
 
 jobs:
   build:
