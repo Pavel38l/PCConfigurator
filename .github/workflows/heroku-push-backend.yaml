@@ -2,7 +2,7 @@ name: Build and push backend container to Heroku
 
 on:
   push:
-    branches: [ ci-tests-backend ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
     - name: Clean maven
       working-directory: ./backend
       run: mvn clean
-    - name: Build with Maven test
+    - name: Build with Maven
       working-directory: ./backend
       run: mvn package -Dmaven.test.skip=true
       
