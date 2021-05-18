@@ -1,0 +1,43 @@
+name: Build and push frontend container to Heroku
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: install dependencies
+      working-directory: ./frontend
+      run: npm install
+    - name: Build react
+      working-directory: ./frontend
+      run: CI=false npm run build
+      
+      
+    - name: Login to Heroku Container registry
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      working-directory: ./frontend
+      run: heroku container:login
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      working-directory: ./frontend
+      run: heroku container:push -a ${{ secrets.HEROKU_FRONTEND_APP_NAME }} web
+    - name: Release
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      working-directory: ./frontend
+      run: heroku container:release -a ${{ secrets.HEROKU_FRONTEND_APP_NAME }} web
