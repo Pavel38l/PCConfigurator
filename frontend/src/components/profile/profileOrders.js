@@ -34,25 +34,27 @@ const ProfileOrders = ({activeKey}) => {
   const ordersTable = orders.length ? (
       orders.map((order) => {
         return (
-            <>
-              {status.some((elem) => elem === order.orderStatus.name) || status.length === 0 ? (
-                <OrderCard
-                  key={order.id}
-                  order={order}
-                  button={
-                    isCurentUser(id) ? (
-                      <Button
-                        variant="outline-success"
-                        className="float-right"
-                        danger
-                        onClick={() => deleteOrder(order.id)}
-                      >
-                        Delete
-                      </Button>
-                    ) : null
-                  }
-                />
-              ) : null}
+          <>
+            {status.some((elem) => elem === order.orderStatus.name) ||
+            status.length === 0 ? (
+              <OrderCard
+                key={order.id}
+                order={order}
+                button={
+                  isCurentUser(id) ? (
+                    <Button
+                      key={order.id}
+                      variant="outline-success"
+                      className="float-right"
+                      danger
+                      onClick={() => deleteOrder(order.id)}
+                    >
+                      Delete
+                    </Button>
+                  ) : null
+                }
+              />
+            ) : null}
           </>
         );
       })

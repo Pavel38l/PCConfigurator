@@ -41,7 +41,7 @@ class Registration extends Component {
                 if (res.data)
                     this.setState({ redirect: true });
                 else
-                    alert("Данная почта уже существует");
+                    alert("User with such email already exists!");
             })
     }
     render() {

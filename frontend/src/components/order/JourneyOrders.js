@@ -19,7 +19,6 @@ import OrderIssueForm from "./OrderIsueForm";
 import { useHistory } from "react-router-dom";
 import useCurrentUserProfileUrl from "../utils/useCurrentUserProfileUrl";
 
-// TODO вынести jwtdecoder
 // TODO кастомные хуки
 
 const { Title } = Typography;
@@ -155,5 +154,4 @@ const JourneyOrders = () => {
     </>
   );
 };
-//TODO back -> (back to journey) поднять и убрать рамку
 export default JourneyOrders;

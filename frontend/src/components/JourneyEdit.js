@@ -140,7 +140,7 @@ function JourneyEdit() {
     <div>
       <YMaps
         query={{
-          lang: "ru_RU",
+          lang: "en_US",
           load: "package.full",
           apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff",
         }}

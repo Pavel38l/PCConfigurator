@@ -9,7 +9,6 @@ import JourneyCard from "./journey/JourneyCard";
 
 // TODO сделать имя обязательным
 // TODO валидациия полей дат при создании поездки
-// TODO ф-ю profileUrl для возвращения адреса профиля
 
 class Home extends React.Component {
   formRef = React.createRef();
@@ -100,7 +99,7 @@ class Home extends React.Component {
     return (
       <YMaps
         query={{
-          lang: "ru_RU",
+          lang: "en_US",
           load: "package.full",
           apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff",
         }}
