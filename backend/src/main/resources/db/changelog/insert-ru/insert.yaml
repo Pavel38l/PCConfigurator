@@ -1,32 +1,26 @@
 databaseChangeLog:
   - include:
-      file: user_role.yaml
+      file: user_role_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: user.yaml
+      file: user_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: journey.yaml
+      file: order_status_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: travel_point.yaml
+      file: order_size_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: order_status.yaml
+      file: journey_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: order_size.yaml
+      file: travel_point_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: order.yaml
+      file: order_insert.yaml
       relativeToChangelogFile: true
   - include:
-      file: journey_cost.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: insert-ru/insert.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: filter.yaml
+      file: journey_cost_insert.yaml
       relativeToChangelogFile: true
 
