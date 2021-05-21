@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -7,16 +7,16 @@ import Button from "react-bootstrap/Button";
 import useCurrentUserProfileUrl from "./utils/useCurrentUserProfileUrl";
 
 const Header = ({ title }) => {
+  const [userName, setUserName] = useState(null);
   const currentUserProfileUrl = useCurrentUserProfileUrl();
 
   const signOut = (event) => {
-    this.setState({ title: "username" });
+    //this.setState({ title: "username" });
+      setUserName("userName");
     localStorage.setItem("token", "");
   };
   const renderUserState = () => {
     if (localStorage.getItem("token")) {
-      //  this.state.title = jwtdecoder(localStorage.getItem("token")).sub;
-      // this.setState({title: jwtdecoder(localStorage.getItem("token")).sub});
       return (
         <Nav>
           <NavDropdown

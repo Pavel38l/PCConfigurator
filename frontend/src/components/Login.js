@@ -29,16 +29,13 @@ class Login extends Component {
 
         axios.post(`${BACKEND_URL}/api/v1/security/login`, user)
             .then(res => {
-                console.log(res);
-                console.log(res.data);
                 localStorage.setItem('token', res.data.token);
-                console.log(localStorage.getItem("token"));
                 if (res.data.token) {
                     this.props.upTitle(res.data.token);
                     this.setState({ redirect: true });
                 }
                 else
-                    alert("wrong login or password");
+                    alert("Wrong login or password");
 
             })
 
