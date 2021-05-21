@@ -3,10 +3,7 @@ import {
   Typography,
   Empty,
   Form,
-  Select,
-  Input,
   Button,
-  Space,
   Timeline,
   Spin,
   message,
@@ -19,16 +16,13 @@ import UserJourneyUtils from "../utils/UserJourneyUtils";
 import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
-import jwtdecoder from "jwt-decode";
-import { PROFILE_URL } from "../../constants";
 import { useHistory } from "react-router-dom";
 import useCurrentUserProfileUrl from "../utils/useCurrentUserProfileUrl";
 
 // TODO вынести jwtdecoder
 // TODO кастомные хуки
 
-const { Title, Text } = Typography;
-const { Option } = Select;
+const { Title } = Typography;
 
 const JourneyOrders = () => {
   const [journey, setJourney] = useState(null);

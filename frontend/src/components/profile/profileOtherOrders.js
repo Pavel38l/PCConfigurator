@@ -1,25 +1,13 @@
-import { useForm } from "antd/lib/form/Form";
 
-import { Button, Select, Empty} from "antd";
+import { Button, Empty} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
-import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import OrderService from "../../services/OrderService";
 import OrderCard from ".././order/OrderCard";
 import isCurentUser from "../utils/isCurentUser";
 
-
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 8 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-const { Option } = Select;
 const ProfileOtherOrders = ({activeKey}) => {
   const [orders, setOrders] = useState([]);
   const { id } = useParams();
@@ -32,7 +20,6 @@ const ProfileOtherOrders = ({activeKey}) => {
       await OrderService.acceptOrder(id);
       await load();
     } catch (error) {
-      console.error("update status order: ", error);
     }
   };
   const cancelOrder = async (id) => {
@@ -40,7 +27,6 @@ const ProfileOtherOrders = ({activeKey}) => {
       await OrderService.cancelOrder(id);
       await load();
     } catch (error) {
-      console.error("update status order: ", error);
     }
   };
   

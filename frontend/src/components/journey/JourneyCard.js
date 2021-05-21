@@ -17,7 +17,7 @@ import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
 import { PROFILE_URL } from "../../constants";
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const JourneyCard = ({
   journey,

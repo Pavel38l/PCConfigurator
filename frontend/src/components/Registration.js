@@ -38,8 +38,6 @@ class Registration extends Component {
 
         axios.post(`${BACKEND_URL}/api/v1/security/register`, user)
             .then(res => {
-                console.log(res);
-                console.log(res.data);
                 if (res.data)
                     this.setState({ redirect: true });
                 else

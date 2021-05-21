@@ -1,11 +1,10 @@
 
 import {
-  Button, Empty, Space, Select
+  Button, Empty, Select
 } from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
-import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import OrderService from "../../services/OrderService";
 import OrderCard from ".././order/OrderCard";
@@ -18,14 +17,12 @@ const ProfileOrders = ({activeKey}) => {
   const load = async () => {
     const response = await UserService.getUserOrders(id);
     setOrders(response.data);
-    console.log(response.data);
   };
   const deleteOrder = async (id) => {
     try {
       await OrderService.deleteOrder(id);
       await load();
     } catch (error) {
-      console.error("delete order: ", error);
     }
   };
   
@@ -36,10 +33,9 @@ const ProfileOrders = ({activeKey}) => {
   //TODO если нет отфильтр. тоже empty
   const ordersTable = orders.length ? (
       orders.map((order) => {
-        console.log(order);
         return (
             <>
-              {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
+              {status.some((elem) => elem === order.orderStatus.name) || status.length === 0 ? (
                 <OrderCard
                   key={order.id}
                   order={order}

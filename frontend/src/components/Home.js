@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
-import { Form, Button, DatePicker, InputNumber, Space } from "antd";
+import { Form, Button, DatePicker, InputNumber } from "antd";
 import JourneyCard from "./journey/JourneyCard";
 
 // TODO сделать имя обязательным
@@ -39,8 +39,6 @@ class Home extends React.Component {
     });
     Promise.all([fromPromise, toPromise])
       .then((points) => {
-        console.log(points[0]);
-        console.log(points[1]);
         const filterDto = {
           startTravelPoint: {
             x: points[0][0],
@@ -91,7 +89,6 @@ class Home extends React.Component {
     });
 
     const onFinishFailed = (errorInfo) => {
-      console.log("Failed:", errorInfo);
     };
 
     const tailLayout = {
