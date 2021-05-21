@@ -10,11 +10,7 @@ import {
   Space,
   Descriptions,
 } from "antd";
-import {
-  EditOutlined,
-  SaveOutlined,
-  RollbackOutlined,
-} from "@ant-design/icons";
+
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
@@ -50,7 +46,6 @@ const Profile = () => {
   const handleSubmit = async (data) => {
     const updateUser = { ...user, ...data };
     const res = await UserService.userUpdate(updateUser);
-    console.log("update res ", res);
     setUser(updateUser);
     setEdit(!edit);
   };

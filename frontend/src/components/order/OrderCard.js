@@ -1,17 +1,14 @@
 import React from "react";
 import {
-  Steps,
   Avatar,
   Card,
   Col,
   Comment,
-  Divider,
   Row,
   Space,
   Tag,
   Timeline,
   Typography,
-  Button,
 } from "antd";
 import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
@@ -19,7 +16,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { PROFILE_URL } from "../../constants";
 
 const { Text } = Typography;
-const { Step } = Steps;
 
 const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
   const color =

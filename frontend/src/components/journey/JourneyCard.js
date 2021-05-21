@@ -17,7 +17,7 @@ import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
 import { PROFILE_URL } from "../../constants";
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const JourneyCard = ({
   journey,
@@ -141,25 +141,29 @@ const JourneyCard = ({
                     )}
                   >
                     <p>{point.address}</p>
-                    <Text type="secondary" style={{ fontStyle: "italic" }}>
-                      Comment:
-                    </Text>
-                    <Comment
-                      id={point.id}
-                      author={
-                        <a href={`${PROFILE_URL}/${journey.owner.id}`}>
-                          {userName}
-                        </a>
-                      }
-                      avatar={
-                        <Avatar
+                    {point.comment ? (
+                      <>
+                        <Text type="secondary" style={{ fontStyle: "italic" }}>
+                          Comment:
+                        </Text>
+                        <Comment
                           id={point.id}
-                          style={{ backgroundColor: "#7265e6" }}
-                          icon={<UserOutlined />}
+                          author={
+                            <a href={`${PROFILE_URL}/${journey.owner.id}`}>
+                              {userName}
+                            </a>
+                          }
+                          avatar={
+                            <Avatar
+                              id={point.id}
+                              style={{ backgroundColor: "#7265e6" }}
+                              icon={<UserOutlined />}
+                            />
+                          }
+                          content={<p>{point.comment}</p>}
                         />
-                      }
-                      content={<p>{point.comment}</p>}
-                    />
+                      </>
+                    ) : null}
                   </Timeline.Item>
                 );
               })}

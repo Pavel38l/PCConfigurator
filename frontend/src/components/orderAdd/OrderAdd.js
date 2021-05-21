@@ -20,7 +20,6 @@ import { useParams } from "react-router";
 import JourneyService from "../../services/JourneyService";
 import { FlagOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
-import jwtdecoder from "jwt-decode";
 import useCurrentUser from "../utils/useCurrentUser";
 
 const { Title, Text } = Typography;
@@ -69,12 +68,10 @@ const OrderAdd = () => {
   };
 
   const onStartPointSelect = (index) => {
-    console.log("start", index);
     setStartPointIndex(index);
   };
 
   const onEndPointSelect = (index) => {
-    console.log("end", index);
     setEndPointIndex(index);
   };
 
@@ -123,7 +120,6 @@ const OrderAdd = () => {
     initialValue.orderSize = loadedOrderSize[1].id;
     initialValue.prefix = "7";
     setJourney(loadedJourney);
-    console.log(initialValue);
   };
 
   useEffect(() => {
@@ -309,7 +305,6 @@ const OrderAdd = () => {
               },
               () => ({
                 validator(_, value) {
-                  console.log(value);
                   if (!value || UserJourneyUtils.isRuPhoneNumber(value)) {
                     return Promise.resolve();
                   }

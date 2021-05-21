@@ -1,9 +1,8 @@
-import {Empty, Button, Space} from "antd";
+import {Empty, Button} from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import JourneyService from "../../services/JourneyService";
 import React, { useState, useEffect } from "react";
-import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import JourneyCard from ".././journey/JourneyCard";
 import isCurentUser from "../utils/isCurentUser";
@@ -20,7 +19,6 @@ const ProfileJourneys = ({activeKey}) => {
       await JourneyService.deleteJourney(id);
       await load();
     } catch (error) {
-      console.error("delete journey: ", error);
     }
   };
 
