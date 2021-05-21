@@ -114,6 +114,20 @@ public class OrderService {
         orderSizeRepository.findAll().forEach(result::add);
         return result;
     }
+    public void updateRateOrder(Long id, Integer rate) throws NotFoundException {
+        Order order = findById(id);
+        order.setRateOrder(rate);
+        createOrUpdateOrder(order);
+    }
+    public void updateRateJourney(Long id, Integer rate) throws NotFoundException {
+        Order order = findById(id);
+        order.setRateJourney(rate);
+        createOrUpdateOrder(order);
+    }
+
+    public List<Order> findByOwnerId(Long id){
+        return orderRepository.findAllByOwner_Id(id);
+    }
 
     public void prepareOrderDelivery(DeliveryPrepareDto dto) throws IOException {
         String code = passwordGenerator.generatePassword(6);

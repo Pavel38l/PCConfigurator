@@ -91,4 +91,32 @@ public class UserController {
                 o -> mapper.map(o, OrderWithDependenciesDto.class)
         ).collect(Collectors.toList());
     }
+    @RequestMapping(method = POST, path = "/{id}/rating-update")
+    public void updateRating(@PathVariable Long id) throws NotFoundException {
+        User user = userService.findById(id);
+        List<Long> idJourneys = user.getJourneys().stream().map(
+                Journey::getId
+        ).collect(Collectors.toList());
+
+        List<Order> ordersJourney = idJourneys.stream().map(
+                orderService::findByJourneyId
+        ).flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        int count = 0;
+        Integer rate = 0;
+        for(Order o : ordersJourney){
+            if(o.getRateJourney() != null) {
+                rate += o.getRateJourney();
+                count++;
+            }
+        }
+        for(Order o : orderService.findByOwnerId(id)){
+            if(o.getRateOrder() != null) {
+                rate += o.getRateJourney();
+                count++;
+            }
+        }
+        rate = rate/count;
+        userService.updateRating(id, rate);
+    }
 }

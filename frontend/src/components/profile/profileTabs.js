@@ -16,7 +16,7 @@ const ProfileTabs = () => {
   const searchParams = new URLSearchParams(search);
   console.log(searchParams);
   // activeKey={searchParams.get("activeTab")}
-  //TODO добавить activeKey в остальные табы
+
 
   return (
     <>

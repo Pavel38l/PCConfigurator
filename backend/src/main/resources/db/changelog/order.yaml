@@ -63,6 +63,12 @@ databaseChangeLog:
                   type: varchar(100)
                   constraints:
                     nullable: true
+              - column:
+                  name: rate_order
+                  type: int
+              - column:
+                  name: rate_journey
+                  type: int
         - addForeignKeyConstraint:
               constraintName: fk_order_order_size
               baseColumnNames: size_id

@@ -21,9 +21,10 @@ import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 import jwtdecoder from "jwt-decode";
 import {PROFILE_URL} from "../../constants";
+import UserService from "../../services/UserService";
 
-// TODO вынести jwtdecoder
-// TODO кастомные хуки
+
+
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -34,6 +35,7 @@ const JourneyOrders = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
   const { journeyId } = useParams();
+
 
   const getTimelineItemForPoint = (point, index) => {
     return (
@@ -67,7 +69,7 @@ const JourneyOrders = () => {
       receiverPhoneNumber: order.receiverPhoneNumber,
       orderId: order.id,
     };
-    OrderService.prepareDelivery(dto).then();
+   // OrderService.prepareDelivery(dto).then();
     setIsModalVisible(true);
     setCurrOrderId(order.id);
   };
@@ -78,11 +80,16 @@ const JourneyOrders = () => {
       code: values.password,
       orderId: currOrderId,
     };
+    
+    
     const response = await OrderService.deliver(dto);
+    const ownwerJourney = await OrderService.getJourneyOwnerId(journeyId);
     if (response.data.status === "OK") {
       message.success("Success!");
       //const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
       //setOrders(ordersResponse.data);
+      OrderService.rateOrder(currOrderId, values.rate)
+      UserService.updateRating(ownwerJourney.data.id)
       setCurrOrderId(null);
     } else {
       message.error("Invalid password!");
@@ -149,5 +156,5 @@ const JourneyOrders = () => {
     </>
   );
 };
-//TODO back -> (back to journey) поднять и убрать рамку
+
 export default JourneyOrders;

@@ -33,10 +33,10 @@ const ProfileOrders = () => {
     setStatus(value);
   }
   //TODO создание заказа самому себе исправить
-  //TODO если нет отфильтр. тоже empty
+  
   const ordersTable = orders.length ? (
       orders.map((order) => {
-        console.log(order);
+        
         return (
             <>
               {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
@@ -54,7 +54,8 @@ const ProfileOrders = () => {
                         Delete
                       </Button>
                     ) : null
-                  }
+                  }                  
+                  rate={isCurentUser(id)}
                 />
               ) : (<Empty />)}
           </>
