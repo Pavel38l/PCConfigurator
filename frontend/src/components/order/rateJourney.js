@@ -33,13 +33,13 @@ const RateJourney = ({ id, idJourney }) => {
         Rate
       </Button>
       <Modal
-        title="Rate Journey"
+        title="Rate order delivery"
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form form={form} layout="vertical" name="userForm" size="large">
-          <Form.Item label="please rate the sender:">
+          <Form.Item label="Please rate order delivery:">
             <Rate
               style={{ marginLeft: "10" }}
               tooltips={desc}
