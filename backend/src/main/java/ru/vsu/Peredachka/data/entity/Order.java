@@ -18,6 +18,8 @@ public class Order {
     private String code;
     private Integer orderValue;
     private String description;
+    private Integer rateOrder;
+    private Integer rateJourney;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "sizeId")
@@ -42,6 +44,8 @@ public class Order {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "arrivalPointId")
     private TravelPoint arrivalPoint;
+
+
 
     private Long receiverPhoneNumber;
 

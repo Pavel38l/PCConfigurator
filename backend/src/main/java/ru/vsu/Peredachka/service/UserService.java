@@ -69,4 +69,10 @@ public class UserService {
         userRepository.findAll().forEach(result::add);
         return result;
     }
+
+    public void updateRating(Long id, Integer rate) throws NotFoundException {
+        User user = findById(id);
+        user.setRating(rate);
+        userRepository.save(user);
+    }
 }

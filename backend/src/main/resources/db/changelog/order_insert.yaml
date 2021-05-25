@@ -32,6 +32,12 @@ databaseChangeLog:
               - column:
                   name: journey_id
                   value: 1
+              - column:
+                  name: rate_order
+                  value: null
+              - column:
+                  name: rate_journey
+                  value: null
             tableName: order
         - insert:
             columns:
@@ -61,5 +67,11 @@ databaseChangeLog:
                   value: 89023499978
               - column:
                   name: journey_id
+                  value: 1
+              - column:
+                  name: rate_order
+                  value: null
+              - column:
+                  name: rate_journey
                   value: null
             tableName: order

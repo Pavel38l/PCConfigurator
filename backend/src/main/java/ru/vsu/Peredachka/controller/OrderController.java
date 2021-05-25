@@ -12,10 +12,12 @@ import ru.vsu.Peredachka.data.dto.order.OrderDto;
 import ru.vsu.Peredachka.data.dto.order.OrderWithDependenciesDto;
 import ru.vsu.Peredachka.data.dto.sms.DeliveryDto;
 import ru.vsu.Peredachka.data.dto.sms.DeliveryPrepareDto;
+import ru.vsu.Peredachka.data.dto.user.UserDto;
 import ru.vsu.Peredachka.data.entity.Journey;
 import ru.vsu.Peredachka.data.entity.Order;
 import ru.vsu.Peredachka.data.entity.OrderSize;
 import ru.vsu.Peredachka.data.entity.OrderStatus;
+import ru.vsu.Peredachka.service.JourneyService;
 import ru.vsu.Peredachka.service.OrderService;
 
 import java.io.IOException;
@@ -30,10 +32,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class OrderController {
     private final OrderService orderService;
     private final ModelMapper mapper;
+    private final JourneyService journeyService;
 
-    public OrderController(OrderService orderService, ModelMapper mapper) {
+    public OrderController(OrderService orderService, ModelMapper mapper, JourneyService journeyService) {
         this.orderService = orderService;
         this.mapper = mapper;
+        this.journeyService = journeyService;
     }
 
     @RequestMapping(method = GET, path = "")
@@ -97,5 +101,19 @@ public class OrderController {
         return StatusDto.builder()
                 .status(status)
                 .build();
+    }
+    @RequestMapping(method = POST, path = "/{id}/rate-order/{rate}")
+    public void updateRateOrder(@PathVariable Long id, @PathVariable Integer rate) throws NotFoundException {
+        orderService.updateRateOrder(id,rate*20);
+    }
+
+    @RequestMapping(method = POST, path = "/{id}/rate-journey/{rate}")
+    public void updateRateJourney(@PathVariable Long id, @PathVariable Integer rate) throws NotFoundException {
+        orderService.updateRateJourney(id,rate*20);
+    }
+
+    @RequestMapping(method = GET, path = "/{id}/journey-owner")
+    public UserDto getJourneyOwnerId(@PathVariable Long id) throws NotFoundException {
+        return mapper.map(journeyService.findById(id).getOwner(), UserDto.class);
     }
 }

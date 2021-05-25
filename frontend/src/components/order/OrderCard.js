@@ -14,10 +14,11 @@ import RatingComponent from "../home/RatingComponent";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import { UserOutlined } from "@ant-design/icons";
 import { PROFILE_URL } from "../../constants";
+import RateJourney from "./rateJourney";
 
 const { Text } = Typography;
 
-const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
+const OrderCard = ({ order, button, issueButton, acceptbutton, rate }) => {
   const color =
     order.orderStatus.name === "offered"
       ? "orange"
@@ -52,6 +53,7 @@ const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
       extra={
         <Space>
           {acceptbutton}
+          {rate && order.orderStatus.name ==="completed" ? (<RateJourney id={order.id} idJourney={order.journey.id} ></RateJourney>):null}
           {button}
           {order.orderStatus.name !== "completed" ? issueButton : null}
         </Space>
@@ -88,7 +90,7 @@ const OrderCard = ({ order, button, issueButton, acceptbutton }) => {
                   (order.owner.lastName ? order.owner.lastName : "")}
               </Text>
               <Text>
-                Rating: <RatingComponent value={order.owner.rating} />
+                Rating: <RatingComponent value={order.owner.rating/20} />
               </Text>
             </Space>
           </Space>

@@ -4,11 +4,11 @@ const { Text } = Typography;
 
 function RatingComponent(props) {
     let status = 'secondary';
-    if (props.value < 0) {
+    if (props.value < 2) {
         status='danger';
-    } else if(props.value >= 0 && props.value < 50) {
+    } else if(props.value >= 2 && props.value < 4) {
         status='warning';
-    } else if(props.value >= 100) {
+    } else if(props.value >= 4) {
         status='success';
     }
     return (

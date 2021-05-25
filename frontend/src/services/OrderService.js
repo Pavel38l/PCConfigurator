@@ -39,6 +39,18 @@ class OrderService {
         return this.httpClient.post("/deliver", deliverDto)
     }
 
+    rateJourney(id, value){
+        return this.httpClient.post(`/${id}/rate-journey/${value}`)
+    }
+
+    rateOrder(id, value){
+        return this.httpClient.post(`/${id}/rate-order/${value}`)
+    }
+
+    getJourneyOwnerId(idJourney){
+        return this.httpClient.get(`/${idJourney}/journey-owner`)
+    }
+
 }
 
 export default new OrderService();
