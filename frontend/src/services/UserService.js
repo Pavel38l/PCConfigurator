@@ -34,6 +34,9 @@ class UserService {
     getUserOtherOrders(id){
         return this.httpClient.get(`/${id}/request-orders`)
     }
+    updateRating(id){
+        return this.httpClient.post(`/${id}/rating-update`)
+    }
     
 }
 

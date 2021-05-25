@@ -198,7 +198,7 @@ const JourneyCard = ({
                   (journey.owner.lastName ? journey.owner.lastName : "")}
               </Text>
               <Text>
-                Rating: <RatingComponent value={journey.owner.rating} />
+                Rating: <RatingComponent value={journey.owner.rating/20} />
               </Text>
             </Space>
           </Space>

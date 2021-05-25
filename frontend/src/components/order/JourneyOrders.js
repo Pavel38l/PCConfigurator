@@ -18,8 +18,7 @@ import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
 import { useHistory } from "react-router-dom";
 import useCurrentUserProfileUrl from "../utils/useCurrentUserProfileUrl";
-
-// TODO кастомные хуки
+import UserService from "../../services/UserService";
 
 const { Title } = Typography;
 
@@ -75,11 +74,15 @@ const JourneyOrders = () => {
       code: values.password,
       orderId: currOrderId,
     };
+
     const response = await OrderService.deliver(dto);
+    const ownwerJourney = await OrderService.getJourneyOwnerId(journeyId);
     if (response.data.status === "OK") {
       message.success("Success!");
       //const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
       //setOrders(ordersResponse.data);
+      OrderService.rateOrder(currOrderId, values.rate)
+      UserService.updateRating(ownwerJourney.data.id)
       setCurrOrderId(null);
     } else {
       message.error("Invalid password!");
