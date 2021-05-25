@@ -49,4 +49,21 @@
   }
 }
 
+.container-image {
+  padding-top: 48px;
+  background-image: url(/src/assets/images/back.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding-bottom: 48px;
+}
 
+.page-container {
+  padding: 48px;
+}
+
+.main-form {
+  background: #ffffffd6;
+  padding: 10px;
+  border-radius: 10px;
+}
