@@ -1,7 +1,7 @@
-import { Card } from "antd";
+import { Card, Layout } from "antd";
 import React from "react";
 
 const PageContainer = ({ children }) => {
-  return <Card style={{ margin: 20 }} bordered={false}>{children}</Card>;
+  return <Layout.Content className="page-container" >{children}</Layout.Content>;
 };
 export default PageContainer;

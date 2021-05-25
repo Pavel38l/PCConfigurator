@@ -4,13 +4,7 @@ import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
-import {
-  Form,
-  Button,
-  DatePicker,
-  InputNumber,
-  Space,
-} from "antd";
+import { Form, Button, DatePicker, InputNumber, Space } from "antd";
 import JourneyCard from "./journey/JourneyCard";
 
 // TODO сделать имя обязательным
@@ -91,7 +85,7 @@ class Home extends React.Component {
     const journeys = this.state.journeys;
     const journeyCards = journeys.map((journey) => {
       return (
-        <JourneyCard key={journey.id} journey={journey} createButton={true}/>
+        <JourneyCard key={journey.id} journey={journey} createButton={true} />
       );
     });
 
@@ -119,132 +113,145 @@ class Home extends React.Component {
           style={{ appearance: "none" }}
         />
         <div>
-          <h1 className="mt-5 Align">
-            Service for finding and sending passing links
-          </h1>
-          <Container className="mt-5">
-            <Form
-              colon={false}
-              ref={this.formRef}
-              labelCol={{
-                span: 4,
-              }}
-              wrapperCol={{
-                span: 14,
-              }}
-              name="basic"
-              onFinish={this.submitHandler}
-              onFinishFailed={onFinishFailed}
-            >
-              <Form.Item label="From">
-                <Form.Item
-                  label="Dispatch point"
-                  name="from"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input dispatch point address!",
-                    },
-                  ]}
-                  style={{ display: "inline-block", width: "calc(70% - 8px)" }}
-                >
-                  <SearchComplete ymaps={this.state.ymaps} />
+          <div className="container-image">
+          <Container className="main-form">
+            <h1 className="Align">
+              Service for finding and sending passing links
+            </h1>
+            
+              <Form
+                colon={false}
+                ref={this.formRef}
+                labelCol={{
+                  span: 4,
+                }}
+                wrapperCol={{
+                  span: 14,
+                }}
+                name="basic"
+                onFinish={this.submitHandler}
+                onFinishFailed={onFinishFailed}
+              >
+                <Form.Item label="From">
+                  <Form.Item
+                    label="Dispatch point"
+                    name="from"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input dispatch point address!",
+                      },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(70% - 8px)",
+                    }}
+                  >
+                    <SearchComplete ymaps={this.state.ymaps} />
+                  </Form.Item>
+                  <Form.Item
+                    name="dispatchDate"
+                    label="Dispatch date"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input dispatch date!",
+                      },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(30% - 8px)",
+                      margin: "0 8px",
+                    }}
+                  >
+                    <DatePicker showTime />
+                  </Form.Item>
                 </Form.Item>
-                <Form.Item
-                  name="dispatchDate"
-                  label="Dispatch date"
-                  rules={[
-                    { required: true, message: "Please input dispatch date!" },
-                  ]}
-                  style={{
-                    display: "inline-block",
-                    width: "calc(30% - 8px)",
-                    margin: "0 8px",
-                  }}
-                >
-                  <DatePicker showTime />
+                <Form.Item label="To">
+                  <Form.Item
+                    label="Arrival point"
+                    name="to"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input arrival point address!",
+                      },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(70% - 8px)",
+                    }}
+                  >
+                    <SearchComplete ymaps={this.state.ymaps} />
+                  </Form.Item>
+                  <Form.Item
+                    label="Arrival date"
+                    name="arrivalDate"
+                    rules={[
+                      { required: true, message: "Please input arrival date!" },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(30% - 8px)",
+                      margin: "0 8px",
+                    }}
+                  >
+                    <DatePicker showTime />
+                  </Form.Item>
                 </Form.Item>
-              </Form.Item>
-              <Form.Item label="To">
-                <Form.Item
-                  label="Arrival point"
-                  name="to"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input arrival point address!",
-                    },
-                  ]}
-                  style={{ display: "inline-block", width: "calc(70% - 8px)" }}
-                >
-                  <SearchComplete ymaps={this.state.ymaps} />
-                </Form.Item>
-                <Form.Item
-                  label="Arrival date"
-                  name="arrivalDate"
-                  rules={[
-                    { required: true, message: "Please input arrival date!" },
-                  ]}
-                  style={{
-                    display: "inline-block",
-                    width: "calc(30% - 8px)",
-                    margin: "0 8px",
-                  }}
-                >
-                  <DatePicker showTime />
-                </Form.Item>
-              </Form.Item>
-              <Form.Item {...tailLayout}>
-                <Form.Item
-                  name="rating"
-                  label="Min owner rating"
-                  tooltip="Each author of the trip has a rating, the higher it is, the more trust in him
+                <Form.Item {...tailLayout}>
+                  <Form.Item
+                    name="rating"
+                    label="Min owner rating"
+                    tooltip="Each author of the trip has a rating, the higher it is, the more trust in him
                                   "
-                  rules={[
-                    {
-                      required: false,
-                      type: "number",
-                      min: 0,
-                    },
-                  ]}
-                  style={{ display: "inline-block", width: "calc(30% - 8px)" }}
-                >
-                  <InputNumber />
+                    rules={[
+                      {
+                        required: false,
+                        type: "number",
+                        min: 0,
+                      },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(30% - 8px)",
+                    }}
+                  >
+                    <InputNumber />
+                  </Form.Item>
+                  <Form.Item
+                    name="maxOrderCount"
+                    label="The number of orders"
+                    tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
+                    rules={[
+                      {
+                        required: false,
+                        type: "number",
+                        min: 1,
+                      },
+                    ]}
+                    style={{
+                      display: "inline-block",
+                      width: "calc(30% - 8px)",
+                      margin: "0 8px",
+                    }}
+                  >
+                    <InputNumber />
+                  </Form.Item>
                 </Form.Item>
-                <Form.Item
-                  name="maxOrderCount"
-                  label="The number of orders"
-                  tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
-                  rules={[
-                    {
-                      required: false,
-                      type: "number",
-                      min: 1,
-                    },
-                  ]}
-                  style={{
-                    display: "inline-block",
-                    width: "calc(30% - 8px)",
-                    margin: "0 8px",
-                  }}
-                >
-                  <InputNumber />
-                </Form.Item>
-              </Form.Item>
 
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit" className="mr-2">
-                  Filter
-                </Button>
-                <Button htmlType="button" onClick={this.cancelHandler}>
-                  Reset
-                </Button>
-              </Form.Item>
-            </Form>
-          </Container>
-          <Container className="mt-5">
-              {journeyCards}
-          </Container>
+                <Form.Item {...tailLayout}>
+                  <Button type="primary" htmlType="submit" className="mr-2">
+                    Filter
+                  </Button>
+                  <Button htmlType="button" onClick={this.cancelHandler}>
+                    Reset
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Container>
+          </div>
+          <Container className="mt-5">{journeyCards}</Container>
         </div>
       </YMaps>
     );
