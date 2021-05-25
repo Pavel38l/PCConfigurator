@@ -53,7 +53,6 @@ class App extends React.Component {
             <Route exact path="/journey/:journeyId/orders">
               <JourneyOrders />
             </Route>
-
           </Switch>
         </PageContainer>
       </Router>
