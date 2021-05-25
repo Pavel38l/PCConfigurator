@@ -3,10 +3,7 @@ import {
   Typography,
   Empty,
   Form,
-  Select,
-  Input,
   Button,
-  Space,
   Timeline,
   Spin,
   message,
@@ -19,15 +16,11 @@ import UserJourneyUtils from "../utils/UserJourneyUtils";
 import OrderCard from "./OrderCard";
 import Container from "react-bootstrap/Container";
 import OrderIssueForm from "./OrderIsueForm";
-import jwtdecoder from "jwt-decode";
-import {PROFILE_URL} from "../../constants";
+import { useHistory } from "react-router-dom";
+import useCurrentUserProfileUrl from "../utils/useCurrentUserProfileUrl";
 import UserService from "../../services/UserService";
 
-
-
-
-const { Title, Text } = Typography;
-const { Option } = Select;
+const { Title } = Typography;
 
 const JourneyOrders = () => {
   const [journey, setJourney] = useState(null);
@@ -35,7 +28,8 @@ const JourneyOrders = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
   const { journeyId } = useParams();
-
+  const history = useHistory();
+  const currentUserProfileUrl = useCurrentUserProfileUrl();
 
   const getTimelineItemForPoint = (point, index) => {
     return (
@@ -69,7 +63,7 @@ const JourneyOrders = () => {
       receiverPhoneNumber: order.receiverPhoneNumber,
       orderId: order.id,
     };
-   // OrderService.prepareDelivery(dto).then();
+    OrderService.prepareDelivery(dto).then();
     setIsModalVisible(true);
     setCurrOrderId(order.id);
   };
@@ -80,8 +74,7 @@ const JourneyOrders = () => {
       code: values.password,
       orderId: currOrderId,
     };
-    
-    
+
     const response = await OrderService.deliver(dto);
     const ownwerJourney = await OrderService.getJourneyOwnerId(journeyId);
     if (response.data.status === "OK") {
@@ -124,7 +117,17 @@ const JourneyOrders = () => {
     <>
       <Title className="Centered">Journey orders</Title>
       <Container className="mt-5">
-        <Button href={PROFILE_URL}>
+        <Button
+          onClick={() => {
+            const searchParams = new URLSearchParams({
+              activeTab: 2,
+            });
+            history.push({
+              pathname: currentUserProfileUrl,
+              search: searchParams.toString(),
+            });
+          }}
+        >
           Back to journeys
         </Button>
       </Container>
@@ -145,9 +148,7 @@ const JourneyOrders = () => {
       <Title level={3} className="Centered">
         Orders
       </Title>
-      <Container className="mt-5">
-        {ordersTable}
-      </Container>
+      <Container className="mt-5">{ordersTable}</Container>
       <Form.Provider
         onFormFinish={(name, { values, forms }) => handleOk(values)}
       >
@@ -156,5 +157,4 @@ const JourneyOrders = () => {
     </>
   );
 };
-
 export default JourneyOrders;

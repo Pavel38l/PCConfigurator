@@ -19,22 +19,22 @@ import SearchComplete from "./SearchComplete";
 import CustomSlider from "./CustomSlider";
 import JourneyMap from "./JourneyMap";
 import JourneyService from "../services/JourneyService";
-import jwtdecoder from "jwt-decode";
-import {useHistory} from "react-router-dom";
-import {PROFILE_URL} from "../constants";
+import { useHistory } from "react-router-dom";
+import useCurrentUser from "./utils/useCurrentUser";
+import useCurrentUserProfileUrl from "./utils/useCurrentUserProfileUrl";
 const { Title } = Typography;
 
 function JourneyEdit() {
   const [ymaps, setYmaps] = useState(null);
   const [points, setPoints] = useState([]);
   const history = useHistory();
+  const currentUserId = useCurrentUser();
+  const currentUserProfileUrl = useCurrentUserProfileUrl();
 
   const onMapClick = (event) => {
     let position = event.get("coords");
-    console.log(position);
     ymaps.geocode(position).then((result) => {
       let newPoint = result.geoObjects.get(0).properties.getAll();
-      console.log(newPoint);
       newPoint.coordinates = position;
       newPoint.pointName =
         newPoint.metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName;
@@ -48,7 +48,6 @@ function JourneyEdit() {
   };
 
   const onAddressSelect = (index, value) => {
-    console.log(index, value);
     ymaps.geocode(value).then((result) => {
       let newPoint = result.geoObjects.get(0).properties.getAll();
       newPoint.coordinates = result.geoObjects.get(0).geometry.getCoordinates();
@@ -63,7 +62,6 @@ function JourneyEdit() {
   };
 
   const onJourneyFinish = async (values) => {
-    console.log("Success:", values);
     const dto = {
       maxOrderCount: values.maxOrderCount,
       travelPoints: values.points.map((point, index) => {
@@ -83,17 +81,17 @@ function JourneyEdit() {
         { orderSize: { id: 2 }, cost: values.avgCost },
         { orderSize: { id: 3 }, cost: values.largeCost },
       ],
-      owner: { id: jwtdecoder(localStorage.getItem("token")).jti },
+      owner: { id: currentUserId },
     };
     if (values.points.length > 1) {
       await JourneyService.createJourney(dto);
       message.success("Journey created!");
       const searchParams = new URLSearchParams({
-        activeTab: 2
+        activeTab: 2,
       });
       history.push({
-        pathname: PROFILE_URL,
-        search: searchParams.toString()
+        pathname: currentUserProfileUrl,
+        search: searchParams.toString(),
       });
       //console.log(dto);
     } else {
@@ -142,7 +140,7 @@ function JourneyEdit() {
     <div>
       <YMaps
         query={{
-          lang: "ru_RU",
+          lang: "en_US",
           load: "package.full",
           apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff",
         }}
@@ -160,7 +158,7 @@ function JourneyEdit() {
           initialValues={{
             smallCost: 0,
             avgCost: 0,
-            largeCost: 0
+            largeCost: 0,
           }}
         >
           <Row justify="space-between">
@@ -298,41 +296,41 @@ function JourneyEdit() {
             <InputNumber />
           </Form.Item>
           <Form.Item
-              name="smallCost"
-              label="Small order cost"
-              rules={[
-                {
-                  required: true,
-                  type: 'number',
-                  min: 1,
-                },
-              ]}
+            name="smallCost"
+            label="Small order cost"
+            rules={[
+              {
+                required: true,
+                type: "number",
+                min: 1,
+              },
+            ]}
           >
             <CustomSlider max={20} />
           </Form.Item>
           <Form.Item
-              name="avgCost"
-              label="Average order cost"
-              rules={[
-                {
-                  required: true,
-                  type: 'number',
-                  min: 1,
-                },
-              ]}
+            name="avgCost"
+            label="Average order cost"
+            rules={[
+              {
+                required: true,
+                type: "number",
+                min: 1,
+              },
+            ]}
           >
             <CustomSlider value={0} max={50} />
           </Form.Item>
           <Form.Item
-              name="largeCost"
-              label="Large order cost"
-              rules={[
-                {
-                  required: true,
-                  type: 'number',
-                  min: 1,
-                },
-              ]}
+            name="largeCost"
+            label="Large order cost"
+            rules={[
+              {
+                required: true,
+                type: "number",
+                min: 1,
+              },
+            ]}
           >
             <CustomSlider value={0} max={100} />
           </Form.Item>
@@ -342,7 +340,19 @@ function JourneyEdit() {
                 Create journey
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Button href={PROFILE_URL}>Cancel</Button>
+              <Button
+                onClick={() => {
+                  const searchParams = new URLSearchParams({
+                    activeTab: 2,
+                  });
+                  history.push({
+                    pathname: currentUserProfileUrl,
+                    search: searchParams.toString(),
+                  });
+                }}
+              >
+                Cancel
+              </Button>
             </Space>
           </Form.Item>
         </Form>

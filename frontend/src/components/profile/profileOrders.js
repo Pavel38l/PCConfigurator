@@ -1,31 +1,28 @@
 
 import {
-  Button, Empty, Space, Select
+  Button, Empty, Select
 } from "antd";
 import Container from "react-bootstrap/Container";
 import UserService from "../../services/UserService";
 import React, { useState, useEffect } from "react";
-import jwtdecoder from "jwt-decode";
 import { useParams } from "react-router";
 import OrderService from "../../services/OrderService";
 import OrderCard from ".././order/OrderCard";
 import isCurentUser from "../utils/isCurentUser";
 const { Option } = Select;
-const ProfileOrders = () => {
+const ProfileOrders = ({activeKey}) => {
   const [orders, setOrders] = useState([]);
   const { id } = useParams();
   const [status, setStatus] = useState([]);
   const load = async () => {
     const response = await UserService.getUserOrders(id);
     setOrders(response.data);
-    console.log(response.data);
   };
   const deleteOrder = async (id) => {
     try {
       await OrderService.deleteOrder(id);
       await load();
     } catch (error) {
-      console.error("delete order: ", error);
     }
   };
   
@@ -33,10 +30,9 @@ const ProfileOrders = () => {
     setStatus(value);
   }
   //TODO создание заказа самому себе исправить
-  
+
   const ordersTable = orders.length ? (
       orders.map((order) => {
-        
         return (
             <>
               {status.some((elem) => elem === order.orderStatus.name) || status.length == 0 ? (
@@ -54,7 +50,7 @@ const ProfileOrders = () => {
                         Delete
                       </Button>
                     ) : null
-                  }                  
+                  }
                   rate={isCurentUser(id)}
                 />
               ) : (<Empty />)}
@@ -65,7 +61,7 @@ const ProfileOrders = () => {
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [id, activeKey]);
 
   return (
     <>

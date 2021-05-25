@@ -16,9 +16,16 @@ import JourneyService from "../../services/JourneyService";
 import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
-const { Text, Link } = Typography;
+import { PROFILE_URL } from "../../constants";
+const { Text } = Typography;
 
-const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton = false }) => {
+const JourneyCard = ({
+  journey,
+  deleteButton,
+  createButton,
+  status,
+  ordersButton = false,
+}) => {
   const [isDetails, setIsDetails] = useState(false);
   const [journeyFull, setJourneyFull] = useState(null);
 
@@ -88,7 +95,9 @@ const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton
               <Tag color="success" style={{ marginRight: 10 }}>
                 completed
               </Tag>
-            ) : moment(journey.startTravelPoint.dispatchDate).isBefore(Date.now()) ? (
+            ) : moment(journey.startTravelPoint.dispatchDate).isBefore(
+                Date.now()
+              ) ? (
               <Tag color="processing" style={{ marginRight: 10 }}>
                 in progress
               </Tag>
@@ -99,20 +108,23 @@ const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton
             ))}
         </>
       }
-      style={{marginTop: 10}}
+      style={{ marginTop: 10 }}
       extra={
         <Space>
           {createButton ? (
-              <Button href={`/orderAdd/${journey.id}`} type="primary">Create order</Button>
+            <Button href={`/orderAdd/${journey.id}`} type="primary">
+              Create order
+            </Button>
           ) : null}
           {ordersButton ? (
-              <Button href={`/journey/${journey.id}/orders`} type="primary">Orders</Button>
+            <Button href={`/journey/${journey.id}/orders`} type="primary">
+              Orders
+            </Button>
           ) : null}
           <Button onClick={onDetailClick}>Details</Button>
           {deleteButton}
         </Space>
       }
-
     >
       <Row justify="space-between">
         <Col span={10}>
@@ -129,23 +141,29 @@ const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton
                     )}
                   >
                     <p>{point.address}</p>
-                    <Text type="secondary" style={{ fontStyle: "italic" }}>
-                      Comment:
-                    </Text>
-                    <Comment
-                      id={point.id}
-                      author={
-                        <a href={`/profile/${journey.owner.id}`}>{userName}</a>
-                      }
-                      avatar={
-                        <Avatar
+                    {point.comment ? (
+                      <>
+                        <Text type="secondary" style={{ fontStyle: "italic" }}>
+                          Comment:
+                        </Text>
+                        <Comment
                           id={point.id}
-                          style={{ backgroundColor: "#7265e6" }}
-                          icon={<UserOutlined />}
+                          author={
+                            <a href={`${PROFILE_URL}/${journey.owner.id}`}>
+                              {userName}
+                            </a>
+                          }
+                          avatar={
+                            <Avatar
+                              id={point.id}
+                              style={{ backgroundColor: "#7265e6" }}
+                              icon={<UserOutlined />}
+                            />
+                          }
+                          content={<p>{point.comment}</p>}
                         />
-                      }
-                      content={<p>{point.comment}</p>}
-                    />
+                      </>
+                    ) : null}
                   </Timeline.Item>
                 );
               })}
@@ -171,7 +189,7 @@ const JourneyCard = ({ journey, deleteButton, createButton, status, ordersButton
         </Col>
         <Col>
           <Space>
-            <a href={`/profile/${journey.owner.id}`}>{avatar}</a>
+            <a href={`${PROFILE_URL}/${journey.owner.id}`}>{avatar}</a>
             <Space direction="vertical">
               <Text strong>{journey.owner.email}</Text>
               <Text>

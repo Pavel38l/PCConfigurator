@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 18
+      author: Burdyug Pavel
+      comment: Create points distance function
+      changes:
+        - sqlFile:
+            path: scripts/points_distance.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+      rollback:
+        - sqlFile:
+            path: scripts/points_distance_rollback.sql
+            relativeToChangelogFile: true

@@ -76,7 +76,7 @@ public class JourneyController {
     }
 
     @RequestMapping(method = DELETE, path = "/{id}")
-    public void deleteDevice(@PathVariable Long id) throws NotFoundException {
+    public void deleteJourney(@PathVariable Long id) throws NotFoundException {
         journeyService.deleteJourneyById(id);
     }
 }

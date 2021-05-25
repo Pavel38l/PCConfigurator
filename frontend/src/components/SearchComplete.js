@@ -20,7 +20,6 @@ const SearchComplete = ({ onSelect, onChange, ymaps, value }) => {
             point.coordinates = ans.geoObjects.get(0).geometry.getCoordinates();
             return point;
         });
-        console.log(localRes);
         setResults(localRes);
     }, 200);
 

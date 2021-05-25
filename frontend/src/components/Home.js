@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import "antd/dist/antd.css";
 import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
-import { Form, Button, DatePicker, InputNumber, Space } from "antd";
+import { Form, Button, DatePicker, InputNumber } from "antd";
 import JourneyCard from "./journey/JourneyCard";
 
 // TODO сделать имя обязательным
@@ -38,8 +38,6 @@ class Home extends React.Component {
     });
     Promise.all([fromPromise, toPromise])
       .then((points) => {
-        console.log(points[0]);
-        console.log(points[1]);
         const filterDto = {
           startTravelPoint: {
             x: points[0][0],
@@ -90,7 +88,6 @@ class Home extends React.Component {
     });
 
     const onFinishFailed = (errorInfo) => {
-      console.log("Failed:", errorInfo);
     };
 
     const tailLayout = {
@@ -102,7 +99,7 @@ class Home extends React.Component {
     return (
       <YMaps
         query={{
-          lang: "ru_RU",
+          lang: "en_US",
           load: "package.full",
           apikey: "c23fb47e-a86c-40a3-95a6-866811b17aff",
         }}
@@ -239,7 +236,6 @@ class Home extends React.Component {
                     <InputNumber />
                   </Form.Item>
                 </Form.Item>
-
                 <Form.Item {...tailLayout}>
                   <Button type="primary" htmlType="submit" className="mr-2">
                     Filter
