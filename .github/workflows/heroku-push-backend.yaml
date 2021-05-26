@@ -2,7 +2,7 @@ name: Build and push backend container to Heroku
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   build:
