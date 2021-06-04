@@ -53,7 +53,7 @@ const OrderCard = ({ order, button, issueButton, acceptbutton, rate }) => {
       extra={
         <Space>
           {acceptbutton}
-          {rate && order.orderStatus.name ==="completed" ? (<RateJourney id={order.id} idJourney={order.journey.id} ></RateJourney>):null}
+          {rate && order.orderStatus.name ==="completed" && order.rateJourney === null ? (<RateJourney id={order.id} idJourney={order.journey.id} ></RateJourney>):null}
           {button}
           {order.orderStatus.name !== "completed" ? issueButton : null}
         </Space>

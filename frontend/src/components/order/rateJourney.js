@@ -7,7 +7,7 @@ const RateJourney = ({ id, idJourney }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
   const [value, setValue] = useState(3);
-  
+
   const [form] = Form.useForm();
   const showModal = () => {
     setIsModalVisible(true);
@@ -17,7 +17,6 @@ const RateJourney = ({ id, idJourney }) => {
     const ownerJourney = await OrderService.getJourneyOwnerId(idJourney);
     await OrderService.rateJourney(id, value);
     await UserService.updateRating(ownerJourney.data.id);
-    
     setIsModalVisible(false);
   };
   const handleChange = (value) => {
@@ -26,7 +25,6 @@ const RateJourney = ({ id, idJourney }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
   return (
     <>
       <Button type="primary" onClick={showModal}>
