@@ -18,6 +18,7 @@ import jwtdecoder from "jwt-decode";
 import moment from "moment";
 import { useParams } from "react-router";
 import isCurentUser from "../utils/isCurentUser";
+import RatingComponent from "../home/RatingComponent";
 
 const layout = {
   labelCol: { span: 8 },
@@ -55,7 +56,7 @@ const Profile = () => {
   if (!user) {
     return <p>loading...</p>;
   }
-
+ 
   return (
     <>
       {!edit ? (
@@ -68,14 +69,14 @@ const Profile = () => {
             <Descriptions.Item label="Date of birthday">
               {user.dateOfBirth.format("DD-MM-yyyy")}
             </Descriptions.Item>
+            <Descriptions.Item label="Rating">
+              <RatingComponent value={user.rating / 20} />
+            </Descriptions.Item>
           </Descriptions>
           <Space align="baseline">
             {isCurentUser(jwtdecoder(localStorage.getItem("token")).jti) ? (
               <Tooltip title="Edit">
-                <Button
-                  type="primary"
-                  onClick={() => setEdit(!edit)}
-                >
+                <Button type="primary" onClick={() => setEdit(!edit)}>
                   Edit
                 </Button>
               </Tooltip>
@@ -83,66 +84,60 @@ const Profile = () => {
           </Space>
         </Container>
       ) : (
-          <Form
-            form={form}
-            {...layout}
-            name="control-ref"
-            onFinish={handleSubmit}
-            initialValues={user}
-            colon={false}
+        <Form
+          form={form}
+          {...layout}
+          name="control-ref"
+          onFinish={handleSubmit}
+          initialValues={user}
+          colon={false}
+        >
+          <Form.Item name="firstName" label="First name">
+            <Input />
+          </Form.Item>
+          <Form.Item name="lastName" label="Last name">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="sex"
+            label="Sex"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
           >
-            <Form.Item name="firstName" label="First name">
-              <Input />
-            </Form.Item>
-            <Form.Item name="lastName" label="Last name">
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="sex"
-              label="Sex"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Select>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name="dateOfBirth"
-              label="Date of birthday"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <DatePicker />
-            </Form.Item>
-            <Row>
-              <Col offset={8}>
-                <Form.Item {...tailLayout}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                  >
-                    Save
-                  </Button>
-                </Form.Item>
-              </Col>
+            <Select>
+              <Option value="male">male</Option>
+              <Option value="female">female</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="dateOfBirth"
+            label="Date of birthday"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <DatePicker />
+          </Form.Item>
+          <Row>
+            <Col offset={8}>
               <Form.Item {...tailLayout}>
-                <Button
-                  htmlType="submit"
-                  onClick={() => cancelSubmit()}
-                >
-                  Cancel
+                <Button type="primary" htmlType="submit">
+                  Save
                 </Button>
               </Form.Item>
-            </Row>
-          </Form>
+            </Col>
+            <Form.Item {...tailLayout}>
+              <Button htmlType="submit" onClick={() => cancelSubmit()}>
+                Cancel
+              </Button>
+            </Form.Item>
+          </Row>
+        </Form>
       )}
     </>
   );
