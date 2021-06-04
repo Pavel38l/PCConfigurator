@@ -1,0 +1,451 @@
+databaseChangeLog:
+- changeSet:
+    id: 1622816533368-1
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: journey_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: owner_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: max_order_count
+            type: INTEGER
+        tableName: journey
+- changeSet:
+    id: 1622816533368-2
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: journey_cost_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: journey_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: order_size_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: cost
+            type: FLOAT8
+        tableName: journey_cost
+- changeSet:
+    id: 1622816533368-3
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: order_size_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(50)
+        - column:
+            name: description
+            type: VARCHAR(300)
+        tableName: order_size
+- changeSet:
+    id: 1622816533368-4
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: travel_point_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: comment
+            type: VARCHAR(1000)
+        - column:
+            constraints:
+              nullable: false
+            name: journey_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: x
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: y
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: point_index
+            type: INTEGER
+        - column:
+            name: dispatch_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: arrival_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: address
+            type: VARCHAR(500)
+        - column:
+            name: point_name
+            type: VARCHAR(500)
+        tableName: travel_point
+- changeSet:
+    id: 1622816533368-5
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: user_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: first_name
+            type: VARCHAR(100)
+        - column:
+            name: last_name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(300)
+        - column:
+            constraints:
+              nullable: false
+            name: rating
+            type: INTEGER
+        - column:
+            name: date_of_birth
+            type: date
+        - column:
+            name: sex
+            type: VARCHAR(10)
+        - column:
+            constraints:
+              nullable: false
+            name: role_id
+            type: BIGINT
+        tableName: user
+- changeSet:
+    id: 1622816533368-6
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: order_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: size_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: status_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: owner_id
+            type: BIGINT
+        - column:
+            name: code
+            type: VARCHAR(300)
+        - column:
+            name: order_value
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: dispatch_point_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: arrival_point_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: receiver_phone_number
+            type: BIGINT
+        - column:
+            name: journey_id
+            type: BIGINT
+        - column:
+            name: description
+            type: VARCHAR(100)
+        - column:
+            name: rate_order
+            type: INTEGER
+        - column:
+            name: rate_journey
+            type: INTEGER
+        tableName: order
+- changeSet:
+    id: 1622816533368-7
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: order_status_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: name
+            type: VARCHAR(50)
+        tableName: order_status
+- changeSet:
+    id: 1622816533368-8
+    author: Pavel_Burdyug (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: user_role_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(50)
+        tableName: user_role
+- changeSet:
+    id: 1622816533368-9
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: journey_id
+        baseTableName: journey_cost
+        constraintName: fk_journey_cost_journey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: journey
+        validate: true
+- changeSet:
+    id: 1622816533368-10
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: journey_id
+        baseTableName: travel_point
+        constraintName: fk_journey_id
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: journey
+        validate: true
+- changeSet:
+    id: 1622816533368-11
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: user_email_key
+        tableName: user
+- changeSet:
+    id: 1622816533368-12
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: journey_id
+        baseTableName: order
+        constraintName: fk_order_journey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: journey
+        validate: true
+- changeSet:
+    id: 1622816533368-13
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: size_id
+        baseTableName: order
+        constraintName: fk_order_order_size
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: order_size
+        validate: true
+- changeSet:
+    id: 1622816533368-14
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: arrival_point_id
+        baseTableName: order
+        constraintName: fk_order_travel_arrival_point
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: travel_point
+        validate: true
+- changeSet:
+    id: 1622816533368-15
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: dispatch_point_id
+        baseTableName: order
+        constraintName: fk_order_travel_dispatch_point
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: travel_point
+        validate: true
+- changeSet:
+    id: 1622816533368-16
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: owner_id
+        baseTableName: order
+        constraintName: fk_order_user
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        validate: true
+- changeSet:
+    id: 1622816533368-17
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: owner_id
+        baseTableName: journey
+        constraintName: fk_journey_user
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        validate: true
+- changeSet:
+    id: 1622816533368-18
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: order_size_id
+        baseTableName: journey_cost
+        constraintName: fk_journey_cost_order_size
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: order_size
+        validate: true
+- changeSet:
+    id: 1622816533368-19
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: role_id
+        baseTableName: user
+        constraintName: fk_user_role
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user_role
+        validate: true
+- changeSet:
+    id: 1622816533368-20
+    author: Pavel_Burdyug (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: status_id
+        baseTableName: order
+        constraintName: fk_order_order_status
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: order_status
+        validate: true
+

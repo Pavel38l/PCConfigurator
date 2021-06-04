@@ -100,7 +100,7 @@ databaseChangeLog:
                   value: $2a$10$KessrQ1npBezolG9JrZDWOuQDFECtWfwzsgIYQmQQ.G2ZtD96JpTe
               - column:
                   name: rating
-                  value: 100
+                  value: 0
               - column:
                   name: date_of_birth
                   value: 1999-06-03
