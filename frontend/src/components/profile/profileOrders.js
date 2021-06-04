@@ -53,7 +53,7 @@ const ProfileOrders = ({activeKey}) => {
                   }
                   rate={isCurentUser(id)}
                 />
-              ) : (<Empty />)}
+              ) : null}
           </>
         );
       })
