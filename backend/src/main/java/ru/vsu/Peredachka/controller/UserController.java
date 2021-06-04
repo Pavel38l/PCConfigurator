@@ -112,7 +112,7 @@ public class UserController {
         }
         for(Order o : orderService.findByOwnerId(id)){
             if(o.getRateOrder() != null) {
-                rate += o.getRateJourney();
+                rate += o.getRateOrder();
                 count++;
             }
         }
