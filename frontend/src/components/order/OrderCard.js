@@ -48,7 +48,7 @@ const OrderCard = ({ order, button, issueButton, acceptbutton, rate }) => {
     <Card
       key={order.id}
       title={
-        order.arrivalPoint.pointName + " - " + order.dispatchPoint.pointName
+        order.dispatchPoint.pointName + " - " + order.arrivalPoint.pointName
       }
       extra={
         <Space>
@@ -65,17 +65,17 @@ const OrderCard = ({ order, button, issueButton, acceptbutton, rate }) => {
           <Timeline mode={"left"}>
             <Timeline.Item
               label={UserJourneyUtils.dateFormat(
-                order.arrivalPoint.arrivalDate
-              )}
-            >
-              {order.arrivalPoint.address}
-            </Timeline.Item>
-            <Timeline.Item
-              label={UserJourneyUtils.dateFormat(
-                order.dispatchPoint.dispatchDate
+                order.dispatchPoint.arrivalDate
               )}
             >
               {order.dispatchPoint.address}
+            </Timeline.Item>
+            <Timeline.Item
+              label={UserJourneyUtils.dateFormat(
+                order.arrivalPoint.dispatchDate
+              )}
+            >
+              {order.arrivalPoint.address}
             </Timeline.Item>
           </Timeline>
         </Col>

@@ -36,7 +36,7 @@ const OrderIssueForm = ({ visible, onCancel }) => {
       onCancel={onCancel}
     >
       <Form form={form} layout="vertical" name="userForm" size="large">
-        <Text style={{marginRight: 10}}>please rate the sender:</Text>
+        <Text style={{marginRight: 10}}>Please rate the sender:</Text>
         <Form.Item label="Please rate the user's package" name="rate" noStyle>
           <Rate
             style={{ marginLeft: "10" }}

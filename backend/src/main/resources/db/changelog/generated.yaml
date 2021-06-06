@@ -5,4 +5,6 @@ databaseChangeLog:
   - include:
       file: output-insert-changelog.yaml
       relativeToChangelogFile: true
-
+  - include:
+      file: filter.yaml
+      relativeToChangelogFile: true

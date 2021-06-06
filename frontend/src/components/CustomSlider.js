@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, InputNumber, Row, Slider} from "antd";
+import {Col, Form, InputNumber, Row, Slider} from "antd";
 
 
 const CustomSlider = ({value = {}, max, onChange }) => {
@@ -14,7 +14,7 @@ const CustomSlider = ({value = {}, max, onChange }) => {
                         value={value}
                     />
             </Col>
-            <Col span={4}>
+            <Col span={2}>
                 <InputNumber
                     min={1}
                     max={max}
@@ -23,6 +23,7 @@ const CustomSlider = ({value = {}, max, onChange }) => {
                     onChange={onChange}
                 />
             </Col>
+            <Col>$ / 100 km</Col>
         </Row>
     );
 }
