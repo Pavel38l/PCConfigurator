@@ -24,6 +24,8 @@ jobs:
     - name: Build react
       working-directory: ./frontend
       run: CI=false npm run build
+      env:
+        REACT_APP_BACKEND: https://peredachka-backend.herokuapp.com
       
       
     - name: Login to Heroku Container registry
