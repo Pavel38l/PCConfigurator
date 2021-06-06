@@ -6,6 +6,7 @@ import SearchComplete from "./SearchComplete";
 import { Map, YMaps } from "react-yandex-maps";
 import { Form, Button, DatePicker, InputNumber } from "antd";
 import JourneyCard from "./journey/JourneyCard";
+import isAuth from "./utils/isAuth";
 
 // TODO сделать имя обязательным
 // TODO валидациия полей дат при создании поездки
@@ -83,7 +84,7 @@ class Home extends React.Component {
     const journeys = this.state.journeys;
     const journeyCards = journeys.map((journey) => {
       return (
-        <JourneyCard key={journey.id} journey={journey} createButton={true} />
+        <JourneyCard key={journey.id} journey={journey} createButton={isAuth()} />
       );
     });
 
@@ -218,7 +219,7 @@ class Home extends React.Component {
                   </Form.Item>
                   <Form.Item
                     name="maxOrderCount"
-                    label="The number of orders"
+                    label="Number of orders"
                     tooltip="Specify the number of orders to be shipped so as not to display trips that will not accommodate so many orders"
                     rules={[
                       {

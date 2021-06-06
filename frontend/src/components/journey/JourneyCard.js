@@ -17,6 +17,7 @@ import { UserOutlined } from "@ant-design/icons";
 import UserJourneyUtils from "../utils/UserJourneyUtils";
 import moment from "moment";
 import { PROFILE_URL } from "../../constants";
+import isAuth from "../utils/isAuth";
 const { Text } = Typography;
 
 const JourneyCard = ({
@@ -189,7 +190,11 @@ const JourneyCard = ({
         </Col>
         <Col>
           <Space>
-            <a href={`${PROFILE_URL}/${journey.owner.id}`}>{avatar}</a>
+            {isAuth() ? (
+                <a href={`${PROFILE_URL}/${journey.owner.id}`}>{avatar}</a>
+            ) : (
+                avatar
+            )}
             <Space direction="vertical">
               <Text strong>{journey.owner.email}</Text>
               <Text>
@@ -209,14 +214,14 @@ const JourneyCard = ({
         <Col>
           <p>
             Small parcel:{" "}
-            <Text strong>{journey.journeyCosts[0].cost} $/km</Text>
+            <Text strong>{journey.journeyCosts[0].cost}$ / 100 km</Text>
           </p>
           <p>
-            Avg parcel: <Text strong>{journey.journeyCosts[1].cost} $/km</Text>
+            Avg parcel: <Text strong>{journey.journeyCosts[1].cost} $ / 100 km</Text>
           </p>
           <p>
             Large parcel:{" "}
-            <Text strong>{journey.journeyCosts[2].cost} $/km</Text>
+            <Text strong>{journey.journeyCosts[2].cost}$ / 100 km</Text>
           </p>
         </Col>
       </Row>

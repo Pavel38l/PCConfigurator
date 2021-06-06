@@ -16,7 +16,7 @@ public class OrderWithDependenciesDto {
     private Long id;
     private Integer orderValue;
     private String description;
-
+    private Integer rateJourney;
     private OrderSizeDto orderSize;
 
     private OrderStatusDto orderStatus;

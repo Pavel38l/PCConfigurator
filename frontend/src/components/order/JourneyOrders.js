@@ -30,6 +30,7 @@ const JourneyOrders = () => {
   const { journeyId } = useParams();
   const history = useHistory();
   const currentUserProfileUrl = useCurrentUserProfileUrl();
+  const [ownerId, setOwnerId] = useState(null);
 
   const getTimelineItemForPoint = (point, index) => {
     return (
@@ -61,11 +62,12 @@ const JourneyOrders = () => {
   const prepareDelivery = (order) => {
     const dto = {
       receiverPhoneNumber: order.receiverPhoneNumber,
-      orderId: order.id,
+      orderId: order.id,     
     };
     OrderService.prepareDelivery(dto).then();
     setIsModalVisible(true);
     setCurrOrderId(order.id);
+    setOwnerId(order.owner.id);
   };
 
   const handleOk = async (values) => {
@@ -81,8 +83,8 @@ const JourneyOrders = () => {
       message.success("Success!");
       //const ordersResponse = await OrderService.getAllJourneyOrders(journeyId);
       //setOrders(ordersResponse.data);
-      OrderService.rateOrder(currOrderId, values.rate)
-      UserService.updateRating(ownwerJourney.data.id)
+      await OrderService.rateOrder(currOrderId, values.rate)
+      await UserService.updateRating(ownerId);
       setCurrOrderId(null);
     } else {
       message.error("Invalid password!");

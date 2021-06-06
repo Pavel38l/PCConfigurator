@@ -284,7 +284,7 @@ const OrderAdd = () => {
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber /><span> $</span>
           </Form.Item>
           <Form.Item
             wrapperCol={{ span: 20 }}
